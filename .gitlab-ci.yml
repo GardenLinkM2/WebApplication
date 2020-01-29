@@ -1,0 +1,13 @@
+image: node
+
+stages:
+    - build
+    
+build_job:
+    stage: build
+    before_script:
+        - npm install -g @angular/cli
+    script:
+        - ng build
+    after_script:
+        - echo "Build complete"
