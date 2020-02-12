@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
+import {FeaturesModule} from '../features/features.module';
+import {ComponentsModule} from '../components/components.module';
 
 
 
@@ -9,7 +11,9 @@ import { HomeScreenComponent } from './home-screen/home-screen.component';
     HomeScreenComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FeaturesModule,
+    ComponentsModule
   ],
   exports: [
     HomeScreenComponent
