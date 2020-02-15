@@ -3,20 +3,22 @@ import { CommonModule } from '@angular/common';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
 import {FeaturesModule} from '../features/features.module';
 import {ComponentsModule} from '../components/components.module';
-import { MpdOublieComponent } from './mpd-oublie/mpd-oublie.component';
+import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
     HomeScreenComponent,
-    MpdOublieComponent
+    MdpOublieComponent
   ],
-  imports: [
-    CommonModule,
-    FeaturesModule,
-    ComponentsModule
-  ],
+    imports: [
+        CommonModule,
+        FeaturesModule,
+        ComponentsModule,
+        ReactiveFormsModule
+    ],
   exports: [
     HomeScreenComponent
   ]
