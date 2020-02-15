@@ -12,6 +12,7 @@ export class UploadScreenComponent {
   cityPattern = /^[A-Za-z0-9 -]+$/; // Gestion rule 6
   streetNamePattern = /^[A-Za-z0-9 ]+$/; // Gestion rule 5
   onlyNumbers = /^[0-9]+$/;
+  zipCodePattern = /^[0-9][0-9][0-9][0-9][0-9]$/;
   uploadForm = new FormGroup(
     {
       titleControl: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
@@ -22,7 +23,7 @@ export class UploadScreenComponent {
         streetNumControl: new FormControl('', Validators.pattern(this.onlyNumbers)),
         streetNameControl: new FormControl('', [Validators.required, Validators.minLength(6),
           Validators.maxLength(255), Validators.pattern(this.streetNamePattern)]),
-        zipCodeControl: new FormControl('', [Validators.required, Validators.pattern(this.onlyNumbers)]),
+        zipCodeControl: new FormControl('', [Validators.required, Validators.pattern(this.zipCodePattern), Validators.max(99999)]),
         cityControl: new FormControl('', [Validators.required, Validators.minLength(1),
           Validators.maxLength(255), Validators.pattern(this.cityPattern)])
       }),
