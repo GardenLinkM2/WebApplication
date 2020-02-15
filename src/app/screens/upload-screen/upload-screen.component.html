@@ -1,1 +1,67 @@
-<p>upload-screen works!</p>
+<div class="container-md p-100 my-10 bg-white rounded">
+  <h2 class="text-center" style="color:#005739">PUBLIER UNE ANNONCE</h2>
+  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+    <div class="text-center">
+      <label style="color: #005739; font-weight: bold">
+        Titre<br>
+        <div class="col">
+          <input class="titleInput" type="text" class="form-control" formControlName="titleControl">
+        </div>
+      </label>
+      <label style="color: #005739; font-weight: bold">
+        Surface<br>
+        <div class="col">
+          <input class="surfaceInput" type="text" class="form-control" formControlName="surfaceControl">
+        </div>
+      </label>
+      <label style="color: #005739; font-weight: bold">
+        Prix<br>
+        <div class="col">
+          <input class="priceInput" type="text" class="form-control" formControlName="priceControl">
+        </div>
+      </label>
+      <label style="color: #005739; font-weight: bold">
+        Durée Max<br>
+        <div class="col">
+          <input class="durationInput" type="text" class="form-control" formControlName="durationMaxControl">
+        </div>
+      </label>
+      <div class="adresse" formGroupName="addressControl">
+        <h5 style="color: #005739; font-weight: bold">Adresse</h5>
+        <label style="color: #005739">
+          N* Rue<input class="numStreetInput" type="number" class="form-control" formControlName="streetNumControl">
+        </label><br>
+        <label style="color: #005739">
+          Rue<input class="streetInput" type="text" class="form-control" formControlName="streetNameControl">
+        </label><br>
+        <label style="color: #005739">
+          Code postal<input class="zipCodeInput" type="number" class="form-control" formControlName="zipCodeControl">
+        </label><br>
+        <label style="color: #005739">
+          Ville<input class="cityInput" type="text" class="form-control" formControlName="cityControl">
+        </label>
+      </div>
+      <label style="color: #005739; font-weight: bold">
+        Accès à l'eau: <input type="checkbox" formControlName="accessWaterControl">
+      </label>
+      <label style="color: #005739; font-weight: bold">
+        Accès aux outils: <input type="checkbox" formControlName="accessToolsControl">
+      </label><br>
+      <label style="color: #005739; font-weight: bold">
+        Type de sol: <input type="search" formControlName="soilTypeControl">
+      </label>
+      <label style="color: #005739; font-weight: bold">
+        Orientation: <input type="search" formControlName="orientationControl">
+      </label>
+      <br>
+      <label style="color: #005739; font-weight: bold">
+        Description: <input class="form-control" type="text" formControlName="descriptionControl">
+      </label>
+      <br>
+      <label for="files" style="color: #005739; font-weight: bold">Ajouter des photos:</label>
+      <input type="file" id="files" name="files" multiple>
+      <br>
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!uploadForm.valid">Publier</button>
+    </div>
+  </form>
+</div>
