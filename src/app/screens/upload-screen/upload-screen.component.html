@@ -1,41 +1,42 @@
-<div class="container-md p-100 my-10 bg-white rounded">
+<div class="container bg-white">
   <h2 class="text-center" style="color:#005739">PUBLIER UNE ANNONCE</h2>
   <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
-    <div>
-      <div class="title">
-      <label style="color: #005739; font-weight: bold">
-        Titre<br>
-          <input class="titleInput" type="text" class="form-control" formControlName="titleControl">
-      </label>
+      <div class="title" >
+        <label style="color: #005739; font-weight: bold">
+          Titre<br>
+            <input class="titleInput" type="text" class="form-control" formControlName="titleControl">
+        </label>
       </div>
-      <div class="numerics">
+      <div class="row">
+        <div class="col-sm-6" formGroupName="addressControl">
+          <h5 style="color: #005739; font-weight: bold">Adresse</h5>
+          <label style="color: #005739">
+            N* Rue<input class="numStreetInput" type="text" class="form-control rounded" formControlName="streetNumControl">
+          </label><br>
+          <label style="color: #005739">
+            Rue<input class="streetInput" type="text" class="form-control rounded" formControlName="streetNameControl">
+          </label><br>
+          <label style="color: #005739">
+            Code postal<input class="zipCodeInput" type="text" class="form-control rounded" formControlName="zipCodeControl">
+          </label><br>
+          <label style="color: #005739">
+            Ville<input class="cityInput" type="text" class="form-control rounded" formControlName="cityControl">
+          </label>
+        </div>
+        <div class="col-sm-6"><br><br>
         <label style="color: #005739; font-weight: bold">
           Surface<br>
-            <input class="surfaceInput" type="text" class="form-control" formControlName="surfaceControl">
-        </label><br>
+            <input class="surfaceInput" type="number" class="form-control" formControlName="surfaceControl">
+        </label><br><br>
         <label style="color: #005739; font-weight: bold">
           Prix<br>
-            <input class="priceInput" type="text" class="form-control" formControlName="priceControl">
-        </label><br>
+            <input class="priceInput" type="number" class="form-control" formControlName="priceControl">
+        </label><br><br>
         <label style="color: #005739; font-weight: bold">
           Durée Max<br>
-            <input class="durationInput" type="text" class="form-control" formControlName="durationMaxControl">
+            <input class="durationInput" type="number" class="form-control" formControlName="durationMaxControl">
         </label>
       </div>
-      <div class="adresse" formGroupName="addressControl">
-        <h5 style="color: #005739; font-weight: bold">Adresse</h5>
-        <label style="color: #005739">
-          N* Rue<input class="numStreetInput" type="number" class="form-control" formControlName="streetNumControl">
-        </label><br>
-        <label style="color: #005739">
-          Rue<input class="streetInput" type="text" class="form-control" formControlName="streetNameControl">
-        </label><br>
-        <label style="color: #005739">
-          Code postal<input class="zipCodeInput" type="number" class="form-control" formControlName="zipCodeControl">
-        </label><br>
-        <label style="color: #005739">
-          Ville<input class="cityInput" type="text" class="form-control" formControlName="cityControl">
-        </label>
       </div>
       <div class="optionals">
         <label style="color: #005739; font-weight: bold">
