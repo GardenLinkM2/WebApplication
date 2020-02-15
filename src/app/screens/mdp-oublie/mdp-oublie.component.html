@@ -1,9 +1,15 @@
-<form [formGroup]="fgtPassForm" (ngSubmit)="onSubmit()">
-
-  <label>
-    Saisissez votre adresse mail:
-    <input type="email" formControlName="emailControl">
-  </label>
-  <br>
-  <button type="submit" [disabled]="!fgtPassForm.valid">Envoyer</button>
-</form>
+<div class="container-md p-100 my-10 bg-white rounded">
+  <h2 class="text-center" style="color:#005739">MOT DE PASSE OUBLIÉ</h2>
+  <form [formGroup]="fgtPassForm" (ngSubmit)="onSubmit()">
+    <div class="text-center">
+      <label style="color: #005739; font-weight: bold">
+        Saisissez votre adresse mail<br>
+        <div class="col">
+          <input class="emailInput" type="email" class="form-control" formControlName="emailControl">
+        </div>
+      </label>
+      <br>
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!fgtPassForm.valid">Envoyer</button>
+    </div>
+  </form>
+</div>
