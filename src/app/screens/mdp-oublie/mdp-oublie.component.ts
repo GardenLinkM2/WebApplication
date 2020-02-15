@@ -22,6 +22,7 @@ export class MdpOublieComponent {
     }
   }
   onSubmit() {
+    // TODO: Replace the following line with an effective one.
     console.warn(this.fgtPassForm.value);
   }
 
