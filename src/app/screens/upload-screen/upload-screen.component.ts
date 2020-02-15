@@ -32,6 +32,7 @@ export class UploadScreenComponent {
       orientationControl: new FormControl(''),
       accessToolsControl: new FormControl(''),
       descriptionControl: new FormControl('', Validators.maxLength(25 * (10 ** 3))),
+      // TODO: limit number of uploaded images to 5
       picturesControl: new FormControl('')
     }
   );
