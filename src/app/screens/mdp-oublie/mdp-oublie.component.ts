@@ -1,16 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-mpd-oublie',
-  templateUrl: './mpd-oublie.component.html',
-  styleUrls: ['./mpd-oublie.component.scss']
+  templateUrl: './mdp-oublie.component.html',
+  styleUrls: ['./mdp-oublie.component.scss']
 })
-export class MpdOublieComponent implements OnInit {
+export class MdpOublieComponent {
 
   constructor() { }
-  name = new FormControl('');
-  ngOnInit() {
+  fgtPassForm = new FormGroup(
+    {emailControl: new FormControl('', Validators.email)}
+  );
+  emailValidator(control) {
+    if (control.value) {
+      const matches = control.value.match();
+
+      return matches ? null : {invalidEmail: true};
+    } else {
+      return null;
+    }
   }
+  onSubmit() {
+    console.warn(this.fgtPassForm.value);
+  }
+
 
 }
