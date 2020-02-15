@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
 import {FeaturesModule} from '../features/features.module';
 import {ComponentsModule} from '../components/components.module';
+import { UploadScreenComponent } from './upload-screen/upload-screen.component';
 
 
 
 @NgModule({
   declarations: [
-    HomeScreenComponent
+    HomeScreenComponent,
+    UploadScreenComponent
   ],
   imports: [
     CommonModule,
