@@ -1,31 +1,27 @@
 <div class="container-md p-100 my-10 bg-white rounded">
   <h2 class="text-center" style="color:#005739">PUBLIER UNE ANNONCE</h2>
   <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
-    <div class="text-center">
+    <div>
+      <div class="title">
       <label style="color: #005739; font-weight: bold">
         Titre<br>
-        <div class="col">
           <input class="titleInput" type="text" class="form-control" formControlName="titleControl">
-        </div>
       </label>
-      <label style="color: #005739; font-weight: bold">
-        Surface<br>
-        <div class="col">
-          <input class="surfaceInput" type="text" class="form-control" formControlName="surfaceControl">
-        </div>
-      </label>
-      <label style="color: #005739; font-weight: bold">
-        Prix<br>
-        <div class="col">
-          <input class="priceInput" type="text" class="form-control" formControlName="priceControl">
-        </div>
-      </label>
-      <label style="color: #005739; font-weight: bold">
-        Durée Max<br>
-        <div class="col">
-          <input class="durationInput" type="text" class="form-control" formControlName="durationMaxControl">
-        </div>
-      </label>
+      </div>
+      <div class="numerics">
+        <label style="color: #005739; font-weight: bold">
+          Surface<br>
+            <input class="surfaceInput" type="text" class="form-control" formControlName="surfaceControl">
+        </label><br>
+        <label style="color: #005739; font-weight: bold">
+          Prix<br>
+            <input class="priceInput" type="text" class="form-control" formControlName="priceControl">
+        </label><br>
+        <label style="color: #005739; font-weight: bold">
+          Durée Max<br>
+            <input class="durationInput" type="text" class="form-control" formControlName="durationMaxControl">
+        </label>
+      </div>
       <div class="adresse" formGroupName="addressControl">
         <h5 style="color: #005739; font-weight: bold">Adresse</h5>
         <label style="color: #005739">
@@ -41,27 +37,45 @@
           Ville<input class="cityInput" type="text" class="form-control" formControlName="cityControl">
         </label>
       </div>
-      <label style="color: #005739; font-weight: bold">
-        Accès à l'eau: <input type="checkbox" formControlName="accessWaterControl">
-      </label>
-      <label style="color: #005739; font-weight: bold">
-        Accès aux outils: <input type="checkbox" formControlName="accessToolsControl">
-      </label><br>
-      <label style="color: #005739; font-weight: bold">
-        Type de sol: <input type="search" formControlName="soilTypeControl">
-      </label>
-      <label style="color: #005739; font-weight: bold">
-        Orientation: <input type="search" formControlName="orientationControl">
-      </label>
-      <br>
-      <label style="color: #005739; font-weight: bold">
-        Description: <input class="form-control" type="text" formControlName="descriptionControl">
-      </label>
-      <br>
-      <label for="files" style="color: #005739; font-weight: bold">Ajouter des photos:</label>
-      <input type="file" id="files" name="files" multiple>
-      <br>
+      <div class="optionals">
+        <label style="color: #005739; font-weight: bold">
+          Accès à l'eau: <input type="checkbox" formControlName="accessWaterControl">
+        </label>
+        <label style="color: #005739; font-weight: bold">
+          Accès aux outils: <input type="checkbox" formControlName="accessToolsControl">
+        </label><br>
+        <label style="color: #005739; font-weight: bold">
+          Type de sol: <select formControlName="soilTypeControl">
+          <option selected value> -- Choisissez un type de sol -- </option>
+          <option value="Argileuse">Argileuse</option>
+          <option value="Sableuse">Sableuse</option>
+          <option value="Tourbeuse">Tourbeuse</option>
+          <option value="Humifère">Humifère</option>
+          <option value="Siliceuse">Siliceuse</option>
+          <option value="Calcaire">Calcaire</option>
+        </select>
+        </label>
+        <label style="color: #005739; font-weight: bold">
+          Orientation: <select formControlName="orientationControl">
+          <option selected value> -- Choisissez une orientation -- </option>
+          <option value="Nord">Nord</option>
+          <option value="Sud">Sud</option>
+          <option value="Est">Est</option>
+          <option value="Ouest">Ouest</option>
+        </select>
+        </label>
+        <br>
+        <label style="color: #005739; font-weight: bold">
+          Description: <input class="form-control" type="text" formControlName="descriptionControl">
+        </label>
+        <br>
+        <label for="files" style="color: #005739; font-weight: bold">Ajouter des photos</label><br>
+        <input type="file" id="files" name="files" multiple>
+        <br>
+      </div>
+      <div class="text-center">
       <button type="submit" class="btn btn-primary mt-3" [disabled]="!uploadForm.valid">Publier</button>
+      </div>
     </div>
   </form>
 </div>
