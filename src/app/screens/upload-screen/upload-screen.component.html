@@ -3,7 +3,7 @@
   <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
       <div class="title" >
         <label style="color: #005739; font-weight: bold">
-          Titre<br>
+          Titre<span style="color:red">*</span><br>
             <input class="titleInput" type="text" class="form-control" formControlName="titleControl">
         </label>
       </div>
@@ -14,27 +14,27 @@
             N* Rue<input class="numStreetInput" type="text" class="form-control rounded" formControlName="streetNumControl">
           </label><br>
           <label style="color: #005739">
-            Rue<input class="streetInput" type="text" class="form-control rounded" formControlName="streetNameControl">
+            Rue<span style="color:red">*</span><input class="streetInput" type="text" class="form-control rounded" formControlName="streetNameControl">
           </label><br>
           <label style="color: #005739">
-            Code postal<input class="zipCodeInput" type="text" class="form-control rounded" formControlName="zipCodeControl">
+            Code postal<span style="color:red">*</span><input class="zipCodeInput" type="text" class="form-control rounded" formControlName="zipCodeControl">
           </label><br>
           <label style="color: #005739">
-            Ville<input class="cityInput" type="text" class="form-control rounded" formControlName="cityControl">
+            Ville<span style="color:red">*</span><input class="cityInput" type="text" class="form-control rounded" formControlName="cityControl">
           </label>
         </div>
         <div class="col-sm-6"><br><br>
         <label style="color: #005739; font-weight: bold">
-          Surface<br>
+          Surface<span style="color:red">*</span><br>
             <input class="surfaceInput" type="number" placeholder="m²" class="form-control" formControlName="surfaceControl">
         </label><br><br>
         <label style="color: #005739; font-weight: bold">
-          Prix<br>
+          Prix<span style="color:red">*</span><br>
             <input class="priceInput" type="number" placeholder="€/mois" class="form-control" formControlName="priceControl">
 
         </label><br><br>
         <label style="color: #005739; font-weight: bold">
-          Durée Max<br>
+          Durée Max<span style="color:red">*</span><br>
             <input class="durationInput" type="number" placeholder="mois" class="form-control" formControlName="durationMaxControl">
         </label>
       </div>
