@@ -1,1 +1,9 @@
-<p>mpd-oublie works!</p>
+<form [formGroup]="fgtPassForm" (ngSubmit)="onSubmit()">
+
+  <label>
+    Saisissez votre adresse mail:
+    <input type="email" formControlName="emailControl">
+  </label>
+  <br>
+  <button type="submit" [disabled]="!fgtPassForm.valid">Envoyer</button>
+</form>
