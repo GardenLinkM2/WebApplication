@@ -24,7 +24,7 @@ build_dev:
       - dev
     script:
         - echo n | npm install --silent
-#        - ng test --browsers ChromeHeadlessCI --code-coverage=true --watch=false
+        - ng test --browsers ChromeHeadlessCI --code-coverage=true --watch=false
         - sonar-scanner
         - ng build
         - cd dist/GardenLinkWeb
