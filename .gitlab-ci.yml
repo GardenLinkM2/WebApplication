@@ -25,7 +25,7 @@ build_dev:
         - echo n | npm install --silent
 #        - ng test --browsers ChromeHeadlessCI --code-coverage=true --watch=false
         - sonar-scanner
-        - ng build --prod
+        - ng build
         - cd dist/GardenLinkWeb
         - tar cvf archive.tar ./
         - curl $CURL_PARAMS "$BINARIES/dev/web$(/bin/date +"%s").tar"
