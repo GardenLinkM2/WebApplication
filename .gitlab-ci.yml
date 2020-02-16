@@ -2,6 +2,7 @@ image: local_angular
 
 stages:
     - build
+    - deploy
 
 build_prd:
     stage: build
@@ -40,3 +41,23 @@ code_insight:
         - echo n | npm install --silent
         - ng test --browsers ChromeHeadlessCI --code-coverage=true --watch=false
         - sonar-scanner
+
+deploy_prd:
+    image: local_ansible
+    stage: deploy
+    when: manual
+    only:
+        - master
+    script:
+        - python3 /root/getPackage.py -r "generic-local/web/prd" -o /root/app.tar
+        - ansible-playbook -i deploy/inventories/prd -u administrateur deploy/playbook.yml
+
+deploy_dev:
+    image: local_ansible
+    stage: deploy
+    when: manual
+    except:
+        - master
+    script:
+        - python3 /root/getPackage.py -r "generic-local/web/dev" -o /root/app.tar
+        - ansible-playbook -i deploy/inventories/dev -u administrateur deploy/playbook.yml
