@@ -5,7 +5,7 @@ import {MdpOublieComponent} from './screens/mdp-oublie/mdp-oublie.component';
 
 const routes: Routes = [
   { path: 'accueil', component: HomeScreenComponent },
-  { path: 'mdpoublie', component: MdpOublieComponent},
+  { path: 'mdp-oublie', component: MdpOublieComponent},
   { path: '**',   redirectTo: '/accueil', pathMatch: 'full'}
 ];
 
