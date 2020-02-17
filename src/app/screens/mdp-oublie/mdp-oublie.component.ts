@@ -10,7 +10,7 @@ export class MdpOublieComponent {
 
   constructor() { }
   fgtPassForm = new FormGroup(
-    {emailControl: new FormControl('', Validators.email)}
+    {emailControl: new FormControl('', [Validators.email, Validators.required])}
   );
   emailValidator(control) {
     if (control.value) {
