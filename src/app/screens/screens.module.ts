@@ -18,10 +18,12 @@ import {ReactiveFormsModule} from '@angular/forms';
         FeaturesModule,
         ComponentsModule,
         ReactiveFormsModule,
-
+        InputTextModule,
+        HttpClientModule
     ],
   exports: [
-    HomeScreenComponent
+    HomeScreenComponent,
+    MdpOublieComponent
   ]
 })
 export class ScreensModule { }

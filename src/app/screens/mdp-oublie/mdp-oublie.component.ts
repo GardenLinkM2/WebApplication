@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {MdpService} from './mdp.service';
 
 @Component({
   selector: 'app-mpd-oublie',
@@ -8,23 +9,17 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class MdpOublieComponent {
 
-  constructor() { }
+  constructor(private recover: MdpService) { }
   fgtPassForm = new FormGroup(
     {emailControl: new FormControl('', [Validators.email, Validators.required])}
   );
-  emailValidator(control) {
-    if (control.value) {
-      const matches = control.value.match();
-
-      return matches ? null : {invalidEmail: true};
-    } else {
-      return null;
-    }
-  }
   onSubmit() {
     // TODO: Replace the following line with an effective one.
     if (this.fgtPassForm.valid) {
-      console.warn(this.fgtPassForm.value);
+      this.recover.recover(this.fgtPassForm).subscribe(
+        data => console.log('success ', data),
+        fail => console.log('error', fail)
+      );
     }
   }
 
