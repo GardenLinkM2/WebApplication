@@ -5,7 +5,8 @@ import {FeaturesModule} from '../features/features.module';
 import {ComponentsModule} from '../components/components.module';
 import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
 import {ReactiveFormsModule} from '@angular/forms';
-
+import {InputTextModule} from 'primeng/inputtext';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({

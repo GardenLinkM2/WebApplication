@@ -5,12 +5,10 @@
       <label style="color: #005739; font-weight: bold">
         Saisissez votre adresse mail<br>
         <div class="col">
-          <input class="emailInput" type="email" class="form-control" formControlName="emailControl">
+          <input pInputText type="email" formControlName="emailControl" size="60%">
         </div>
       </label>
       <br>
-      <p *ngIf="fgtPassForm.get('emailControl').hasError('required') && myform.submitted" style="color:red">l'adresse mail est requise</p>
-      <p *ngIf="fgtPassForm.get('emailControl').hasError('email') && myform.submitted" style="color:red">>le format est incorrect</p>
       <!--TODO: replace with input field color change-->
       <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
     </div>
