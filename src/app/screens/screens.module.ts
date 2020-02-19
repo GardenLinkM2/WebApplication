@@ -17,7 +17,8 @@ import {ReactiveFormsModule} from '@angular/forms';
         CommonModule,
         FeaturesModule,
         ComponentsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+
     ],
   exports: [
     HomeScreenComponent

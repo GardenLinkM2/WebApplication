@@ -1,6 +1,6 @@
 <div class="container-md p-100 my-10 bg-white rounded">
   <h2 class="text-center" style="color:#005739">MOT DE PASSE OUBLIÉ</h2>
-  <form [formGroup]="fgtPassForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="fgtPassForm" (ngSubmit)="onSubmit()" #myform="ngForm">
     <div class="text-center">
       <label style="color: #005739; font-weight: bold">
         Saisissez votre adresse mail<br>
@@ -9,7 +9,10 @@
         </div>
       </label>
       <br>
-      <button type="submit" class="btn btn-primary mt-3" [disabled]="!fgtPassForm.valid">Envoyer</button>
+      <p *ngIf="fgtPassForm.get('emailControl').hasError('required') && myform.submitted" style="color:red">l'adresse mail est requise</p>
+      <p *ngIf="fgtPassForm.get('emailControl').hasError('email') && myform.submitted" style="color:red">>le format est incorrect</p>
+      <!--TODO: replace with input field color change-->
+      <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
     </div>
   </form>
 </div>
