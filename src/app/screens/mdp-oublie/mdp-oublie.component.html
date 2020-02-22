@@ -1,16 +1,23 @@
-<div class="container-md p-100 my-10 bg-white rounded">
-  <h2 class="text-center" style="color:#005739">MOT DE PASSE OUBLIÉ</h2>
-  <form [formGroup]="fgtPassForm" (ngSubmit)="onSubmit()" #myform="ngForm">
-    <div class="text-center">
-      <label style="color: #005739; font-weight: bold">
-        Saisissez votre adresse mail<br>
-        <div class="col">
-          <input pInputText type="email" formControlName="emailControl" size="60%">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
+    <div class="col-sm"><h2 class="text-center" style="color:#005739; font-size: 100%">MOT DE PASSE OUBLIÉ</h2></div>
+    <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
+  </div>
+  <form [formGroup]="fgtPassForm" (ngSubmit)="onSubmit()">
+
+    <div class="labelfield">
+
+      <label style="color: #005739; font-size: 150%">
+        <div class="labeltext">Saisissez votre adresse mail</div>
+        <div class="emailInput">
+          <input pInputText type="email" size="70" formControlName="emailControl">
         </div>
+
       </label>
-      <br>
+      <br><br>
       <!--TODO: replace with input field color change-->
-      <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+      <button pButton type="submit" label="Envoyer" class="ui-button-rounded" style="font-size: 100%"></button>
     </div>
   </form>
 </div>

@@ -1,4 +1,66 @@
-.btn {
+.container{
+  background: white;
+  border-radius: 15px;
+  position: relative;
+  height: 12cm;
+  width: 40%;
+  top: 5cm;
+}
+
+.row{
+  text-align: center;
+}
+
+.col-sm-3{
+  height: 1%;
+  width: auto;
+  top: 20px;
+  margin: auto;
+}
+
+h2{
+  position: relative;
+  top:20px;
+  size: auto;
+}
+
+button {
   background: #448233;
+  position: relative;
   border: none;
+  height: 10%;
+  margin:auto;
+}
+
+button:hover {
+  background: #005739 !important;
+}
+
+button:focus{
+  background: #448233 !important;
+}
+
+form{
+  position: relative;
+  top:30%;
+}
+
+input{
+  width: 100%;
+}
+
+.emailInput{
+  position: relative;
+  width: 100%;
+  margin: auto;
+}
+
+.labeltext{
+  position: relative;
+  margin: auto;
+  width: 100%;
+}
+
+.labelfield{
+  text-align: center;
 }

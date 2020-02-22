@@ -6,6 +6,7 @@ import {ComponentsModule} from '../components/components.module';
 import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {InputTextModule} from 'primeng/inputtext';
+import {ButtonModule} from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
         ComponentsModule,
         ReactiveFormsModule,
         InputTextModule,
+        ButtonModule,
         HttpClientModule
     ],
   exports: [
