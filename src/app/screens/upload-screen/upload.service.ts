@@ -1,21 +1,47 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHandler, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {FormGroup} from '@angular/forms';
+import {TokenInterceptor} from './upload-interceptor';
+
+interface Token {
+  token: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  url = 'https://devbackendm2.artheriom.fr/api/Gardens';
+  private url = 'https://devbackendm2.artheriom.fr/api/Gardens';
+  private urlsyn = 'https://devbackendm2.artheriom.fr/api/syn';
   private body: {};
-  header = {
-    headers: new HttpHeaders()
-      .set('Authorization',  `Bearer ${'eyJraWQiOiJnYXJkZW5saW5rIiwiYWxnIjoiSFM1MTIifQ.eyJzdWIiOiJyaWNreWJsYWNrd2FsbEBnbWFpbC5jb20iLCJraWQiOiJnYXJkZW5saW5rIiwiaXNBZG1pbiI6ZmFsc2UsImV4cCI6MTU4NDQzOTYyNywidXVpZCI6IjkwYTVmY2NjLTVkZTktNGQyZS1iMjYwLTNjYjkwY2I4M2E5YSIsImVtaXR0ZXIiOiJnYXJkZW5saW5rIiwianRpIjoiN2ZiNzc2MTAtOTg3OS00NDNkLTk1MWYtNTkxYjFiNjM4MTBjIn0._D-CS0Bi4ZTSn3K56ogZyEIS4wdf4xH1usI27BhnPDpGUkc_5vs_FDndk_h2mlbJ4594hkISpmbc1PEZnoYcbQ'}`)
+  private bearerToken: Token;
+  private token: Token;
+  private owner: any;
+  private req: HttpRequest<any>;
+  private tokeninterceptor = new TokenInterceptor();
+  private headers = new HttpHeaders({
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'});
+  private options = { headers: this.headers };
+  constructor(private next: HttpHandler) { }
+  getBearerToken() {
+      this.token = {
+        token: 'eyJraWQiOiJnYXJkZW5saW5rIiwiYWxnIjoiSFM1MTIifQ.eyJzdWIiOiJyaWNreWJsYWNrd2FsbEBnbWFpbC5jb20iL' +
+        'CJraWQiOiJnYXJkZW5saW5rIiwiaXNBZG1pbiI6ZmFsc2UsImV4cCI6MTU4NDQzOTYyNywidXVpZCI6IjkwYTVmY2NjLTVkZTktNGQyZS1iMjYwLTNjYjkwY2I' +
+        '4M2E5YSIsImVtaXR0ZXIiOiJnYXJkZW5saW5rIiwianRpIjoiN2ZiNzc2MTAtOTg3OS00NDNkLTk1MWYtNTkxYjFiNjM4MTBjIn0._D-CS0Bi4ZTSn3K56ogZy' +
+        'EIS4wdf4xH1usI27BhnPDpGUkc_5vs_FDndk_h2mlbJ4594hkISpmbc1PEZnoYcbQ'
+      };
+      this.req = new HttpRequest<any>('POST', this.urlsyn, this.token);
+      this.tokeninterceptor.intercept(this.req, this.next).subscribe(
+        data => console.log('success', data),
+        error1 => console.log('fail', error1)
+      );
   }
-  constructor(private client: HttpClient) { }
   postGarden(userForm: FormGroup) {
-    this.client.get('https://devbackendm2.artheriom.fr/api/me', this.header).subscribe(
-      me => console.log('success ', me),
+    this.getBearerToken();
+    this.req = new HttpRequest('GET', 'https://devbackendm2.artheriom.fr/api/me');
+    this.tokeninterceptor.intercept(this.req, this.next).subscribe(
+      me => this.owner,
       fail => console.log('error ', fail)
     );
     this.body = {
@@ -51,7 +77,8 @@ export class UploadService {
         }
       ]
     };
-    return this.client.post(this.url, this.body, this.header);
+    this.req = new HttpRequest('POST', this.url, this.body);
+    return this.tokeninterceptor.intercept(this.req, this.next);
   }
 
 }

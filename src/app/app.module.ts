@@ -7,6 +7,8 @@ import {ScreensModule} from './screens/screens.module';
 import {ComponentsModule} from './components/components.module';
 import {FeaturesModule} from './features/features.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {TokenInterceptor} from './screens/upload-screen/upload-interceptor';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
