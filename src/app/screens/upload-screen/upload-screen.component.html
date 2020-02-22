@@ -9,65 +9,70 @@
         <div class="title" >
           <label style="color: #005739; font-weight: bold">
             Titre<span style="color:red">*</span><br>
-              <input pInputText type="text" class="form-control" formControlName="titleControl" size="76">
+              <input pInputText type="text" class="form-control" formControlName="title" size="76">
           </label>
         </div>
         <div class="row">
-          <div class="col-sm-6" formGroupName="addressControl">
+          <div class="col-sm-6" formGroupName="address">
             <h5 style="color: #005739; font-weight: bold">Adresse</h5>
             <label style="color: #005739">
-              N* Rue<input pInputText type="text" class="form-control rounded" formControlName="streetNumControl">
+              N* Rue<input pInputText type="text" class="form-control rounded" formControlName="streetNum">
             </label><br>
             <label style="color: #005739">
-              Rue<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="streetNameControl">
+              Rue<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="streetName">
             </label><br>
             <label style="color: #005739">
-              Code postal<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="zipCodeControl">
+              Code postal<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="zipCode">
             </label><br>
             <label style="color: #005739">
-              Ville<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="cityControl">
+              Ville<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="city">
             </label>
           </div>
           <div class="col-sm-6" style="text-align: right"><br><br>
           <label style="color: #005739; font-weight: bold">
             Surface<span style="color:red">*</span><br>
-              <input pInputText type="number" placeholder="m²" class="form-control" formControlName="surfaceControl">
+              <input pInputText type="number" placeholder="m²" class="form-control" formControlName="surface">
           </label><br><br>
           <label style="color: #005739; font-weight: bold">
             Prix<span style="color:red">*</span><br>
-              <input pInputText type="number" placeholder="€/mois" class="form-control" formControlName="priceControl">
+              <input pInputText type="number" placeholder="€/mois" class="form-control" formControlName="price">
 
           </label><br><br>
           <label style="color: #005739; font-weight: bold">
             Durée Max<span style="color:red">*</span><br>
-              <input pInputText type="number" placeholder="mois" class="form-control" formControlName="durationMaxControl">
+              <input pInputText type="number" placeholder="mois" class="form-control" formControlName="durationMax">
           </label>
         </div>
         </div>
         <div class="optionals">
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-3">
               <label style="color: #005739; font-weight: bold">
-                <p-checkbox label="Accès à l'eau" formControlName="accessWaterControl"></p-checkbox>
+                <p-checkbox label="Accès à l'eau" formControlName="accessWater"></p-checkbox>
               </label>
             </div>
-            <div class="col-sm-6" >
+            <div class="col-sm-3" >
               <label style="color: #005739; font-weight: bold">
-                <p-checkbox label="Accès aux outils" formControlName="accessToolsControl"></p-checkbox>
-              </label><br>
+                <p-checkbox label="Accès aux outils" formControlName="accessTools"></p-checkbox>
+              </label>
             </div>
-          </div>
+            <div class="col-sm-3" >
+              <label style="color: #005739; font-weight: bold">
+                <p-checkbox label="Accès direct" formControlName="directAccess"></p-checkbox>
+              </label>
+            </div>
+          </div><br><br>
           <div class="row">
             <div class="col-sm-6">
               <label style="color: #005739; font-weight: bold">
                 Type de sol:
-                <p-dropdown [options]="soils" placeholder="Choisissez un type de sol" optionLabel="type" [showClear]="true" formControlName="soilTypeControl"></p-dropdown>
+                <p-dropdown [options]="soils" placeholder="Choisissez un type de sol" optionLabel="type" [showClear]="true" formControlName="soilType"></p-dropdown>
               </label>
             </div>
             <div class="col-sm-6">
               <label style="color: #005739; font-weight: bold">
                 Orientation:
-                <p-dropdown [options]="directions" placeholder="Choisissez une orientation" optionLabel="direction" [showClear]="true" formControlName="orientationControl"></p-dropdown>
+                <p-dropdown [options]="directions" placeholder="Choisissez une orientation" optionLabel="direction" [showClear]="true" formControlName="orientation"></p-dropdown>
               </label>
               <br>
             </div>
@@ -75,7 +80,7 @@
           <div class="row">
             <div class="col-sm-8" id="description">
               <label style="color: #005739; font-weight: bold">
-                Description:<br> <input pInputText id="descriptionInput" type="text" size="70" formControlName="descriptionControl">
+                Description:<br> <input pInputText id="descriptionInput" type="text" size="70" formControlName="description">
               </label>
               <br>
             </div>
