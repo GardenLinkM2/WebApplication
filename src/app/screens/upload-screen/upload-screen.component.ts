@@ -16,6 +16,7 @@ interface Orientation {
 })
 export class UploadScreenComponent {
   private soils: Soil[];
+  private uploadedFiles: any[] = [];
   private directions: Orientation[];
   constructor() {
     this.soils = [
@@ -64,5 +65,11 @@ export class UploadScreenComponent {
   onSubmit() {
     // TODO: Replace the following line with an effective one.
     console.warn(this.uploadForm.value);
+  }
+
+  onUpload(event) {
+    for (const file of event.files) {
+      this.uploadedFiles.push(file);
+    }
   }
 }

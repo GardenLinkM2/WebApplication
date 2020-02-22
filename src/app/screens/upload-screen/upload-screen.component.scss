@@ -1,4 +1,60 @@
-.btn {
+h2{
+  position: relative;
+  top:20px;
+  size: auto;
+}
+
+button {
   background: #448233;
   border: none;
+}
+
+button:hover {
+  background: #005739 !important;
+}
+
+button:focus{
+  background: #448233 !important;
+}
+.row{
+  text-align: left;
+}
+.optionals{
+  position: relative;
+  text-align: left;
+}
+
+.col-sm-3{
+  height: 1%;
+  width: auto;
+  top: 20px;
+  margin: auto;
+}
+
+.title{
+  text-align: left;
+}
+
+#description{
+  text-align: left;
+}
+
+#descriptionInput{
+  height: 200px;
+  width: 100%;
+}
+
+#formdiv{
+  width: 80%;
+}
+
+#title{
+  text-align: center;
+}
+
+#overall{
+  border-style: solid;
+  border-color: gray;
+  position: relative;
+  top: 2cm;
 }
