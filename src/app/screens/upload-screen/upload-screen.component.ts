@@ -1,14 +1,39 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+interface Soil {
+  type: string;
+}
+
+interface Orientation {
+  direction: string;
+}
+
 @Component({
   selector: 'app-upload-screen',
   templateUrl: './upload-screen.component.html',
   styleUrls: ['./upload-screen.component.scss']
 })
 export class UploadScreenComponent {
+  private soils: Soil[];
+  private directions: Orientation[];
+  constructor() {
+    this.soils = [
+      {type: 'Argileuse'},
+      {type: 'Sableuse'},
+      {type: 'Tourbeuse'},
+      {type: 'Humifère'},
+      {type: 'Siliceuse'},
+      {type: 'Calcaire'}
+    ];
 
-  constructor() { }
+    this.directions = [
+      {direction: 'Nord'},
+      {direction: 'Sud'},
+      {direction: 'Est'},
+      {direction: 'Ouest'}
+    ];
+  }
   cityPattern = /^[A-Za-z0-9 -]+$/; // Gestion rule 6
   streetNamePattern = /^[A-Za-z0-9 ]+$/; // Gestion rule 5
   onlyNumbers = /^[0-9]+$/;

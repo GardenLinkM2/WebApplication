@@ -5,8 +5,11 @@ import {FeaturesModule} from '../features/features.module';
 import {ComponentsModule} from '../components/components.module';
 import { UploadScreenComponent } from './upload-screen/upload-screen.component';
 import {ReactiveFormsModule} from '@angular/forms';
-
-
+import {ButtonModule} from 'primeng/button';
+import {InputTextModule} from 'primeng/inputtext';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DropdownModule} from 'primeng/dropdown';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,12 @@ import {ReactiveFormsModule} from '@angular/forms';
     CommonModule,
     FeaturesModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ButtonModule,
+    InputTextModule,
+    CheckboxModule,
+    DropdownModule,
+    BrowserAnimationsModule
   ],
   exports: [
     HomeScreenComponent
