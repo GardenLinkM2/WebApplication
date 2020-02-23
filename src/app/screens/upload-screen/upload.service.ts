@@ -41,7 +41,7 @@ export class UploadService {
     this.getBearerToken();
     this.req = new HttpRequest('GET', 'https://devbackendm2.artheriom.fr/api/me');
     this.tokeninterceptor.intercept(this.req, this.next).subscribe(
-      me => this.owner,
+      me => this.owner = me,
       fail => console.log('error ', fail)
     );
     this.body = {
