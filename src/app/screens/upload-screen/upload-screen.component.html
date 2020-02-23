@@ -86,6 +86,7 @@
             </div>
           </div>
           <label style="color: #005739; font-weight: bold">Ajouter des photos</label><br>
+          <!--TODO: adding upload url-->
           <p-fileUpload url="./upload.php" (onUpload)="onUpload($event)"
                         multiple="multiple" accept="image/*" maxFileSize="50000000" fileLimit="5"
                         [showCancelButton]="false" chooseLabel="Parcourir" uploadLabel="Ajouter">

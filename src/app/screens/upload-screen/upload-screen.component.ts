@@ -40,7 +40,7 @@ export class UploadScreenComponent {
   streetNamePattern = /^[A-Za-z0-9 ]+$/; // Gestion rule 5
   onlyNumbers = /^[0-9]+$/;
   zipCodePattern = /^[0-9][0-9][0-9][0-9][0-9]$/;
-  uploadForm = new FormGroup(
+  uploadForm = new FormGroup( // Garden upload form
     {
       title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
       surface: new FormControl('', [Validators.required, Validators.max(10 ** 4), Validators.pattern(this.onlyNumbers)]),
@@ -54,30 +54,26 @@ export class UploadScreenComponent {
         city: new FormControl('', [Validators.required, Validators.minLength(1),
           Validators.maxLength(255), Validators.pattern(this.cityPattern)])
       }),
-      accessWater: new FormControl(''),
       soilType: new FormControl(''),
       orientation: new FormControl(''),
-      accessTools: new FormControl(''),
-      directAccess: new FormControl(''),
+      accessWater: new FormControl(false),
+      accessTools: new FormControl(false),
+      directAccess: new FormControl(false),
       description: new FormControl('', Validators.maxLength(25 * (10 ** 3))),
-      // TODO: limit number of uploaded images to 5
       pictures: new FormControl('')
     }
   );
   onSubmit() {
     // TODO: Replace the following line with an effective one.
     if (this.uploadForm.valid) {
-      /*this.upload.postGarden(this.uploadForm).subscribe(
-        data => console.log('success', data),
-        fail => console.log('error', fail)
+      this.upload.postGarden(this.uploadForm).subscribe(
+        response => console.log('Response', response),
+        error => console.log('Failure', error)
       );
-       */
-      this.upload.getBearerToken();
     }
-    // console.warn(this.uploadForm.value);
   }
 
-  onUpload(event) {
+  onUpload(event) { // Uploading image files
     for (const file of event.files) {
       this.uploadedFiles.push(file);
     }
