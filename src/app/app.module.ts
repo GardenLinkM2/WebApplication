@@ -8,7 +8,7 @@ import {ComponentsModule} from './components/components.module';
 import {FeaturesModule} from './features/features.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {TokenInterceptor} from './screens/upload-screen/upload-interceptor';
+import {TokenInterceptor} from './req-interceptor';
 
 
 @NgModule({

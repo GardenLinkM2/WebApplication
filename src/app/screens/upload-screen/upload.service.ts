@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHandler, HttpHeaders, HttpRequest} from '@angular/common/http';
+import { HttpHandler, HttpRequest} from '@angular/common/http';
 import {FormGroup} from '@angular/forms';
-import {TokenInterceptor} from './upload-interceptor';
+import {TokenInterceptor} from '../../req-interceptor';
 
 interface Token {
   token: string;
