@@ -18,7 +18,7 @@ export class MdpOublieComponent {
     // TODO: Replace the following line with an effective one.
     if (this.fgtPassForm.valid) {
       this.recover.recover(this.fgtPassForm).subscribe(
-        data => console.log('success ', data),
+        response => console.log('success ', response),
         fail => console.log('error', fail)
       );
       this.submitted = true;
