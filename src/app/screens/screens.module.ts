@@ -8,12 +8,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
+import { RecoverPwdScreenComponent } from './recover-pwd-screen/recover-pwd-screen.component';
 
 
 @NgModule({
   declarations: [
     HomeScreenComponent,
-    MdpOublieComponent
+    MdpOublieComponent,
+    RecoverPwdScreenComponent
   ],
     imports: [
         CommonModule,
@@ -22,11 +24,12 @@ import { HttpClientModule } from '@angular/common/http';
         ReactiveFormsModule,
         InputTextModule,
         ButtonModule,
-        HttpClientModule
+        HttpClientModule,
     ],
   exports: [
     HomeScreenComponent,
-    MdpOublieComponent
+    MdpOublieComponent,
+    RecoverPwdScreenComponent
   ]
 })
 export class ScreensModule { }
