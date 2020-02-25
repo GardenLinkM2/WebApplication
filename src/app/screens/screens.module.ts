@@ -32,7 +32,8 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule
   ],
   exports: [
-    HomeScreenComponent
+    HomeScreenComponent,
+    UploadScreenComponent,
   ]
 })
 export class ScreensModule { }
