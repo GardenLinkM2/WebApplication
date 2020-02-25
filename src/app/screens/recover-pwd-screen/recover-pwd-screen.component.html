@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
+    <div class="col-sm"><h2 class="text-center" style="color:#005739; font-size: 100%">REINITIALISATION DU MOT DE PASSE</h2></div>
+    <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
+  </div>
+  <div class="shown" *ngIf="!submitted">
+    <form [formGroup]="rcvPassForm" (ngSubmit)="onSubmit()">
+
+      <div class="labelfield">
+
+        <label>
+          <div class="textprint">Saisissez un nouveau mot de passe</div>
+          <div class="passwordInput">
+            <input pInputText type="password" size="70" formControlName="emailControl">
+          </div>
+
+        </label>
+        <br><br>
+        <!--TODO: replace with input field color change-->
+        <button pButton type="submit" label="Envoyer" class="ui-button-rounded" style="font-size: 100%"></button>
+      </div>
+    </form>
+  </div>
+  <div class="shown" *ngIf="submitted">
+    <div class="textprint"><b>Mot de pass changé</b><br>
+      Vous pouvez vous connecter avec votre nouveau mot de passe.
+    </div>
+  </div>
+</div>
+
