@@ -6,7 +6,7 @@ import {FormGroup} from '@angular/forms';
   providedIn: 'root'
 })
 export class MdpService {
-  url = 'https://devbackendm2.artheriom.fr/api/lostpassword/';
+  url = 'https://devauthm2.artheriom.fr/lostpassword/';
   constructor(private client: HttpClient) { }
   recover(userForm: FormGroup) {
     return this.client.get<any>(this.url + userForm.get('emailControl').value);

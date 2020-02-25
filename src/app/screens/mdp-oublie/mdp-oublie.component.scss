@@ -36,11 +36,12 @@ button:hover {
   background: #005739 !important;
 }
 
-button:focus{
+button:active:focus{
   background: #448233 !important;
+  outline: none !important;
 }
 
-form{
+.shown{
   position: relative;
   top:30%;
 }
@@ -55,10 +56,12 @@ input{
   margin: auto;
 }
 
-.labeltext{
+.textprint{
   position: relative;
   margin: auto;
   width: 100%;
+  color: #005739;
+  font-size: 150%;
 }
 
 .labelfield{

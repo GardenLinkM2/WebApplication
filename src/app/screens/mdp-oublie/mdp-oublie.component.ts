@@ -9,7 +9,8 @@ import {MdpService} from './mdp.service';
 })
 export class MdpOublieComponent {
 
-  constructor(private recover: MdpService) { }
+  submitted: boolean;
+  constructor(private recover: MdpService) { this.submitted = false; }
   fgtPassForm = new FormGroup(
     {emailControl: new FormControl('', [Validators.email, Validators.required])}
   );
@@ -20,6 +21,7 @@ export class MdpOublieComponent {
         data => console.log('success ', data),
         fail => console.log('error', fail)
       );
+      this.submitted = true;
     }
   }
 
