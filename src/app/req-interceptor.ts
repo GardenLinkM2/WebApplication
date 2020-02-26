@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class TokenInterceptor implements HttpInterceptor {
     // NOTE: Replace the previous constant with your bearer for now.
     // TODO: get session token from api/syn
     const modifiedReq = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${userToken}`),
+      headers: new HttpHeaders({Authorization: `Bearer ${userToken}`, 'Access-Control-Allow-Origin': '*'}),
     });
     return next.handle(modifiedReq);
   }
