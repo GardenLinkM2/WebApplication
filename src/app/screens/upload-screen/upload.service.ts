@@ -7,12 +7,46 @@ interface Token {
   token: string;
 }
 
+interface Body {
+  id: string;
+  name: string;
+  size: number;
+  reserve: boolean;
+  type: string;
+  minUse: number;
+  owner: string;
+  validation: {
+    id: string
+    state: number
+  };
+  criteria: {
+    id: string
+    locationTime: {}
+    area: number
+    price: number
+    location: {
+      id: string
+    },
+    orientation: string
+    typeOfClay: string
+    equipments: boolean
+    waterAccess: boolean
+    directAccess: boolean
+  };
+  photos: [
+    {
+      id: string
+      fileName: string
+    }
+  ];
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
   private url = 'https://devbackendm2.artheriom.fr/api/Gardens'; // TODO: backend url should be set in environment confing
-  private body: {};
+  private body: Body;
   private req: HttpRequest<any>;
   private tokeninterceptor = new TokenInterceptor();
   constructor(private next: HttpHandler) { }
@@ -59,6 +93,13 @@ export class UploadService {
         }
       ]
     };
+    let filename;
+    for (filename of userForm.get('pictures').value) {
+      this.body.photos.push({
+        id: '90a5fccc-5de9-4d2e-b260-3cb90cb83a9a',
+        fileName: filename
+      });
+    }
     this.req = new HttpRequest('POST', this.url, this.body); // Garden upload request
     return this.tokeninterceptor.intercept(this.req, this.next);
   }

@@ -60,16 +60,17 @@ export class UploadScreenComponent {
       accessTools: new FormControl(false),
       directAccess: new FormControl(false),
       description: new FormControl('', Validators.maxLength(25 * (10 ** 3))),
-      pictures: new FormControl('')
+      pictures: new FormControl(this.uploadedFiles)
     }
   );
   onSubmit() {
     // TODO: Replace the following line with an effective one.
     if (this.uploadForm.valid) {
-      this.upload.postGarden(this.uploadForm).subscribe(
+      /*this.upload.postGarden(this.uploadForm).subscribe(
         response => console.log('Response', response),
         error => console.log('Failure', error)
-      );
+      );*/
+      console.log(this.uploadForm.get('pictures').value);
     }
   }
 
