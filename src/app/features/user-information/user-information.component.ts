@@ -8,8 +8,18 @@ import { Component, OnInit } from '@angular/core';
 export class UserInformationComponent implements OnInit {
 
   constructor() { }
-
+  activateFields = false;
   ngOnInit() {
   }
+  switchFieldState() {
+    this.activateFields = true;
+  }
 
+  saveChanges() {
+    this.activateFields = false;
+  }
+
+  cancelAction() {
+    this.activateFields = false;
+  }
 }

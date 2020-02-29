@@ -1,39 +1,46 @@
-<div class="container">
-  <div class=" container text-center">
-    <img src="assets/img/logo.ico" alt="Garden Logo" class="avatar">
-    <div class="row bg-white" style="text-align: left">
-      <div class="col-sm">
+<div class="container text-center withlogo" style="width: 50%; background-color: #f7f7f7">
+   <img src="assets/img/test.jpg" alt="Garden Logo" class="avatar">
+</div>
+<div class=" container text-center withinfo" style="width: 50%; background-color: #f7f7f7">
+    <div class="row">
+      <div class="col-md text-center">
         <p>
           <label for="firstname">Nom</label><br>
-          <input pInputText id="firstname" type="text" value="user_firstname" [disabled]="true">
+          <input pInputText id="firstname" type="text" value="user_firstname" [disabled]="!activateFields">
         </p>
         <p>
           <label for="lastname">Prénoms</label><br>
-          <input pInputText id="lastname" type="text" value="user_lastname" [disabled]="true">
+          <input pInputText id="lastname" type="text" value="user_lastname" [disabled]="!activateFields">
         </p>
         <p>
           <label for="password">Mot de passe</label><br>
-          <input pInputText id="password" type="password" value="ahiddenpassword" [disabled]="true">
+          <input pInputText id="password" type="password" value="ahiddenpassword" [disabled]="!activateFields">
         </p>
       </div>
-      <div class="col-sm">
+      <div class="col-md text-center">
         <p>
           <label for="email">Adresse mail</label><br>
-          <input pInputText id="email"  type="email" value="user@email.com" [disabled]="true">
+          <input pInputText id="email"  type="email" value="user@email.com" [disabled]="!activateFields">
         </p>
         <p>
           <label for="phonenum">Téléphone</label><br>
-          <input pInputText id="phonenum" type="text" value="user_phone" [disabled]="true">
+          <input pInputText id="phonenum" type="text" value="user_phone" [disabled]="!activateFields">
         </p>
-        <p> Mon porte monnaie<br>
-          <span>AMOUNT</span> <p-button label="+" type="button"></p-button>
+        <p *ngIf="!activateFields"> Mon porte monnaie<br>
+          <span style="font-size:25px">00.00 €<i class="pi pi-plus" style="color: #006600"></i></span>
+        </p>
+        <p *ngIf="activateFields">
+          <label for="confirmpassword">Confirmer mot de passe</label><br>
+          <input pInputText id="confirmpassword" type="password" [disabled]="!activateFields">
         </p>
       </div>
     </div>
-    <div class="row bg-white">
-      <p-button label="Modifier" class="ui-button-rounded" type="button"></p-button>
-      <p-button label="Supprimer" class="ui-button-rounded" type="button"></p-button>
-    </div>
-  </div>
+    <br>
+    <button *ngIf="!activateFields" pButton label="Modifier" class="ui-button-rounded ui-button-success editing" type="button" (click)="switchFieldState()"></button>
+    <button *ngIf="activateFields" pButton label="Enregistrer" class="ui-button-rounded ui-button-success editing" type="button" (click)="saveChanges()"></button>
+    <span>&nbsp;&nbsp;&nbsp;</span>
+    <button *ngIf="!activateFields" pButton label="Supprimer" class="ui-button-rounded ui-button-danger editing" type="button"></button>
+    <button *ngIf="activateFields" pButton label="Annuler" class="ui-button-rounded ui-button-danger editing" type="button" (click)="cancelAction()"></button>
+    <br><br>
 </div>
 
