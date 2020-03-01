@@ -66,10 +66,10 @@ export class UploadScreenComponent {
   onSubmit() {
     // TODO: Replace the following line with an effective one.
     if (this.uploadForm.valid) {
-      /*this.upload.postGarden(this.uploadForm).subscribe(
+      this.upload.postGarden(this.uploadForm).subscribe(
         response => console.log('Response', response),
         error => console.log('Failure', error)
-      );*/
+      );
       console.log(this.uploadForm.get('pictures').value);
     }
   }
