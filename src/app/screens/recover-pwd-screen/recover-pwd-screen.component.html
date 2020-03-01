@@ -22,9 +22,14 @@
       </div>
     </form>
   </div>
-  <div class="shown" *ngIf="submitted">
+  <div class="shown" *ngIf="responseStatus === 'success'">
     <div class="textprint"><b>Mot de pass changé</b><br>
       Vous pouvez vous connecter avec votre nouveau mot de passe.
+    </div>
+  </div>
+  <div class="shown" *ngIf="responseStatus === 'failure'">
+    <div class="textprint"><b>Echec</b><br>
+      La réinitialisation du mot de passe a échouée.
     </div>
   </div>
 </div>

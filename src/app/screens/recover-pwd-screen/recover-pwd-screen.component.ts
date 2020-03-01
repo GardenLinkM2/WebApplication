@@ -10,8 +10,8 @@ import {RecoverPwdService} from './recover-pwd.service';
 export class RecoverPwdScreenComponent {
 
   submitted: boolean;
-  responseStatus: number;
-  constructor(private reinitpass: RecoverPwdService) { this.submitted = false; }
+  responseStatus: string;
+    constructor(private reinitpass: RecoverPwdService) { this.submitted = false; }
   rcvPassForm = new FormGroup(
     {password: new FormControl('', [Validators.required])}
   );
@@ -19,9 +19,8 @@ export class RecoverPwdScreenComponent {
     // TODO: Replace the following line with an effective one.
     if (this.rcvPassForm.valid) {
       this.reinitpass.reinitpass(this.rcvPassForm).subscribe(
-        response => {console.log('Response code', response.status); },
-        error => {console.log('Error code', error.status);
-                  this.responseStatus = error.status; }
+        response => {console.log('Success 200 ok'); this.responseStatus = 'success'; },
+        error => {console.log('Error code', error.code); this.responseStatus = 'failure'; }
       );
       this.submitted = true;
     }
