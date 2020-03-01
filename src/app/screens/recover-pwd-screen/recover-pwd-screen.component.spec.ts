@@ -27,4 +27,13 @@ describe('RecoverPwdScreenComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should change submit value', () => {
+    component.rcvPassForm.get('password').setValue('someValue');
+    component.onSubmit();
+    expect(component.submitted).toEqual(true);
+  });
+  it('should not change submit value', () => {
+    component.onSubmit();
+    expect(component.submitted).toEqual(false);
+  });
 });
