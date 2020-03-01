@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { UploadScreenComponent } from './upload-screen.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('UploadScreenComponent', () => {
   let component: UploadScreenComponent;
@@ -8,7 +9,9 @@ describe('UploadScreenComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UploadScreenComponent ]
+      declarations: [ UploadScreenComponent],
+      imports: [HttpClientTestingModule],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
