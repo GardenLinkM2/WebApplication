@@ -3,10 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import {HomeScreenComponent} from './screens/home-screen/home-screen.component';
 import {UploadScreenComponent} from './screens/upload-screen/upload-screen.component';
 
+import {MdpOublieComponent} from './screens/mdp-oublie/mdp-oublie.component';
+import {RecoverPwdScreenComponent} from './screens/recover-pwd-screen/recover-pwd-screen.component';
 
 const routes: Routes = [
   { path: 'accueil', component: HomeScreenComponent },
   { path: 'upload', component: UploadScreenComponent},
+  { path: 'mdp-oublie', component: MdpOublieComponent},
+  { path: 'recover', component: RecoverPwdScreenComponent},
   { path: '**',   redirectTo: '/accueil', pathMatch: 'full'}
 ];
 

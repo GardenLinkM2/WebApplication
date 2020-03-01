@@ -4,6 +4,8 @@ import { HomeScreenComponent } from './home-screen/home-screen.component';
 import {FeaturesModule} from '../features/features.module';
 import {ComponentsModule} from '../components/components.module';
 import { UploadScreenComponent } from './upload-screen/upload-screen.component';
+import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
+import { RecoverPwdScreenComponent } from './recover-pwd-screen/recover-pwd-screen.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
@@ -16,7 +18,9 @@ import {HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     HomeScreenComponent,
-    UploadScreenComponent
+    UploadScreenComponent,
+    MdpOublieComponent,
+    RecoverPwdScreenComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +38,8 @@ import {HttpClientModule} from '@angular/common/http';
   exports: [
     HomeScreenComponent,
     UploadScreenComponent,
+    MdpOublieComponent,
+    RecoverPwdScreenComponent
   ]
 })
 export class ScreensModule { }
