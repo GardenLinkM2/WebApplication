@@ -1,0 +1,106 @@
+<div class="container bg-white" id="overall">
+  <div class="row" id="title">
+    <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
+    <div class="col-sm"><h2 class="text-center" style="color:#005739; font-size: 150%">PUBLIER UNE ANNONCE</h2></div>
+    <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
+  </div><br><br>
+  <div class="container text-center" id="formdiv">
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+        <div class="title" >
+          <label style="color: #005739; font-weight: bold">
+            Titre<span style="color:red">*</span><br>
+              <input pInputText type="text" class="form-control" formControlName="title" size="76">
+          </label>
+        </div>
+        <div class="row">
+          <div class="col-sm-6" formGroupName="address">
+            <h5 style="color: #005739; font-weight: bold">Adresse</h5>
+            <label style="color: #005739">
+              N* Rue<input pInputText type="text" class="form-control rounded" formControlName="streetNum">
+            </label><br>
+            <label style="color: #005739">
+              Rue<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="streetName">
+            </label><br>
+            <label style="color: #005739">
+              Code postal<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="zipCode">
+            </label><br>
+            <label style="color: #005739">
+              Ville<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="city">
+            </label>
+          </div>
+          <div class="col-sm-6" style="text-align: right"><br><br>
+          <label style="color: #005739; font-weight: bold">
+            Surface<span style="color:red">*</span><br>
+              <input pInputText type="number" placeholder="m²" class="form-control" formControlName="surface">
+          </label><br><br>
+          <label style="color: #005739; font-weight: bold">
+            Prix<span style="color:red">*</span><br>
+              <input pInputText type="number" placeholder="€/mois" class="form-control" formControlName="price">
+
+          </label><br><br>
+          <label style="color: #005739; font-weight: bold">
+            Durée Max<span style="color:red">*</span><br>
+              <input pInputText type="number" placeholder="mois" class="form-control" formControlName="durationMax">
+          </label>
+        </div>
+        </div>
+        <div class="optionals">
+          <div class="row">
+            <div class="col-sm-3">
+              <label style="color: #005739; font-weight: bold">
+                <p-checkbox label="Accès à l'eau" formControlName="accessWater" binary="true"></p-checkbox>
+              </label>
+            </div>
+            <div class="col-sm-3" >
+              <label style="color: #005739; font-weight: bold">
+                <p-checkbox label="Accès aux outils" formControlName="accessTools" binary="true"></p-checkbox>
+              </label>
+            </div>
+            <div class="col-sm-3" >
+              <label style="color: #005739; font-weight: bold">
+                <p-checkbox label="Accès direct" formControlName="directAccess" binary="true"></p-checkbox>
+              </label>
+            </div>
+          </div><br><br>
+          <div class="row">
+            <div class="col-sm-6">
+              <label style="color: #005739; font-weight: bold">
+                Type de sol:
+                <p-dropdown [options]="soils" placeholder="Choisissez un type de sol" optionLabel="type" [showClear]="true" formControlName="soilType"></p-dropdown>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label style="color: #005739; font-weight: bold">
+                Orientation:
+                <p-dropdown [options]="directions" placeholder="Choisissez une orientation" optionLabel="direction" [showClear]="true" formControlName="orientation"></p-dropdown>
+              </label>
+              <br>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-8" id="description">
+              <label style="color: #005739; font-weight: bold">
+                Description:<br> <input pInputText id="descriptionInput" type="text" size="70" formControlName="description">
+              </label>
+              <br>
+            </div>
+          </div>
+          <label style="color: #005739; font-weight: bold">Ajouter des photos</label><br>
+          <!--TODO: adding upload url-->
+          <p-fileUpload url="https://uploadm2.artheriom.fr/upload.php" (onUpload)="onUpload($event)"
+                        multiple="multiple" accept="image/*" maxFileSize="50000000" fileLimit="5"
+                        [showCancelButton]="false" chooseLabel="Parcourir" uploadLabel="Ajouter">
+            <ng-template pTemplate="content">
+              <ul *ngIf="uploadedFiles.length">
+                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+              </ul>
+            </ng-template>
+          </p-fileUpload>
+          <br>
+        </div>
+        <div class="text-center">
+          <button pButton type="submit" label="Publier" class="ui-button-rounded" [disabled]="!uploadForm.valid"></button>
+        </div>
+    </form>
+  </div>
+</div>
