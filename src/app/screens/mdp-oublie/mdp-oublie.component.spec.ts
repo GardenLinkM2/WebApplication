@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MdpOublieComponent } from './mdp-oublie.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('MpdOublieComponent', () => {
   let component: MdpOublieComponent;
@@ -8,7 +10,9 @@ describe('MpdOublieComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MdpOublieComponent ]
+      declarations: [ MdpOublieComponent ],
+      imports: [HttpClientTestingModule],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
