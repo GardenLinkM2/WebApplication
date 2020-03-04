@@ -15,10 +15,12 @@ export class UserInformationComponent implements OnInit {
   private lastname: string;
   private email: string;
   private balance: number;
-  private password: string;
+  private password = '****************';
+  private passwordLabel: string;
   private phoneNumber: string;
   private msgs: Message[] = [];
   private  activateFields: boolean;
+  private editingPassword: boolean;
   infoForm = new FormGroup({
     firstname: new FormControl({value: this.firstname}, Validators.required),
     lastname: new FormControl({value: this.lastname}, Validators.required),
@@ -28,6 +30,8 @@ export class UserInformationComponent implements OnInit {
   });
   ngOnInit() {
     this.activateFields = false;
+    this.editingPassword = false;
+    this.passwordLabel = 'Mot de passe';
     this.infoForm.disable();
     this.userService.getUserInfo().toPromise().then(
       response => {
@@ -65,7 +69,10 @@ export class UserInformationComponent implements OnInit {
 
   switchFieldState() {
     this.activateFields = true;
-    this.infoForm.enable();
+    this.infoForm.get('firstname').enable();
+    this.infoForm.get('lastname').enable();
+    this.infoForm.get('email').enable();
+    this.infoForm.get('phoneNumber').enable();
   }
 
   saveChanges() {
@@ -87,5 +94,21 @@ export class UserInformationComponent implements OnInit {
   cancelAction() {
     this.activateFields = false;
     this.infoForm.disable();
+    this.editingPassword = false;
+    this.passwordLabel = 'Mot de passe';
+  }
+
+  editPassword() {
+    if  (this.infoForm.get('password').enabled) {
+      this.infoForm.get('password').disable();
+      this.editingPassword = false;
+      this.passwordLabel = 'Mot de passe';
+      this.infoForm.get('password').setValue('****************');
+    } else {
+      this.infoForm.get('password').enable();
+      this.infoForm.get('password').setValue('');
+      this.editingPassword = true;
+      this.passwordLabel = 'Saisir le nouveau mot de passe';
+    }
   }
 }
