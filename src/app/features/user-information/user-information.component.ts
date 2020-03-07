@@ -37,16 +37,20 @@ export class UserInformationComponent implements OnInit {
       response => {
         // @ts-ignore
         this.firstname = response.body.data.firstName;
+        this.infoForm.get('firstname').setValue(this.firstname);
         // @ts-ignore
         this.lastname = response.body.data.lastName;
+        this.infoForm.get('lastname').setValue(this.lastname);
         // @ts-ignore
         this.email = response.body.data.email;
+        this.infoForm.get('email').setValue(this.email);
         // @ts-ignore
         this.balance = response.body.data.wallet.balance;
         // @ts-ignore
         this.userService.getUserInfoAuth(response.body.data.id).toPromise().then(
           // @ts-ignore
-          responseAuth => {this.phoneNumber = responseAuth.body.phone; },
+          responseAuth => {this.phoneNumber = responseAuth.body.phone;
+                           this.infoForm.get('phoneNumber').setValue(this.phoneNumber); },
           error => {console.log('ERROR', error); }
         );
       }
