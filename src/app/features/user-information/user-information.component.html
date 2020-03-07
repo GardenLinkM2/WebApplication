@@ -32,13 +32,14 @@
         </p>
         <p *ngIf="editingPassword">
           <label for="confirmpassword">Confirmer mot de passe</label><br>
-          <input pInputText id="confirmpassword" type="password" >
+          <input pInputText id="confirmpassword" type="password" formControlName="confirmPassword">
         </p>
       </div>
     </div>
     <br>
     <button *ngIf="!activateFields" pButton label="Modifier" class="ui-button-rounded ui-button-success editing" type="button" (click)="switchFieldState()"></button>
-    <button *ngIf="activateFields" pButton label="Enregistrer" class="ui-button-rounded ui-button-success editing" type="button" (click)="saveChanges()"></button>
+    <button *ngIf="activateFields" pButton label="Enregistrer" class="ui-button-rounded ui-button-success editing" type="button" (click)="saveChanges()"
+    [disabled]="!infoForm.valid || infoForm.untouched"></button>
     <span>&nbsp;&nbsp;&nbsp;</span>
     <p-confirmDialog [style]="{width: '25vw'}" [baseZIndex]="10000" acceptLabel="Oui" rejectLabel="Non"
                      acceptButtonStyleClass="ui-button-rounded ui-button-success"
