@@ -21,7 +21,7 @@ export class TokenInterceptor implements HttpInterceptor {
       });
     } else {
       this.modifiedReq = req.clone({
-        headers: new HttpHeaders({Authorization: `${this.accessToken}`, 'Access-Control-Allow-Origin': '*'}),
+        headers: new HttpHeaders({Authorization: `${this.userToken}`, 'Access-Control-Allow-Origin': '*'}),
       });
     }
     return next.handle(this.modifiedReq);
