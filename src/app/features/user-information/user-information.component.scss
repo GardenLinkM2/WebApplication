@@ -4,7 +4,7 @@
 
 .avatar {
   vertical-align: middle;
-  width: 150px;
+  width: 25%;
   height: 150px;
   border-radius: 50%;
   border: 1px solid #515151;
@@ -19,7 +19,9 @@ img{
   position: relative;
   bottom: 2cm;
 }
-
+input {
+  width: 60%;
+}
 .withlogo{
   height: 2cm;
   margin-top: 2cm;
