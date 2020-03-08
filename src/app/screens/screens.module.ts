@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
 import {FeaturesModule} from '../features/features.module';
 import {ComponentsModule} from '../components/components.module';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
+import {AppRoutingModule} from '../app-routing.module';
+
+
 import { UploadScreenComponent } from './upload-screen/upload-screen.component';
 import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
 import { RecoverPwdScreenComponent } from './recover-pwd-screen/recover-pwd-screen.component';
@@ -18,6 +22,8 @@ import {HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     HomeScreenComponent,
+    MainLayoutComponent,
+    HomeScreenComponent,
     UploadScreenComponent,
     MdpOublieComponent,
     RecoverPwdScreenComponent
@@ -25,6 +31,8 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     CommonModule,
     FeaturesModule,
+    ComponentsModule,
+    AppRoutingModule,
     ComponentsModule,
     ReactiveFormsModule,
     ButtonModule,
@@ -36,6 +44,8 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule
   ],
   exports: [
+    HomeScreenComponent,
+    MainLayoutComponent,
     HomeScreenComponent,
     UploadScreenComponent,
     MdpOublieComponent,

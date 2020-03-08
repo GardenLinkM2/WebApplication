@@ -1,0 +1,28 @@
+<p-card [subheader]="garden.name" styleClass="ui-card-shadow">
+  <div class="row">
+    <div class="col">
+      {{garden.criteria.price}} € / Semaine
+    </div>
+  </div>
+  <p-header>
+    <img src="../../../assets/img/background.jpg">
+  </p-header>
+  <div class="row">
+    <div class="col">
+      {{garden.criteria.area}} m <sup>2</sup>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+    {{garden.criteria.location.id}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      {{garden.minUse}} semaine <span *ngIf="false">s</span>
+    </div>
+  </div>
+  <p-footer>
+    <a routerLink="" class="btn btn-sm ml-0 pl-0">Détails</a>
+  </p-footer>
+</p-card>

@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  url: 'https://devbackendm2.artheriom.fr/',
+  urlAuth: 'https://devauthm2.artheriom.fr/ '
 };
 
 /*

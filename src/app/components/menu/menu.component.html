@@ -1,0 +1,11 @@
+<nav class="navbar navbar-expand-sm"
+     [class.menu-transparent]="isBackgroundEnabled"
+     [class.shadow]="!isBackgroundEnabled" [class.menu]="!isBackgroundEnabled">
+  <a class="navbar-brand" routerLink="/accueil">
+    <img src="../../../assets/img/logo.png" alt="Logo" class="logo">
+  </a>
+  <div class="ml-auto mr-1" *ngIf="isUserNotConnected">
+    <button routerLink="inscription" pButton type="button" label="Inscription" class="ui-button-rounded ui-button-secondary"></button>
+    <button routerLink="connexion" pButton type="button" label="Connexion" class="ui-button-rounded ui-button-secondary ml-1"></button>
+  </div>
+</nav>
