@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ResearchComponent } from './research/research.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [ResearchComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
+  ],
+  exports: [
+    ResearchComponent
   ]
 })
 export class FeaturesModule { }
