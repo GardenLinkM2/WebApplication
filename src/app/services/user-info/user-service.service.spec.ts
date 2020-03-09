@@ -29,6 +29,11 @@ describe('UserServiceService', () => {
     expect(service.deleteAccount('anyid')).toEqual(jasmine.any(Observable));
   });
 
+  it('deleteAccountBack should return observable', () => {
+    const service: UserService = TestBed.get(UserService);
+    expect(service.deleteAccountBack()).toEqual(jasmine.any(Observable));
+  });
+
   it('updateInformation should return observable', () => {
     const service: UserService = TestBed.get(UserService);
     let updatedInfo: UpdatedInfo;
