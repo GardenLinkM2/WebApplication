@@ -16,17 +16,17 @@ describe('UserServiceService', () => {
 
   it('getUserWallet should return observable', () => {
     const service: UserService = TestBed.get(UserService);
-    expect(service.getUserWallet()).toBe(Observable);
+    expect(service.getUserWallet()).toEqual(jasmine.any(Observable));
   });
 
   it('getUserInfoAuth should return observable', () => {
     const service: UserService = TestBed.get(UserService);
-    expect(service.getUserInfoAuth()).toBe(Observable);
+    expect(service.getUserInfoAuth()).toEqual(jasmine.any(Observable));
   });
 
   it('deleteAccount should return observable', () => {
     const service: UserService = TestBed.get(UserService);
-    expect(service.deleteAccount('anyid')).toBe(Observable);
+    expect(service.deleteAccount('anyid')).toEqual(jasmine.any(Observable));
   });
 
   it('updateInformation should return observable', () => {
@@ -39,6 +39,6 @@ describe('UserServiceService', () => {
       phone: '0600000000',
       newsletter: true
     };
-    expect(service.updateInformation('anyid', updatedInfo)).toBe(Observable);
+    expect(service.updateInformation('anyid', updatedInfo)).toEqual(jasmine.any(Observable));
   });
 });

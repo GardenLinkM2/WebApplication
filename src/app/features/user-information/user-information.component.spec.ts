@@ -38,4 +38,25 @@ describe('UserInformationComponent', () => {
   it('save changes should be void', () => {
     expect(component.saveChanges()).toBeUndefined();
   });
+
+  it('editPassword should switch from enabled to disabled', () => {
+    component.infoForm.controls.password.enable();
+    component.editPassword();
+    expect(component.infoForm.controls.password.enabled).toEqual(false);
+    expect(component.infoForm.controls.confirmPassword.enabled).toEqual(false);
+    expect(component.editingPassword).toEqual(false);
+    expect(component.passwordLabel).toEqual('Mot de passe');
+    expect(component.infoForm.controls.password.value).toEqual('****************');
+  });
+
+  it('editPassword should switch from disabled to enabled', () => {
+    component.infoForm.controls.password.disable();
+    component.editPassword();
+    expect(component.infoForm.controls.password.disabled).toEqual(false);
+    expect(component.infoForm.controls.confirmPassword.disabled).toEqual(false);
+    expect(component.editingPassword).toEqual(true);
+    expect(component.passwordLabel).toEqual('Saisir le nouveau mot de passe');
+    expect(component.infoForm.controls.password.value).toEqual('');
+    expect(component.infoForm.controls.confirmPassword.value).toEqual('');
+  });
 });
