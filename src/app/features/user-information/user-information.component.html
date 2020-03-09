@@ -22,11 +22,11 @@
       <div class="col-md text-center" [formGroup]="infoForm">
         <p>
           <label for="email">Adresse mail</label><br>
-          <input pInputText id="email"  type="email" value="{{email}}" formControlName="email">
+          <input pInputText id="email"  type="email" value="{{newInformation.email}}" formControlName="email">
         </p>
         <p>
           <label for="phonenum">Téléphone</label><br>
-          <input pInputText id="phonenum" type="text" value="{{phoneNumber}}" formControlName="phoneNumber">
+          <input pInputText id="phonenum" type="text" value="{{newInformation.phone}}" formControlName="phoneNumber">
         </p>
         <p *ngIf="!activateFields"> Mon porte monnaie<br>
           <span style="font-size:25px">{{balance}} €<i class="pi pi-plus" style="color: #006600" routerLink="acceuil"></i></span>
@@ -42,7 +42,7 @@
     </div>
     <p [formGroup]="infoForm">
       <label for="newsletter">Newsletter&nbsp;</label>
-      <p-checkbox id="newsletter" value="{{newsletter}}" formControlName="newsletter" binary="true">
+      <p-checkbox id="newsletter" value="{{newInformation.newsletter}}" formControlName="newsletter" binary="true">
       </p-checkbox>
     </p>
     <br>

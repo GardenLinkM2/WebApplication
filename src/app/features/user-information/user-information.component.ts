@@ -15,32 +15,22 @@ export class UserInformationComponent implements OnInit {
   constructor(private userService: UserService, private confirmationService: ConfirmationService) { }
   firstname: string;
   lastname: string;
-  email: string;
-  newsletter: boolean;
   balance: number;
   id: string;
-  password = '****************';
   passwordLabel: string;
-  phoneNumber: string;
   msgs: Message[] = [];
   activateFields: boolean;
   editingPassword: boolean;
   newInformation: UpdatedInfo;
   displaySuccessSuppression = false;
   displaySuccessModification: boolean;
-  infoForm = new FormGroup({
-    password: new FormControl({value: this.password}, Validators.required),
-    email: new FormControl({value: this.email}, [Validators.email, Validators.required]),
-    phoneNumber: new FormControl({value: this.phoneNumber}, Validators.required),
-    newsletter: new FormControl({value: this.newsletter}),
-    confirmPassword: new FormControl({value: ''}, Validators.required)
-  });
+  infoForm: FormGroup;
 
   comparisonValidator(): ValidatorFn {
     return (group: FormGroup): ValidationErrors => {
       const control1 = group.get('password');
       const control2 = group.get('confirmPassword');
-      if (control1.value !== control2.value && control1.enabled && control2.value !== '') {
+      if (control1.value !== control2.value && control1.enabled && control2.value !== null) {
         control2.setErrors({notEquivalent: 'Les deux saisies ne correspondent pas!'});
       } else {
         control2.setErrors(null);
@@ -50,6 +40,20 @@ export class UserInformationComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.newInformation = {
+      email: null,
+      password: null,
+      avatar: 'assets/img/defaultavatar.png',
+      newsletter: null,
+      phone: null
+    };
+    this.infoForm = new FormGroup({
+      password: new FormControl({value: this.newInformation.password}, Validators.required),
+      email: new FormControl({value: this.newInformation.email}, [Validators.email, Validators.required]),
+      phoneNumber: new FormControl({value: this.newInformation.phone}, Validators.required),
+      newsletter: new FormControl({value: this.newInformation.newsletter}),
+      confirmPassword: new FormControl({value: null}, Validators.required)
+    });
     this.infoForm.setValidators(this.comparisonValidator());
     this.displaySuccessModification = false;
     this.activateFields = false;
@@ -70,14 +74,19 @@ export class UserInformationComponent implements OnInit {
         // @ts-ignore
         this.lastname = responseAuth.lastName;
         // @ts-ignore
-        this.email = responseAuth.email;
-        this.infoForm.get('email').setValue(this.email);
+        this.newInformation.email = responseAuth.email;
+        this.infoForm.get('email').setValue(this.newInformation.email);
         // @ts-ignore
-        this.phoneNumber = responseAuth.phone;
-        this.infoForm.get('phoneNumber').setValue(this.phoneNumber);
+        this.newInformation.phone = responseAuth.phone;
+        this.infoForm.get('phoneNumber').setValue(this.newInformation.phone);
         // @ts-ignore
-        this.newsletter = responseAuth.newsletter;
-        this.infoForm.get('newsletter').setValue(this.newsletter);
+        this.newInformation.newsletter = responseAuth.newsletter;
+        this.infoForm.get('newsletter').setValue(this.newInformation.newsletter);
+        // @ts-ignore
+        if (responseAuth.avatar !== 'urltoavatar') {
+          // @ts-ignore
+          this.newInformation.avatar = responseAuth.avatar;
+        }
         // @ts-ignore
         this.id = responseAuth.id;
       },
@@ -93,7 +102,12 @@ export class UserInformationComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
         await this.userService.deleteAccount(this.id).subscribe(
-          () => this.displaySuccessSuppression = true,
+          () => {
+            this.userService.deleteAccountBack().subscribe(
+              () => this.displaySuccessSuppression = true,
+              error => console.log('error', error)
+            );
+            },
           error => console.log('Failure', error)
         );
         this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'Votre compte à été supprimé !!!'}];
