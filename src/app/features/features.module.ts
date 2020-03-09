@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';
 import {AppRoutingModule} from '../app-routing.module';
+import {CheckboxModule} from 'primeng/checkbox';
 
 @NgModule({
   declarations: [UserInformationComponent],
@@ -18,6 +19,7 @@ import {AppRoutingModule} from '../app-routing.module';
     ConfirmDialogModule,
     DialogModule,
     AppRoutingModule,
+    CheckboxModule,
   ]
 })
 export class FeaturesModule { }

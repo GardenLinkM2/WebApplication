@@ -15,6 +15,15 @@
   border-color: orange;
 }
 
+::ng-deep{
+  body .ui-chkbox .ui-chkbox-box.ui-state-active {
+    border-color: #006600 !important;
+    background-color: #006600 !important;
+    color:
+      #ffffff;
+  }
+}
+
 img{
   position: relative;
   bottom: 2cm;

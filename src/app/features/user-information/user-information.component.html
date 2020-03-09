@@ -40,6 +40,11 @@
         </p>
       </div>
     </div>
+    <p [formGroup]="infoForm">
+      <label for="newsletter">Newsletter&nbsp;</label>
+      <p-checkbox id="newsletter" value="{{newsletter}}" formControlName="newsletter" binary="true">
+      </p-checkbox>
+    </p>
     <br>
     <button *ngIf="!activateFields" pButton label="Modifier" class="ui-button-rounded ui-button-success editing" type="button" (click)="switchFieldState()"></button>
     <button *ngIf="activateFields" pButton label="Enregistrer" class="ui-button-rounded ui-button-success editing" type="button" (click)="saveChanges()"
