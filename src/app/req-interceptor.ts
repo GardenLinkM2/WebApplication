@@ -4,15 +4,22 @@ import {Observable} from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
+  private synToken = localStorage.getItem('synToken');
+  private userToken = localStorage.getItem('userToken');
+  private modifiedReq: HttpRequest<any>;
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const userToken = 'eyJhbGciOiJIUzUxMiIsImtpZCI6ImJhY2sifQ.eyJ1dWlkIjoiOTBhNWZjY2MtNWRlOS00ZDJlLWIyNjAtM2NiOTBjYjgzYTlhIiwic3Vi' +
-      'Ijoicmlja3libGFja3dhbGxAZ21haWwuY29tIiwiaXNBZG1pbiI6dHJ1ZSwiZXhwIjoxNTgzMzQzMjM2LjkxOTUyMzd9.RQmXucKmzCtxt8wTITSzg8K4kG_zuyi' +
-      'VOgzrcEKdJMiQ9HmqaTpD70MoyN-dZYJmunieMFNyzvRcgR-1YzT7iA';
-    // NOTE: Replace the previous constant with your bearer for now.
-    // TODO: get session token from api/syn
-    const modifiedReq = req.clone({
-      headers: new HttpHeaders({Authorization: `Bearer ${userToken}`, 'Access-Control-Allow-Origin': '*'}),
-    });
-    return next.handle(modifiedReq);
+    this.modifiedReq = req.clone();
+    if (req.url.includes('backend') && this.synToken) {
+      this.modifiedReq = req.clone({
+        headers: new HttpHeaders({Authorization: `${this.synToken}`, 'Access-Control-Allow-Origin': '*'}),
+      });
+    } else {
+      if (this.userToken) {
+        this.modifiedReq = req.clone({
+          headers: new HttpHeaders({Authorization: `${this.userToken}`, 'Access-Control-Allow-Origin': '*'}),
+        });
+      }
+    }
+    return next.handle(this.modifiedReq);
   }
 }

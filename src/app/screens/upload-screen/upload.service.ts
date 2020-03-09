@@ -6,7 +6,7 @@ import {TokenInterceptor} from '../../req-interceptor';
 interface Token {
   token: string;
 }
-
+// TODO: move interface to entities, service should only execute requests
 interface Body {
   id: string;
   name: string;
@@ -59,6 +59,7 @@ export class UploadService {
       error => {console.log('Failure', error); }
     );
     */
+    // TODO: move this in the component
     this.body = { // Request body
       // TODO: missing attributes (notify backend)
       id: '90a5fccc-5de9-4d2e-b260-3cb90cb83a9a',

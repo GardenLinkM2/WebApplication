@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="container text-center withlogo infocard">
+    <img src="{{newInformation.avatar}}" class="avatar">
+  </div>
+  <div class=" container text-center withinfo infocard">
+    <div class="row">
+      <div class="col-md text-center" [formGroup]="infoForm">
+        <p>
+          <label for="firstname">Nom</label><br>
+          <input pInputText id="firstname" type="text" value="{{firstname}}" disabled>
+        </p>
+        <p>
+          <label for="lastname">Prénoms</label><br>
+          <input pInputText id="lastname" type="text" value="{{lastname}}" disabled>
+        </p>
+        <p>
+          <label for="password">{{passwordLabel}}</label><br>
+          <input pInputText id="password" type="password" formControlName="password">
+          <i *ngIf="activateFields" class="pi pi-pencil" style="color: #006600" (click)="editPassword()"></i>
+        </p>
+      </div>
+      <div class="col-md text-center" [formGroup]="infoForm">
+        <p>
+          <label for="email">Adresse mail</label><br>
+          <input pInputText id="email"  type="email" value="{{newInformation.email}}" formControlName="email">
+        </p>
+        <p>
+          <label for="phonenum">Téléphone</label><br>
+          <input pInputText id="phonenum" type="text" value="{{newInformation.phone}}" formControlName="phoneNumber">
+        </p>
+        <p *ngIf="!activateFields"> Mon porte monnaie<br>
+          <span style="font-size:25px">{{balance}} €<i class="pi pi-plus" style="color: #006600" routerLink="acceuil"></i></span>
+        </p>
+        <p *ngIf="editingPassword">
+          <label for="confirmpassword">Confirmer mot de passe</label><br>
+          <input pInputText id="confirmpassword" type="password" formControlName="confirmPassword"><br>
+          <span *ngIf="infoForm.get('confirmPassword').errors != null" style="color: red">
+            {{infoForm.get('confirmPassword').errors.notEquivalent}}
+          </span>
+        </p>
+      </div>
+    </div>
+    <p [formGroup]="infoForm">
+      <label for="newsletter">Newsletter&nbsp;</label>
+      <p-checkbox id="newsletter" value="{{newInformation.newsletter}}" formControlName="newsletter" binary="true">
+      </p-checkbox>
+    </p>
+    <br>
+    <button *ngIf="!activateFields" pButton label="Modifier" class="ui-button-rounded ui-button-success editing" type="button" (click)="switchFieldState()"></button>
+    <button *ngIf="activateFields" pButton label="Enregistrer" class="ui-button-rounded ui-button-success editing" type="button" (click)="saveChanges()"
+            [disabled]="!infoForm.valid || infoForm.untouched"></button>
+    <span>&nbsp;&nbsp;&nbsp;</span>
+    <p-confirmDialog [style]="{width: '25vw'}" [baseZIndex]="10000" acceptLabel="Oui" rejectLabel="Non"
+                     acceptButtonStyleClass="ui-button-rounded ui-button-success"
+                     rejectButtonStyleClass="ui-button-rounded ui-button-danger"></p-confirmDialog>
+    <p-dialog header="Information" [(visible)]="displaySuccessSuppression" [modal]="true" [style]="{width: '25vw'}" [baseZIndex]="10000"
+              [draggable]="false" [resizable]="false">
+      <p>Votre compte à été supprimé avec success.</p>
+      <p-footer>
+        <button type="button" class="ui-button-rounded ui-button-success editing" pButton icon="pi pi-check" routerLink="acceuil" label="Ok"></button>
+      </p-footer>
+    </p-dialog>
+    <p-dialog header="Information" [(visible)]="displaySuccessModification" [modal]="true" [style]="{width: '25vw'}" [baseZIndex]="10000"
+              [draggable]="false" [resizable]="false">
+      <p>Les modifications saisies ont été enregistrées.</p>
+      <p-footer>
+        <button type="button" class="ui-button-rounded ui-button-success editing" pButton icon="pi pi-check" (click)="cancelAction()" label="Ok"></button>
+      </p-footer>
+    </p-dialog>
+    <button *ngIf="!activateFields" pButton label="Supprimer" class="ui-button-rounded ui-button-danger editing" type="button" (click)="confirmSuppression()"></button>
+    <button *ngIf="activateFields" pButton label="Annuler" class="ui-button-rounded ui-button-danger editing" type="button" (click)="cancelAction()"></button>
+    <br><br>
+  </div>
+</div>
+
