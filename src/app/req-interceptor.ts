@@ -8,7 +8,6 @@ export class TokenInterceptor implements HttpInterceptor {
   private userToken = localStorage.getItem('userToken');
   private modifiedReq: HttpRequest<any>;
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // TODO: get session token from api/syn
     this.modifiedReq = req.clone();
     if (req.url.includes('backend') && this.synToken) {
       this.modifiedReq = req.clone({
