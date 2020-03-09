@@ -2,14 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../services/user-info/user.service';
 import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {ConfirmationService, Message} from 'primeng/api';
-
-interface UpdatedInfo {
-  'password': string;
-  'phone': string;
-  'email': string;
-  'avatar': string;
-  'newsletter': boolean;
-}
+import {UpdatedInfo} from '../../@entities/updateInfo';
 
 @Component({
   selector: 'app-user-information',
@@ -23,6 +16,7 @@ export class UserInformationComponent implements OnInit {
   private firstname: string;
   private lastname: string;
   private email: string;
+  private newsletter: boolean;
   private balance: number;
   private  id: string;
   private password = '****************';
@@ -38,6 +32,7 @@ export class UserInformationComponent implements OnInit {
     password: new FormControl({value: this.password}, Validators.required),
     email: new FormControl({value: this.email}, [Validators.email, Validators.required]),
     phoneNumber: new FormControl({value: this.phoneNumber}, Validators.required),
+    newsletter: new FormControl({value: this.newsletter}),
     confirmPassword: new FormControl({value: ''}, Validators.required)
   });
 
@@ -81,6 +76,9 @@ export class UserInformationComponent implements OnInit {
         this.phoneNumber = responseAuth.phone;
         this.infoForm.get('phoneNumber').setValue(this.phoneNumber);
         // @ts-ignore
+        this.newsletter = responseAuth.newsletter;
+        this.infoForm.get('newsletter').setValue(this.newsletter);
+        // @ts-ignore
         this.id = responseAuth.id;
       },
       error => {
@@ -110,6 +108,7 @@ export class UserInformationComponent implements OnInit {
     this.activateFields = true;
     this.infoForm.get('email').enable();
     this.infoForm.get('phoneNumber').enable();
+    this.infoForm.get('newsletter').enable();
   }
 
   saveChanges() {
@@ -126,7 +125,7 @@ export class UserInformationComponent implements OnInit {
             phone: this.infoForm.get('phoneNumber').value,
             email: this.infoForm.get('email').value,
             avatar: 'urltoavatar',
-            newsletter: false,
+            newsletter: this.infoForm.get('newsletter').value,
           };
           delete this.newInformation.password;
         } else {
@@ -135,7 +134,7 @@ export class UserInformationComponent implements OnInit {
             phone: this.infoForm.get('phoneNumber').value,
             email: this.infoForm.get('email').value,
             avatar: 'urltoavatar',
-            newsletter: false,
+            newsletter: this.infoForm.get('newsletter').value,
           };
           this.passwordLabel = 'Mot de passe';
           this.editingPassword = false;
