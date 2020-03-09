@@ -13,21 +13,21 @@ import {UpdatedInfo} from '../../@entities/updateInfo';
 
 export class UserInformationComponent implements OnInit {
   constructor(private userService: UserService, private confirmationService: ConfirmationService) { }
-  private firstname: string;
-  private lastname: string;
-  private email: string;
-  private newsletter: boolean;
-  private balance: number;
-  private  id: string;
-  private password = '****************';
-  private passwordLabel: string;
-  private phoneNumber: string;
-  private msgs: Message[] = [];
-  private  activateFields: boolean;
-  private editingPassword: boolean;
-  private newInformation: UpdatedInfo;
-  private displaySuccessSuppression = false;
-  private displaySuccessModification: boolean;
+  firstname: string;
+  lastname: string;
+  email: string;
+  newsletter: boolean;
+  balance: number;
+  id: string;
+  password = '****************';
+  passwordLabel: string;
+  phoneNumber: string;
+  msgs: Message[] = [];
+  activateFields: boolean;
+  editingPassword: boolean;
+  newInformation: UpdatedInfo;
+  displaySuccessSuppression = false;
+  displaySuccessModification: boolean;
   infoForm = new FormGroup({
     password: new FormControl({value: this.password}, Validators.required),
     email: new FormControl({value: this.email}, [Validators.email, Validators.required]),
