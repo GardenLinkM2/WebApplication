@@ -21,4 +21,7 @@ export class UserService {
   deleteAccount(id: string) {
     return this.client.delete(this.urlauth + `users/${id}`);
   }
+  deleteAccountBack() {
+    return this.client.delete(this.urlback + `Users/me`);
+  }
 }
