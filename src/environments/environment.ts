@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   url: 'https://devbackendm2.artheriom.fr/',
-  urlAuth: 'https://devauthm2.artheriom.fr/ '
+  urlAuth: 'https://devauthm2.artheriom.fr/'
 };
 
 /*

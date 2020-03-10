@@ -33,6 +33,5 @@ describe('RecoverPwdService', () => {
     service.reinitpass(userForm).subscribe(
       response => {serveResponse = response; expect(serveResponse).toEqual(200); }
     );
-    // TODO: expectation should not be in subricbe
   });
 });

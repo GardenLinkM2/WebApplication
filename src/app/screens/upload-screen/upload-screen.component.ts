@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {UploadService} from './upload.service';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UploadService} from '../../services/upload-add/upload.service';
+import {Orientation} from '../../@entities/enum/orientation.enum';
+import {GroundEnum} from '../../@entities/enum/ground.enum';
+import {UploadAdBody} from '../../@entities/adUploadBody';
 
 interface Soil {
   type: string;
 }
 
-interface Orientation {
+interface Direction {
   direction: string;
 }
 
@@ -18,22 +21,24 @@ interface Orientation {
 export class UploadScreenComponent {
   private soils: Soil[];
   private uploadedFiles: any[] = [];
-  private directions: Orientation[];
+  private directions: Direction[];
+  private requestBody: UploadAdBody;
+  private id: string;
   constructor(private upload: UploadService) {
     this.soils = [
-      {type: 'Argileuse'},
-      {type: 'Sableuse'},
-      {type: 'Tourbeuse'},
-      {type: 'Humifère'},
-      {type: 'Siliceuse'},
-      {type: 'Calcaire'}
+      {type: GroundEnum.ARGILEUSE},
+      {type: GroundEnum.SABLEUSE},
+      {type: GroundEnum.TOURBEUSE},
+      {type: GroundEnum.HUMIFERE},
+      {type: GroundEnum.SILICEUSE},
+      {type: GroundEnum.CALCAIRE}
     ];
 
     this.directions = [
-      {direction: 'Nord'},
-      {direction: 'Sud'},
-      {direction: 'Est'},
-      {direction: 'Ouest'}
+      {direction: Orientation.NORD},
+      {direction: Orientation.SUD},
+      {direction: Orientation.EST},
+      {direction: Orientation.OUEST}
     ];
   }
   cityPattern = /^[A-Za-z0-9 -]+$/; // Gestion rule 6
@@ -63,14 +68,57 @@ export class UploadScreenComponent {
       pictures: new FormControl(this.uploadedFiles)
     }
   );
-  onSubmit() {
+  async onSubmit() {
     // TODO: Replace the following line with an effective one.
     if (this.uploadForm.valid) {
-      this.upload.postGarden(this.uploadForm).subscribe(
-        response => console.log('Response', response),
-        error => console.log('Failure', error)
+      await this.upload.getId().toPromise().then(
+        // @ts-ignore
+        response => this.id = response.data.id,
+        error => console.log('Error', error)
       );
-      console.log(this.uploadForm.get('pictures').value);
+      this.requestBody = {
+        id: this.id,
+        name: this.uploadForm.get('title').value,
+        description: this.uploadForm.get('description').value,
+        size: 0,
+        isReserved: false,
+        minUse: this.uploadForm.get('durationMax').value,
+        owner: this.id,
+        validation: 0,
+        location: {
+          streetNumber: this.uploadForm.get('address').get('streetNum').value,
+          street: this.uploadForm.get('address').get('streetName').value,
+          postalCode: this.uploadForm.get('address').get('zipCode').value,
+          city: this.uploadForm.get('address').get('city').value
+        },
+        criteria: {
+          locationTime: 0,
+          area: this.uploadForm.get('surface').value,
+          price: this.uploadForm.get('price').value,
+          orientation: this.uploadForm.get('orientation').value.direction,
+          typeOfClay: this.uploadForm.get('soilType').value.type,
+          equipments: this.uploadForm.get('accessTools').value,
+          waterAccess: this.uploadForm.get('accessWater').value,
+          directAccess: this.uploadForm.get('directAccess').value
+        },
+        photos: [
+          {
+            id: this.id,
+            fileName: 'string'
+          }
+        ]
+      };
+      let filename;
+      for (filename of this.uploadForm.get('pictures').value) {
+        this.requestBody.photos.push({
+          id: this.id,
+          fileName: filename
+        });
+      }
+      this.upload.postGarden(this.requestBody).subscribe(
+        () => {},
+        error => console.log('Error', error)
+      );
     }
   }
 

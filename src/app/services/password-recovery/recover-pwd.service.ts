@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RecoverPwdService {
-  url = 'https://devauthm2.artheriom.fr/newpassword/';
+  private url = environment.urlAuth + 'newpassword/';
   private token: string;
   constructor(private client: HttpClient, private activatedRoute: ActivatedRoute) { }
   reinitpass(userForm: FormGroup) {
