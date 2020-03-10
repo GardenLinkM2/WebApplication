@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {MdpService} from './mdp.service';
+import {MdpService} from '../../services/password-recovery/mdp.service';
 
 @Component({
   selector: 'app-mpd-oublie',

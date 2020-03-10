@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {RecoverPwdService} from './recover-pwd.service';
+import {RecoverPwdService} from '../../services/password-recovery/recover-pwd.service';
 
 @Component({
   selector: 'app-recover-pwd-screen',
