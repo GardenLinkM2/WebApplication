@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'accueil', component: HomeScreenComponent },
   { path: 'upload', component: UploadScreenComponent},
   { path: 'mdp-oublie', component: MdpOublieComponent},
-  { path: 'recover', component: RecoverPwdScreenComponent},
+  { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
   { path: 'user-info', component: UserInformationComponent },
   { path: '**',   redirectTo: '/accueil', pathMatch: 'full'}
 ];

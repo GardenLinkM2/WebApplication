@@ -10,13 +10,8 @@ import {environment} from '../../../environments/environment';
 
 export class RecoverPwdService {
   private url = environment.urlAuth + 'newpassword/';
-  private token: string;
-  constructor(private client: HttpClient, private activatedRoute: ActivatedRoute) { }
-  reinitpass(userForm: FormGroup) {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.token = params.token;
-    });
-    console.log(this.token);
-    return this.client.post<any>(this.url + this.token, { password: userForm.get('password').value});
+  constructor(private client: HttpClient) { }
+  reinitpass(userForm: FormGroup, token: string) {
+    return this.client.post<any>(this.url + token, { password: userForm.get('password').value});
   }
 }
