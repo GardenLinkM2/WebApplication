@@ -1,0 +1,82 @@
+#main_div
+{
+  margin: auto;
+  position: relative;
+  background-color: rgba($color: white, $alpha: 1);
+  width: 65%;
+  height: 100%;
+  border-radius: 3%;
+  top: 2cm;
+
+  border-color: green;
+}
+
+form
+{
+  position: relative;
+  left: 7%;
+  top: 5%;
+}
+
+h1
+{
+  position: relative;
+  text-align: center;
+  color: green;
+  margin-bottom: 2%;
+  font-size: 230%;
+}
+
+
+label
+{
+  position: relative;
+  color: green;
+  font-weight: bold;
+}
+
+
+button
+{
+  position: relative;
+  left: 25%;
+  color: white;
+  background-color: green;
+  margin-top: 5%;
+  margin-bottom: 1%;
+  left: 35%;
+  text-align: center;
+}
+
+.form-check
+{
+  margin-top: 4%;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border-color: 5px solid #42A948;
+}
+
+
+#l
+{
+  position: relative;
+  left: 3.5%;
+}
+
+#r
+{
+  position: relative;
+  right: 3.5%;
+}
+
+p-checkbox
+{
+  color: green;
+}
+
+input
+{
+  width: 65%;
+}
+
