@@ -30,7 +30,7 @@ describe('RecoverPwdService', () => {
     const userForm =  new FormGroup(
       {password: new FormControl('newpassord', [Validators.required])}
     );
-    service.reinitpass(userForm).subscribe(
+    service.reinitpass(userForm, 'atoken').subscribe(
       response => {serveResponse = response; expect(serveResponse).toEqual(200); }
     );
   });
