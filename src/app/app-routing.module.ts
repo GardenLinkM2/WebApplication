@@ -1,3 +1,4 @@
+import { InscriptionComponent } from './features/inscription/inscription.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {HomeScreenComponent} from './screens/home-screen/home-screen.component';
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'mdp-oublie', component: MdpOublieComponent},
   { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
   { path: 'user-info', component: UserInformationComponent },
+  { path: 'inscription', component: InscriptionComponent},
   { path: '**',   redirectTo: '/accueil', pathMatch: 'full'}
 ];
 
