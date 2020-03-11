@@ -83,7 +83,7 @@ export class UserInformationComponent implements OnInit {
         this.newInformation.newsletter = responseAuth.newsletter;
         this.infoForm.get('newsletter').setValue(this.newInformation.newsletter);
         // @ts-ignore
-        if (responseAuth.avatar !== 'urltoavatar') {
+        if (responseAuth.avatar !== '') {
           // @ts-ignore
           this.newInformation.avatar = responseAuth.avatar;
         }
