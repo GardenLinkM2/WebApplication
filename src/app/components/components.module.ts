@@ -11,6 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { IndevelopmentComponent } from './indevelopment/indevelopment.component';
 import {DialogModule} from 'primeng/dialog';
 import {TieredMenuModule} from 'primeng/tieredmenu';
+import { PageTitleComponent } from "./page-title/page-title.component";
 
 
 
@@ -19,7 +20,8 @@ import {TieredMenuModule} from 'primeng/tieredmenu';
     MenuComponent,
     AdCardComponent,
     NavbarComponent,
-    IndevelopmentComponent
+    IndevelopmentComponent,
+    PageTitleComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import {TieredMenuModule} from 'primeng/tieredmenu';
   exports: [
     MenuComponent,
     AdCardComponent,
-    NavbarComponent
+    NavbarComponent,
+    PageTitleComponent
   ]
 })
 export class ComponentsModule { }

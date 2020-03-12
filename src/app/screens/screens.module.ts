@@ -20,6 +20,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {HttpClientModule} from '@angular/common/http';
 import { PersonalSpaceComponent } from './personal-space/personal-space/personal-space.component';
 import {DialogModule} from 'primeng/dialog';
+import { FillWalletScreenComponent } from './fill-wallet-screen/fill-wallet-screen.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {DialogModule} from 'primeng/dialog';
     UploadScreenComponent,
     MdpOublieComponent,
     RecoverPwdScreenComponent,
-    PersonalSpaceComponent
+    PersonalSpaceComponent,
+    FillWalletScreenComponent
   ],
   imports: [
     CommonModule,
