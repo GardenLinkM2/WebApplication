@@ -1,0 +1,38 @@
+.logo {
+  max-width: 200px;
+}
+.menu .menu-transparent {
+  padding: 0;
+  height: 75px;
+}
+.menu-transparent {
+  background-color: rgba(0,0,0,0.4);
+}
+
+.menu {
+  background-color: #FFFFFF;
+  border-bottom: #000000 solid 1px;
+}
+
+.modal_header
+{
+  font-size: 200%;
+  color: green;
+}
+
+.userMenu {
+  right: 0.5cm;
+}
+
+#deconnexion {
+  position: relative;
+  width: 15%;
+  height: 15%;
+  float: right;
+}
+
+.thisdiv {
+  float: right;
+  text-align: left;
+  width: 5.5cm;
+}

@@ -1,0 +1,59 @@
+h2{
+  position: relative;
+  top:20px;
+  size: auto;
+}
+
+button {
+  background: #448233;
+  border: none;
+}
+
+button:hover {
+  background: #005739 !important;
+}
+
+button:focus{
+  background: #448233 !important;
+}
+.row{
+  text-align: left;
+}
+.optionals{
+  position: relative;
+  text-align: left;
+}
+
+.col-sm-3{
+  height: 1%;
+  width: auto;
+  top: 20px;
+  margin: auto;
+}
+
+.title{
+  text-align: left;
+}
+
+#description{
+  text-align: left;
+}
+
+#descriptionInput{
+  height: 200px;
+  width: 100%;
+}
+
+#formdiv{
+  width: 80%;
+}
+
+#title{
+  text-align: center;
+}
+
+#overall{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: relative;
+  top: 2cm;
+}

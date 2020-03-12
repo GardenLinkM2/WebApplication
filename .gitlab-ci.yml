@@ -1,14 +1,63 @@
-image: node
+image: local_angular
 
 stages:
     - build
-    
-build_job:
+    - deploy
+
+build_prd:
     stage: build
-    before_script:
-        - npm install -g @angular/cli
-        - npm install --save-dev @angular-devkit/build-angular
+    only:
+      - master
     script:
+        - echo n | npm install --silent
+        - ng test --browsers ChromeHeadlessCI --code-coverage=true --watch=false
+        - sonar-scanner
+        - ng build --prod
+        - cd dist/GardenLinkWeb
+        - tar cvf archive.tar ./
+        - curl $CURL_PARAMS "$BINARIES/prd/web$(/bin/date +"%s").tar"
+
+build_dev:
+    stage: build
+    only:
+      - develop
+      - dev
+    script:
+        - echo n | npm install --silent
+        - ng test --browsers ChromeHeadlessCI --code-coverage=true --watch=false
+        - sonar-scanner
         - ng build
-    after_script:
-        - echo "Build complete"
+        - cd dist/GardenLinkWeb
+        - tar cvf archive.tar ./
+        - curl $CURL_PARAMS "$BINARIES/dev/web$(/bin/date +"%s").tar"
+
+code_insight:
+    stage: build
+    except:
+      - develop
+      - dev
+      - master
+    script:
+        - echo n | npm install --silent
+        - ng test --browsers ChromeHeadlessCI --code-coverage=true --watch=false
+        - sonar-scanner
+
+deploy_prd:
+    image: local_ansible
+    stage: deploy
+    when: manual
+    only:
+        - master
+    script:
+        - python3 /root/getPackage.py -r "generic-local/web/prd" -o /root/app.tar
+        - ansible-playbook -i deploy/inventories/prd -u administrateur deploy/playbook.yml
+
+deploy_dev:
+    image: local_ansible
+    stage: deploy
+    when: manual
+    except:
+        - master
+    script:
+        - python3 /root/getPackage.py -r "generic-local/web/dev" -o /root/app.tar
+        - ansible-playbook -i deploy/inventories/dev -u administrateur deploy/playbook.yml

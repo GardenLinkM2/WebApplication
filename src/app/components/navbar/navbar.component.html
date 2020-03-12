@@ -1,0 +1,3 @@
+<div class="topnav text-center">
+  <a *ngFor="let tab of tabs" [class.active]="switch(tab.route)" id="{{tab.id}}" routerLink="{{tab.route}}">{{tab.name}}</a>
+</div>
