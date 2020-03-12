@@ -1,4 +1,4 @@
-import { ConnexionComponent } from './connexion/connexion.component';
+import { ConnexionComponent } from '../components/connexion/connexion.component';
 import { InputTextModule } from 'primeng/inputtext';
 import {CheckboxModule} from 'primeng/checkbox';
 import {ButtonModule} from 'primeng/button';

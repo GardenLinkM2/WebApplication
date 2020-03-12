@@ -1,5 +1,5 @@
 import { FeaturesModule } from './../features/features.module';
-import { ConnexionComponent } from './../features/connexion/connexion.component';
+import { ConnexionComponent } from './connexion/connexion.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
