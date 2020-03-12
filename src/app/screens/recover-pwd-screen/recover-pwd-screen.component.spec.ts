@@ -29,6 +29,7 @@ describe('RecoverPwdScreenComponent', () => {
   });
   it('should change submit value', () => {
     component.rcvPassForm.get('password').setValue('someValue');
+    component.rcvPassForm.get('confirmPassword').setValue('someValue');
     component.onSubmit();
     expect(component.submitted).toEqual(true);
   });

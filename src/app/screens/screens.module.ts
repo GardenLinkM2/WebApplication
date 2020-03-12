@@ -21,6 +21,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { PersonalSpaceComponent } from './personal-space/personal-space/personal-space.component';
 import {DialogModule} from 'primeng/dialog';
 import { FillWalletScreenComponent } from './fill-wallet-screen/fill-wallet-screen.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { FillWalletScreenComponent } from './fill-wallet-screen/fill-wallet-scre
     BrowserAnimationsModule,
     FileUploadModule,
     HttpClientModule,
-    DialogModule
+    DialogModule,
+    ConfirmDialogModule
   ],
   exports: [
     HomeScreenComponent,

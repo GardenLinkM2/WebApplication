@@ -4,6 +4,7 @@ import {UploadService} from '../../services/upload-add/upload.service';
 import {Orientation} from '../../@entities/enum/orientation.enum';
 import {GroundEnum} from '../../@entities/enum/ground.enum';
 import {UploadAdBody} from '../../@entities/adUploadBody';
+import {ConfirmationService, Message} from 'primeng/api';
 
 interface Soil {
   type: string;
@@ -16,15 +17,17 @@ interface Direction {
 @Component({
   selector: 'app-upload-screen',
   templateUrl: './upload-screen.component.html',
-  styleUrls: ['./upload-screen.component.scss']
+  styleUrls: ['./upload-screen.component.scss'],
+  providers: [ConfirmationService]
 })
 export class UploadScreenComponent {
   private soils: Soil[];
   private uploadedFiles: any[] = [];
   private directions: Direction[];
+  msgs: Message[] = [];
   private requestBody: UploadAdBody;
   private id: string;
-  constructor(private upload: UploadService) {
+  constructor(private upload: UploadService, private confirmationService: ConfirmationService) {
     this.soils = [
       {type: GroundEnum.ARGILEUSE},
       {type: GroundEnum.SABLEUSE},
@@ -86,9 +89,9 @@ export class UploadScreenComponent {
         owner: this.id,
         validation: 0,
         location: {
-          streetNumber: this.uploadForm.get('address').get('streetNum').value,
+          streetNumber: Number(this.uploadForm.get('address').get('streetNum').value),
           street: this.uploadForm.get('address').get('streetName').value,
-          postalCode: this.uploadForm.get('address').get('zipCode').value,
+          postalCode: Number(this.uploadForm.get('address').get('zipCode').value),
           city: this.uploadForm.get('address').get('city').value
         },
         criteria: {
@@ -115,13 +118,27 @@ export class UploadScreenComponent {
           fileName: filename
         });
       }
-      this.upload.postGarden(this.requestBody).subscribe(
-        () => {},
-        error => console.log('Error', error)
-      );
+      this.confirmPublish();
     }
   }
 
+  confirmPublish() {
+    this.confirmationService.confirm({
+      message: 'Souhaitez vous publier le bien?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.upload.postGarden(this.requestBody).subscribe(
+          () => {window.location.reload()},
+          error => console.log('Error', error)
+        );
+        this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'Votre annonce à été publiée !!!'}];
+      },
+      reject: () => {
+        this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'publication annulée.'}];
+      }
+    });
+  }
   onUpload(event) { // Uploading image files
     for (const file of event.files) {
       this.uploadedFiles.push(file);

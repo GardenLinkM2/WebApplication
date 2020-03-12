@@ -3,6 +3,7 @@ import {UserService} from '../../services/user-info/user.service';
 import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {ConfirmationService, Message} from 'primeng/api';
 import {UpdatedInfo} from '../../@entities/updateInfo';
+import {comparisonValidator} from '../../services/validators/cofirm-password';
 
 @Component({
   selector: 'app-user-information',
@@ -26,19 +27,6 @@ export class UserInformationComponent implements OnInit {
   displaySuccessModification: boolean;
   infoForm: FormGroup;
 
-  comparisonValidator(): ValidatorFn {
-    return (group: FormGroup): ValidationErrors => {
-      const control1 = group.get('password');
-      const control2 = group.get('confirmPassword');
-      if (control1.value !== control2.value && control1.enabled && control2.value !== null) {
-        control2.setErrors({notEquivalent: 'Les deux saisies ne correspondent pas!'});
-      } else {
-        control2.setErrors(null);
-      }
-      return;
-    };
-  }
-
   async ngOnInit() {
     this.newInformation = {
       email: null,
@@ -54,7 +42,7 @@ export class UserInformationComponent implements OnInit {
       newsletter: new FormControl({value: this.newInformation.newsletter}),
       confirmPassword: new FormControl({value: null}, Validators.required)
     });
-    this.infoForm.setValidators(this.comparisonValidator());
+    this.infoForm.setValidators(comparisonValidator());
     this.displaySuccessModification = false;
     this.activateFields = false;
     this.editingPassword = false;
