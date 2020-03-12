@@ -1,0 +1,100 @@
+<div class="search container-fluid rounded  py-3">
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm.value)">
+    <div class="form-group" >
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="pi pi-search"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="Rechercher un jardin.." formControlName="freeTextArea" >
+        <div class="input-group-append">
+          <button class="input-group-text" type="submit"><i class="pi pi-arrow-right"></i></button>
+        </div>
+      </div>
+      <a class="float-right float-button btn text-light" (click)="isFilterActivated = ! isFilterActivated">
+        Filtres
+        <span *ngIf="isFilterActivated"><i class="pi pi-chevron-up"></i></span>
+        <span *ngIf="!isFilterActivated"><i class="pi pi-chevron-down"></i></span>
+      </a>
+    </div>
+
+    <div *ngIf="isFilterActivated" class="container-fluid">
+      <div class="form-row w-100 align-items-start pb-2" >
+        <label for="price" class="text-nowrap col-form-label py-0">Prix:</label>
+        <div class="col-md">
+          <input type="range" id="price" class="col-md form-control-range mx-1 mt-1" max="10000" formControlName="price">
+          <div [hidden]="searchForm.get('price').pristine" class="text-md-center mt-1 text-nowrap">
+            {{searchForm.get('price').value}} €
+            <button type="button" class="btn btn-sm btn-outline-light ml-1" (click)="onCancel('price')">&times;</button>
+          </div>
+        </div>
+
+        <label for="surface" class="text-nowrap col-form-label py-0">Surface:</label>
+        <div class="col-md">
+          <input type="range" id="surface" class="col-md form-control-range mx-1 mt-1" max="10000" formControlName="surface">
+          <div *ngIf="!searchForm.get('surface').pristine" class="text-md-center mt-1 text-nowrap">
+            {{searchForm.get('surface').value}} m<sup>2</sup>
+            <button type="button" class="btn btn-sm btn-outline-light ml-1" (click)="onCancel('surface')">&times;</button>
+          </div>
+        </div>
+
+        <label for="duration" class="text-nowrap col-form-label py-0">Durée:</label>
+        <div class="col-md">
+          <input type="range" id="duration" class="col-md form-control-range mx-1 mt-1" max="36" formControlName="duration">
+          <div *ngIf="!searchForm.get('duration').pristine" class="text-md-center mt-1 text-nowrap">
+            {{searchForm.get('duration').value}} mois
+            <button type="button" class="btn btn-sm btn-outline-light ml-1" (click)="onCancel('duration')">&times;</button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-row w-100 pb-2">
+        <div class="col-md form-check-inline mr-1">
+          <label for="waterAccess" class="form-check-label text-nowrap">Accès à l'eau:</label>
+          <input type="checkbox" id="waterAccess" class="form-check-input mx-1" formControlName="waterAccess">
+        </div>
+        <div class="col-md form-check-inline my-1 justify-content-center">
+          <label for="outilsAccess" class="form-check-label text-nowrap">Accès aux outils:</label>
+          <input type="checkbox" id="outilsAccess" class="form-check-input mx-1" formControlName="outilsAccess">
+        </div>
+        <div class="col-md form-check-inline ml-1 pr-0 mr-0 justify-content-end">
+          <label for="directGardenAccess" class="form-check-label text-nowrap">Accès direct au terrain:</label>
+          <input type="checkbox" id="directGardenAccess" class="form-check-input mx-1" formControlName="directGardenAccess">
+        </div>
+      </div>
+
+
+      <div class="form-row w-100 pb-2">
+        <select class="col-md form-control form-control-sm mx-1 my-1" id="groundSel" formControlName="groundSel" [value]="undefined">
+          <option value="undefined">Type de sol</option>
+          <option *ngFor="let groundType of groundTypes" value="groundType[0]">{{groundType[1]}}</option>
+        </select>
+        <select class="col-md form-control form-control-sm mx-1 my-1" id="orientation" formControlName="orientationSel" [value]="undefined">
+          <option value="undefined">Orientation</option>
+          <option *ngFor="let orientationType of orientationTypes" value="orientationType[0]">{{orientationType[1]}}</option>
+        </select>
+      </div>
+
+
+      <div class="form-row w-100">
+
+          <label for="streetNumber" class="col-form-label-md mr-1 my-1">N° rue: </label>
+          <input id="streetNumber" type="number" min="0" class="col-md form-control form-control-sm mr-1 my-1" placeholder="Entrez un numéro de rue" formControlName="streetNum" >
+
+          <label for="street" class="col-form-label-md mr-1 my-1">Rue: </label>
+          <input id="street" type="text" class="col-md form-control form-control-sm my-1" placeholder="Entrez une rue" formControlName="street" >
+
+          <label for="city" class="col-form-label-md mr-1 my-1">Ville: </label>
+          <input id="city" type="text" class="col-md form-control form-control-sm mr-1 my-1" placeholder="Entrez une ville" formControlName="cityText" >
+
+          <label for="postalCode" class="col-form-label-md mr-1 my-1">Code postal: </label>
+          <input id="postalCode" type="number" class="col-md form-control form-control-sm mr-1 my-1" placeholder="Entrez un code postal" formControlName="postalCode" min="1" max="99999" >
+      </div>
+      <div class="row mt-2">
+        <div class="col text-center">
+              <button class="btn btn-outline-light" type="submit">Rechercher</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

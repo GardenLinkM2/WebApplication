@@ -1,0 +1,63 @@
+@import "~primeng/resources/themes/nova-light/theme.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeicons/primeicons.css";
+
+.avatar {
+  vertical-align: middle;
+  width: 25%;
+  height: 150px;
+  border-radius: 50%;
+  border: 1px solid #515151;
+}
+
+.twobuttons{
+  border-style: ridge;
+  border-color: orange;
+}
+
+::ng-deep{
+  body .ui-chkbox .ui-chkbox-box.ui-state-active {
+    border-color: #006600 !important;
+    background-color: #006600 !important;
+    color:
+      #ffffff;
+  }
+}
+
+img{
+  position: relative;
+  bottom: 2cm;
+}
+input {
+  width: 60%;
+}
+.withlogo{
+  height: 2cm;
+  margin-top: 2cm;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border: 1px solid #515151;
+  border-bottom-color: #11111100;
+}
+
+.withinfo{
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border: 1px solid #515151;
+  border-top-color: #11111100;
+}
+
+.infocard{
+  width: 50%;
+  background-color: #f7f7f7;
+}
+
+.addCash{
+  border-radius: 50% !important;
+  width: 0.7cm;
+  height: 0.7cm;
+}
+
+.editing{
+  width: 2.7cm;
+}

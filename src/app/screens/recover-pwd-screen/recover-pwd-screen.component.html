@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
+    <div class="col-sm"><h2 class="text-center" style="color:#005739; font-size: 100%">REINITIALISATION DU MOT DE PASSE</h2></div>
+    <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
+  </div>
+  <div class="shown" *ngIf="!submitted">
+    <form [formGroup]="rcvPassForm" (ngSubmit)="onSubmit()">
+      <div class="labelfield">
+        <label>
+          <div class="textprint">Saisissez un nouveau mot de passe</div>
+          <div class="passwordInput">
+            <input pInputText type="password" size="70" formControlName="password">
+          </div>
+        </label>
+        <label>
+          <br><br>
+          <div class="textprint">Confirmer votre saisie</div>
+          <div class="passwordInput">
+            <input pInputText type="password" size="70" formControlName="confirmPassword">
+            <span *ngIf="rcvPassForm.get('confirmPassword').errors != null" style="color: red">
+              {{rcvPassForm.get('confirmPassword').errors.notEquivalent}}
+            </span>
+          </div>
+        </label>
+        <br><br>
+        <!--TODO: replace with input field color change-->
+        <button pButton type="submit" label="Valider" class="ui-button-rounded" style="font-size: 100%"></button>
+      </div>
+    </form>
+  </div>
+  <div class="shown" *ngIf="responseStatus === 'success'">
+    <div class="textprint"><b>Mot de pass changé</b><br>
+      Vous pouvez vous connecter avec votre nouveau mot de passe.
+    </div>
+  </div>
+  <div class="shown" *ngIf="responseStatus === 'failure'">
+    <div class="textprint"><b>Echec</b><br>
+      La réinitialisation du mot de passe a échouée.
+    </div>
+  </div>
+</div>
+
