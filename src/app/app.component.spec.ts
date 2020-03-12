@@ -17,7 +17,8 @@ describe('AppComponent', () => {
         AppComponent,
         MainLayoutComponent,
         MenuComponent
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
