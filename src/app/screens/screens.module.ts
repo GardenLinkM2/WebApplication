@@ -18,6 +18,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FileUploadModule} from 'primeng/fileupload';
 import {HttpClientModule} from '@angular/common/http';
+import { PersonalSpaceComponent } from './personal-space/personal-space/personal-space.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {HttpClientModule} from '@angular/common/http';
     HomeScreenComponent,
     UploadScreenComponent,
     MdpOublieComponent,
-    RecoverPwdScreenComponent
+    RecoverPwdScreenComponent,
+    PersonalSpaceComponent
   ],
   imports: [
     CommonModule,
