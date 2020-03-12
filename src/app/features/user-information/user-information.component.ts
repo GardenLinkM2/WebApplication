@@ -92,7 +92,11 @@ export class UserInformationComponent implements OnInit {
         await this.userService.deleteAccount(this.id).subscribe(
           () => {
             this.userService.deleteAccountBack().subscribe(
-              () => this.displaySuccessSuppression = true,
+              () => {this.displaySuccessSuppression = true;
+                     localStorage.removeItem('synToken');
+                     localStorage.removeItem('userToken');
+                     localStorage.removeItem('accessToken');
+              },
               error => console.log('error', error)
             );
             },
@@ -126,7 +130,7 @@ export class UserInformationComponent implements OnInit {
             password: undefined,
             phone: this.infoForm.get('phoneNumber').value,
             email: this.infoForm.get('email').value,
-            avatar: 'urltoavatar',
+            avatar: 'assets/img/defaultavatar.png',
             newsletter: this.infoForm.get('newsletter').value,
           };
           delete this.newInformation.password;
@@ -135,7 +139,7 @@ export class UserInformationComponent implements OnInit {
             password: this.infoForm.get('password').value,
             phone: this.infoForm.get('phoneNumber').value,
             email: this.infoForm.get('email').value,
-            avatar: 'urltoavatar',
+            avatar: 'assets/img/defaultavatar.png',
             newsletter: this.infoForm.get('newsletter').value,
           };
           this.passwordLabel = 'Mot de passe';
