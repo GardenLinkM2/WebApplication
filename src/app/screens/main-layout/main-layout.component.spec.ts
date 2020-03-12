@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MainLayoutComponent } from './main-layout.component';
 import {MenuComponent} from '../../components/menu/menu.component';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('MainLayoutComponent', () => {
   let component: MainLayoutComponent;
@@ -15,7 +16,8 @@ describe('MainLayoutComponent', () => {
         MenuComponent ],
       imports: [
         RouterTestingModule
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

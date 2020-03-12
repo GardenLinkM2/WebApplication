@@ -9,6 +9,7 @@ import {MdpOublieComponent} from './screens/mdp-oublie/mdp-oublie.component';
 import {RecoverPwdScreenComponent} from './screens/recover-pwd-screen/recover-pwd-screen.component';
 import {PersonalSpaceComponent} from './screens/personal-space/personal-space/personal-space.component';
 import {IndevelopmentComponent} from './components/indevelopment/indevelopment.component';
+import { ConnexionComponent } from './features/connexion/connexion.component';
 
 const routes: Routes = [
   { path: 'accueil', component: HomeScreenComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'mdp-oublie', component: MdpOublieComponent},
   { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
   { path: 'inscription', component: InscriptionComponent},
+  { path: 'connexion', component: ConnexionComponent},
   { path: 'personal-space', component: PersonalSpaceComponent,
     children: [
       { path: 'user-info', component: UserInformationComponent },

@@ -1,3 +1,4 @@
+import { ConnexionComponent } from './connexion/connexion.component';
 import { InputTextModule } from 'primeng/inputtext';
 import {CheckboxModule} from 'primeng/checkbox';
 import {ButtonModule} from 'primeng/button';
@@ -15,7 +16,12 @@ import { InscriptionComponent } from './inscription/inscription.component';
 
 
 @NgModule({
-  declarations: [ResearchComponent, InscriptionComponent, UserInformationComponent],
+  declarations: [
+    ResearchComponent,
+    UserInformationComponent,
+    InscriptionComponent,
+    ConnexionComponent
+    ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -24,11 +30,12 @@ import { InscriptionComponent } from './inscription/inscription.component';
     ConfirmDialogModule,
     DialogModule,
     AppRoutingModule,
-    CheckboxModule,
+    CheckboxModule
   ],
   exports: [
     ResearchComponent,
-    InscriptionComponent
+    InscriptionComponent,
+    ConnexionComponent
   ]
 })
 export class FeaturesModule { }

@@ -19,6 +19,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FileUploadModule} from 'primeng/fileupload';
 import {HttpClientModule} from '@angular/common/http';
 import { PersonalSpaceComponent } from './personal-space/personal-space/personal-space.component';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { PersonalSpaceComponent } from './personal-space/personal-space/personal
     DropdownModule,
     BrowserAnimationsModule,
     FileUploadModule,
-    HttpClientModule
+    HttpClientModule,
+    DialogModule
   ],
   exports: [
     HomeScreenComponent,

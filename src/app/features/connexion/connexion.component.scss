@@ -1,0 +1,60 @@
+.link
+{
+  color: green;
+  font-size: 80%;
+
+  &:hover
+  {
+    color: green($color: #000000);
+    text-decoration: none;
+  }
+
+  position: relative;
+  left: 60%;
+
+}
+
+h1
+{
+  color: green;
+  position: relative;
+  left: 28%;
+  font-size: 220%;
+}
+
+label
+{
+  color: green;
+  font-weight: bold;
+  position: relative;
+  left: 13%;
+}
+
+button
+{
+  background-color: green;
+  &:hover
+  {
+    background-color: darkgreen;
+  }
+
+  &:active
+  {
+    background-color: darkgreen;
+  }
+
+  position: relative;
+  left: 38%;
+}
+
+input
+{
+  position: relative;
+  left: 13%;
+  width: 70%;
+}
+
+#incorrect {
+  color: red;
+  text-align: center;
+}
