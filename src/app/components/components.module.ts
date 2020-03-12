@@ -10,6 +10,7 @@ import {AppRoutingModule} from '../app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { IndevelopmentComponent } from './indevelopment/indevelopment.component';
 import {DialogModule} from 'primeng/dialog';
+import {TieredMenuModule} from 'primeng/tieredmenu';
 
 
 
@@ -26,7 +27,8 @@ import {DialogModule} from 'primeng/dialog';
     CardModule,
     AppRoutingModule,
     DialogModule,
-    FeaturesModule
+    FeaturesModule,
+    TieredMenuModule,
   ],
   exports: [
     MenuComponent,
