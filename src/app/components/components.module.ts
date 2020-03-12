@@ -5,13 +5,17 @@ import {ButtonModule} from 'primeng/button';
 import {CardModule} from 'primeng/card';
 import { AdCardComponent } from './ad-card/ad-card.component';
 import {AppRoutingModule} from '../app-routing.module';
+import { NavbarComponent } from './navbar/navbar.component';
+import { IndevelopmentComponent } from './indevelopment/indevelopment.component';
 
 
 
 @NgModule({
   declarations: [
     MenuComponent,
-    AdCardComponent
+    AdCardComponent,
+    NavbarComponent,
+    IndevelopmentComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +25,8 @@ import {AppRoutingModule} from '../app-routing.module';
   ],
   exports: [
     MenuComponent,
-    AdCardComponent
+    AdCardComponent,
+    NavbarComponent
   ]
 })
 export class ComponentsModule { }
