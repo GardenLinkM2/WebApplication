@@ -21,9 +21,9 @@ interface Direction {
   providers: [ConfirmationService]
 })
 export class UploadScreenComponent {
-  private soils: Soil[];
-  private uploadedFiles: any[] = [];
-  private directions: Direction[];
+  soils: Soil[];
+  uploadedFiles: any[] = [];
+  directions: Direction[];
   msgs: Message[] = [];
   private requestBody: UploadAdBody;
   private id: string;

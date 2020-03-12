@@ -1,6 +1,6 @@
 export enum Orientation {
-  NORD = 'Nord',
-  SUD = 'Sud',
+  NORD = 'North',
+  SUD = 'South',
   EST = 'Est',
   OUEST = 'Ouest'
 }
