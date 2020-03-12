@@ -2,7 +2,7 @@ import { UserData } from '../../@entities/user.interface';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
-
+import {environment} from '../../../environments/environment';
 
 
 @Injectable({
@@ -10,7 +10,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class InscriptionService {
 
-  url = 'https://devauthm2.artheriom.fr/users';
+  url = environment.urlAuth + 'users';
 
   constructor(private httpClient: HttpClient) { }
 
