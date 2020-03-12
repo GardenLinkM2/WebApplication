@@ -25,4 +25,8 @@ export class UserService {
   deleteAccountBack() {
     return this.client.delete(this.urlback + `Users/me`);
   }
+
+  fillWallet(walletId: string, newBalance: number) {
+    return this.client.put(this.urlback + `Wallets/${walletId}`, {balance: newBalance});
+  }
 }

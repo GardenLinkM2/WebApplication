@@ -10,6 +10,7 @@ import {RecoverPwdScreenComponent} from './screens/recover-pwd-screen/recover-pw
 import {PersonalSpaceComponent} from './screens/personal-space/personal-space/personal-space.component';
 import {IndevelopmentComponent} from './components/indevelopment/indevelopment.component';
 import { ConnexionComponent } from './components/connexion/connexion.component';
+import {FillWalletScreenComponent} from './screens/fill-wallet-screen/fill-wallet-screen.component';
 
 const routes: Routes = [
   { path: 'accueil', component: HomeScreenComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'user-info', pathMatch: 'full'}
       ]
   },
+  { path: 'recharger-compte', component: FillWalletScreenComponent},
   { path: '**',   redirectTo: '/accueil', pathMatch: 'full'}
 ];
 
@@ -33,4 +35,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
