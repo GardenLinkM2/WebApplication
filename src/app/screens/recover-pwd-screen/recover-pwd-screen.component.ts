@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RecoverPwdService} from '../../services/password-recovery/recover-pwd.service';
 import {ActivatedRoute} from '@angular/router';
+import {comparisonValidator} from '../../services/validators/cofirm-password';
 
 @Component({
   selector: 'app-recover-pwd-screen',
@@ -11,10 +12,14 @@ import {ActivatedRoute} from '@angular/router';
 export class RecoverPwdScreenComponent {
   submitted: boolean;
   responseStatus: string;
-    constructor(private reinitpass: RecoverPwdService, private activatedRoute: ActivatedRoute) { this.submitted = false; }
   rcvPassForm = new FormGroup(
-    {password: new FormControl('', [Validators.required])}
+    {password: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required])}
   );
+    constructor(private reinitpass: RecoverPwdService, private activatedRoute: ActivatedRoute) {
+      this.submitted = false;
+      this.rcvPassForm.setValidators(comparisonValidator());
+    }
   onSubmit() {
     // TODO: Replace the following line with an effective one.
     if (this.rcvPassForm.valid) {

@@ -1,8 +1,8 @@
 export enum GroundEnum {
-  ARGILEUSE = 'Argileuse',
-  SABLEUSE = 'Sableuse',
-  TOURBEUSE = 'Tourbeuse',
+  ARGILEUSE = 'Argileux',
+  SABLEUSE = 'Sableux',
+  TOURBEUSE = 'Tourbeux',
   HUMIFERE = 'Humifère',
-  SILICEUSE = 'Siliceuse',
+  SILICEUSE = 'Siliceux',
   CALCAIRE = 'Calcaire'
 }

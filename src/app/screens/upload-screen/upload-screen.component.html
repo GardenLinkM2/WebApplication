@@ -5,7 +5,7 @@
     <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
   </div><br><br>
   <div class="container text-center" id="formdiv">
-    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" id="up">
         <div class="title" >
           <label style="color: #005739; font-weight: bold">
             Titre<span style="color:red">*</span><br>
@@ -80,7 +80,7 @@
           <div class="row">
             <div class="col-sm-8" id="description">
               <label style="color: #005739; font-weight: bold">
-                Description:<br> <input pInputText id="descriptionInput" type="text" size="70" formControlName="description">
+                Description:<br> <textarea pInputText id="descriptionInput" type="text" style="width: 40vw" formControlName="description"></textarea>
               </label>
               <br>
             </div>
@@ -99,6 +99,9 @@
           <br>
         </div>
         <div class="text-center">
+          <p-confirmDialog [style]="{width: '25vw'}" [baseZIndex]="10000" acceptLabel="Oui" rejectLabel="Non"
+                           acceptButtonStyleClass="ui-button-rounded ui-button-success"
+                           rejectButtonStyleClass="ui-button-rounded ui-button-danger"></p-confirmDialog>
           <button pButton type="submit" label="Publier" class="ui-button-rounded" [disabled]="!uploadForm.valid"></button>
         </div>
     </form>

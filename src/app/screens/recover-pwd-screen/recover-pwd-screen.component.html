@@ -6,15 +6,22 @@
   </div>
   <div class="shown" *ngIf="!submitted">
     <form [formGroup]="rcvPassForm" (ngSubmit)="onSubmit()">
-
       <div class="labelfield">
-
         <label>
           <div class="textprint">Saisissez un nouveau mot de passe</div>
           <div class="passwordInput">
             <input pInputText type="password" size="70" formControlName="password">
           </div>
-
+        </label>
+        <label>
+          <br><br>
+          <div class="textprint">Confirmer votre saisie</div>
+          <div class="passwordInput">
+            <input pInputText type="password" size="70" formControlName="confirmPassword">
+            <span *ngIf="rcvPassForm.get('confirmPassword').errors != null" style="color: red">
+              {{rcvPassForm.get('confirmPassword').errors.notEquivalent}}
+            </span>
+          </div>
         </label>
         <br><br>
         <!--TODO: replace with input field color change-->
