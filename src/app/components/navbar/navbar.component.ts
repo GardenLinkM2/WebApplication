@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
   private gardens = 'my-gardens';
   private messages = 'messages';
   private active = '';
-  private tabs = [
+  tabs = [
     {
       route: `/personal-space/${this.user}`,
       name: 'Mes informations',
