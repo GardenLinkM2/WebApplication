@@ -4,6 +4,7 @@ import { MainLayoutComponent } from './main-layout.component';
 import {MenuComponent} from '../../components/menu/menu.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('MainLayoutComponent', () => {
   let component: MainLayoutComponent;
@@ -15,7 +16,7 @@ describe('MainLayoutComponent', () => {
         MainLayoutComponent,
         MenuComponent ],
       imports: [
-        RouterTestingModule
+        RouterTestingModule, HttpClientTestingModule
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

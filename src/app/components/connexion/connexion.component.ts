@@ -1,6 +1,6 @@
-import { ModalService } from './../../services/modal-service/modal.service';
+import { ModalService } from '../../services/modal-service/modal.service';
 import { Router } from '@angular/router';
-import { AuthenticationService } from './../../services/connexion/authentication.service';
+import { AuthenticationService } from '../../services/connexion/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -62,6 +62,7 @@ export class ConnexionComponent implements OnInit {
     if (localStorage.getItem('userToken') != null && localStorage.getItem('synToken') != null) {
       this.router.navigateByUrl('/');
       this.loginForm.reset();
+      window.location.reload();
     }
   }
 

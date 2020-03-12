@@ -5,13 +5,15 @@ import {MainLayoutComponent} from './screens/main-layout/main-layout.component';
 import {MenuComponent} from './components/menu/menu.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientTestingModule
       ],
       declarations: [
         AppComponent,

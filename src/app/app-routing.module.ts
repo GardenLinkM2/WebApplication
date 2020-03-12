@@ -9,7 +9,7 @@ import {MdpOublieComponent} from './screens/mdp-oublie/mdp-oublie.component';
 import {RecoverPwdScreenComponent} from './screens/recover-pwd-screen/recover-pwd-screen.component';
 import {PersonalSpaceComponent} from './screens/personal-space/personal-space/personal-space.component';
 import {IndevelopmentComponent} from './components/indevelopment/indevelopment.component';
-import { ConnexionComponent } from './features/connexion/connexion.component';
+import { ConnexionComponent } from './components/connexion/connexion.component';
 
 const routes: Routes = [
   { path: 'accueil', component: HomeScreenComponent },

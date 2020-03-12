@@ -42,6 +42,7 @@ export class AuthenticationService {
 
     localStorage.removeItem('synToken');
     localStorage.removeItem('userToken');
+    localStorage.removeItem('accessToken');
   }
 
 }
