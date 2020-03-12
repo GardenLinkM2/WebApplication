@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fill-wallet-screen.component.scss']
 })
 export class FillWalletScreenComponent implements OnInit {
-  private title = 'Recharger le porte-monnaie';
+  title = 'Recharger le porte-monnaie';
   constructor() { }
 
   ngOnInit() {
