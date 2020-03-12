@@ -48,7 +48,7 @@ export class ConnexionComponent implements OnInit {
             localStorage.setItem('accessToken', user.access_token);
             this.invalidate = false;
             this.closeDialog();
-            this.loginForm.reset();
+
           },
           error => this.invalidate = true
         );
@@ -61,6 +61,7 @@ export class ConnexionComponent implements OnInit {
 
     if (localStorage.getItem('userToken') != null && localStorage.getItem('synToken') != null) {
       this.router.navigateByUrl('/');
+      this.loginForm.reset();
     }
   }
 

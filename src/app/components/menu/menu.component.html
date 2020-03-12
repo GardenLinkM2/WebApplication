@@ -4,7 +4,7 @@
   <a class="navbar-brand" routerLink="/accueil">
     <img src="../../../assets/img/logo.png" alt="Logo" class="logo">
   </a>
-  <div class="ml-auto mr-1" *ngIf="isUserNotConnected">
+  <div class="ml-auto mr-1" *ngIf="localStorageEmpty()">
     <button routerLink="inscription" pButton type="button" label="Inscription" class="ui-button-rounded ui-button-secondary"></button>
     <button type="button" (click)="showModalDialog()" pButton label="Connexion" class="ui-button-rounded ui-button-secondary"></button>
 
@@ -17,4 +17,11 @@
 
     </p-dialog>
   </div>
+
+  <div class="ml-auto mr-1 thisdiv" *ngIf="!localStorageEmpty()">
+    <p-tieredMenu #menu [model]="items" [popup]="true" ></p-tieredMenu>
+    <button #btn type="button" pButton icon="pi pi-fw pi-list" label=" Espace personnel" (click)="menu.toggle($event)" class="userMenu"></button>
+    <img (click)="logOutUser()" src="../../../assets/img/deconnexion.png" id="deconnexion"/>
+  </div>
+
 </nav>
