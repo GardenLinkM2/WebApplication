@@ -1,3 +1,5 @@
+import { FeaturesModule } from './../features/features.module';
+import { ConnexionComponent } from './../features/connexion/connexion.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
@@ -7,6 +9,7 @@ import { AdCardComponent } from './ad-card/ad-card.component';
 import {AppRoutingModule} from '../app-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { IndevelopmentComponent } from './indevelopment/indevelopment.component';
+import {DialogModule} from 'primeng/dialog';
 
 
 
@@ -21,7 +24,9 @@ import { IndevelopmentComponent } from './indevelopment/indevelopment.component'
     CommonModule,
     ButtonModule,
     CardModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DialogModule,
+    FeaturesModule
   ],
   exports: [
     MenuComponent,
