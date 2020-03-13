@@ -22,6 +22,7 @@ import { PersonalSpaceComponent } from './personal-space/personal-space/personal
 import {DialogModule} from 'primeng/dialog';
 import { FillWalletScreenComponent } from './fill-wallet-screen/fill-wallet-screen.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { CardModule } from "primeng/card";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     FileUploadModule,
     HttpClientModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    CardModule
   ],
   exports: [
     HomeScreenComponent,

@@ -59,9 +59,8 @@ export class FillWalletComponent implements OnInit {
 
   confirm() {
     this.confirmationService.confirm({
-        message: 'Are you sure that you want to perform this action?',
+        message: 'Veuillez confirmer votre rechargement.',
         accept: () => {
-            console.warn(this.fillForm.value);
             this.userService.fillWallet(this.wallet.id, this.fillForm.get('amount').value + this.wallet.amount).subscribe(
               () => this.router.navigateByUrl('personal-space/user-info')
             );
