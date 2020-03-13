@@ -25,6 +25,7 @@ export class UploadScreenComponent {
   uploadedFiles: any[] = [];
   directions: Direction[];
   msgs: Message[] = [];
+  message: string;
   private requestBody: UploadAdBody;
   private id: string;
   constructor(private upload: UploadService, private confirmationService: ConfirmationService) {
@@ -48,6 +49,10 @@ export class UploadScreenComponent {
   streetNamePattern = /^[A-Za-z0-9 ]+$/; // Gestion rule 5
   onlyNumbers = /^[0-9]+$/;
   zipCodePattern = /^[0-9][0-9][0-9][0-9][0-9]$/;
+  pictureUrl: string;
+  displayUpload = false;
+  fields = ['title', 'surface', 'price', 'durationMax', 'streetNum', 'streetName', 'zipCode',
+  'city', 'soilType', 'orientation', 'accessWater', 'accessTools', 'directAccess', 'description', 'pictures'];
   uploadForm = new FormGroup( // Garden upload form
     {
       title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
@@ -67,10 +72,10 @@ export class UploadScreenComponent {
       accessWater: new FormControl(false),
       accessTools: new FormControl(false),
       directAccess: new FormControl(false),
-      description: new FormControl('', Validators.maxLength(25 * (10 ** 3))),
-      pictures: new FormControl(this.uploadedFiles)
+      description: new FormControl('', Validators.maxLength(25 * (10 ** 3)))
     }
   );
+  private control: string;
   async onSubmit() {
     // TODO: Replace the following line with an effective one.
     if (this.uploadForm.valid) {
@@ -107,17 +112,10 @@ export class UploadScreenComponent {
         photos: [
           {
             id: this.id,
-            fileName: 'string'
+            fileName: this.pictureUrl
           }
         ]
       };
-      let filename;
-      for (filename of this.uploadForm.get('pictures').value) {
-        this.requestBody.photos.push({
-          id: this.id,
-          fileName: filename
-        });
-      }
       this.confirmPublish();
     }
   }
@@ -129,8 +127,17 @@ export class UploadScreenComponent {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.upload.postGarden(this.requestBody).subscribe(
-          () => {window.location.reload()},
-          error => console.log('Error', error)
+          () => {this.message = 'Votre annonce a été mise en ligne'; this.displayUpload = true;
+                 for (this.control of this.fields) {
+                   if (['streetNum', 'streetName', 'zipCode',
+                     'city'].includes(this.control)) {
+                      this.uploadForm.get('address').get(this.control).setValue(null);
+                   } else {
+                     this.uploadForm.get(this.control).setValue(null);
+                   }
+          }
+            },
+          error => {this.message = 'Une erreur est survenue, réessayez plus tard!'; this.displayUpload = true; }
         );
         this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'Votre annonce à été publiée !!!'}];
       },
@@ -143,5 +150,6 @@ export class UploadScreenComponent {
     for (const file of event.files) {
       this.uploadedFiles.push(file);
     }
+    this.pictureUrl = event.originalEvent.body[0];
   }
 }
