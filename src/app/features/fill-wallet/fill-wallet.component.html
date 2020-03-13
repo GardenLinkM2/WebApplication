@@ -1,4 +1,3 @@
-<br>
 <div class="content">
 
 <br>
@@ -8,7 +7,7 @@
     <div class="label row">
         <b><label class="col-3" for="amountId">Montant: </label></b>
         <span class="col-3">
-            <p-spinner class="customSpinner" id="amountId" formControlName="amount" [min]="0" [step]="1" [formatInput]="true" thousandSeparator="." decimalSeparator=","></p-spinner> <b> €</b>
+            <p-spinner class="customSpinner" id="amountId" formControlName="amount" placeholder="0" [min]="0" [step]="1" [formatInput]="true" thousandSeparator="." decimalSeparator=","></p-spinner> <b> €</b>
         </span>
     </div>
 
@@ -34,13 +33,13 @@
             <button pButton style="margin-right: 5px;" class="ui-button-rounded ui-button-success" type="submit" label="Recharger" [disabled]="!fillForm.valid"></button>
         </div>
         <div>
-            <button pButton class="ui-button-rounded ui-button-danger" type="button" (click)="abort()" label="Annuler"></button>
+            <button pButton style="margin-right: 10px;" class="ui-button-rounded ui-button-danger" type="button" (click)="abort()" label="Annuler"></button>
         </div>
     </div>
     <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle" >
         <p-footer>
-            <button type="button" class="ui-button-rounded ui-button-success" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
-            <button type="button" class="ui-button-rounded ui-button-danger" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+            <button type="button" class="ui-button-rounded ui-button-success" pButton icon="pi pi-check" label="Confirmer" (click)="cd.accept()"></button>
+            <button type="button" class="ui-button-rounded ui-button-danger" pButton icon="pi pi-times" label="Annuler" (click)="cd.reject()"></button>
         </p-footer>
     </p-confirmDialog>
 </form>
