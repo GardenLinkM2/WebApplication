@@ -11,6 +11,7 @@ import {PersonalSpaceComponent} from './screens/personal-space/personal-space/pe
 import {IndevelopmentComponent} from './components/indevelopment/indevelopment.component';
 import { ConnexionComponent } from './components/connexion/connexion.component';
 import {FillWalletScreenComponent} from './screens/fill-wallet-screen/fill-wallet-screen.component';
+import {AuthGuard} from './services/activator/route-activator';
 
 const routes: Routes = [
   { path: 'accueil', component: HomeScreenComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
   { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
   { path: 'inscription', component: InscriptionComponent},
   { path: 'connexion', component: ConnexionComponent},
-  { path: 'personal-space', component: PersonalSpaceComponent,
+  { path: 'personal-space', component: PersonalSpaceComponent, canActivate: [AuthGuard],
     children: [
       { path: 'user-info', component: UserInformationComponent },
       { path: 'my-gardens', component: IndevelopmentComponent},
@@ -27,8 +28,8 @@ const routes: Routes = [
       {path: '', redirectTo: 'user-info', pathMatch: 'full'}
       ]
   },
-  { path: 'recharger-compte', component: FillWalletScreenComponent},
-  { path: '**',   redirectTo: '/accueil', pathMatch: 'full'}
+  { path: 'recharger-compte', component: FillWalletScreenComponent, canActivate: [AuthGuard]},
+  { path: '**',   redirectTo: '/accueil', pathMatch: 'full'},
 ];
 
 @NgModule({
