@@ -85,17 +85,21 @@
               <br>
             </div>
           </div>
-          <label style="color: #005739; font-weight: bold">Ajouter des photos</label><br>
+          <label for="fileInput" style="color: #005739; font-weight: bold">Ajouter des photos</label><br>
           <!--TODO: adding upload url-->
-          <p-fileUpload url="https://uploadm2.artheriom.fr/upload.php" (onUpload)="onUpload($event)"
-                        multiple="multiple" accept="image/*" maxFileSize="50000000" fileLimit="1"
-                        [showCancelButton]="false" chooseLabel="Parcourir" uploadLabel="Ajouter">
-            <ng-template pTemplate="content">
-              <ul *ngIf="uploadedFiles.length">
-                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-              </ul>
-            </ng-template>
-          </p-fileUpload>
+          <div>
+            <form [formGroup] = "uploadFile">
+              <div>
+                <input id="fileInput" [disabled]="!(uploadedFiles.length < MAX_FILES)" type="file"
+                       (change)="onFileSelect($event)" /><br><br>
+                <div *ngFor="let url of previewUrls; let index = index">
+                    <img class="preview" [src]="url" height="100" width="100">
+                    <span>{{uploadedFiles[index].name}}</span>
+                    <i class="pi pi-trash" style="color: #006600" (click)="removeImage(index)"></i>
+                </div>
+              </div>
+            </form>
+          </div>
           <br>
         </div>
         <div class="text-center">

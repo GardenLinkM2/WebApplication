@@ -6,6 +6,7 @@ import {GroundEnum} from '../../@entities/enum/ground.enum';
 import {UploadAdBody} from '../../@entities/adUploadBody';
 import {ConfirmationService, Message} from 'primeng/api';
 import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 interface Soil {
   type: string;
@@ -26,9 +27,11 @@ export class UploadScreenComponent implements OnInit {
   uploadedFiles: any[] = [];
   directions: Direction[];
   message: string;
+  MAX_FILES = 5;
   private requestBody: UploadAdBody;
   private id: string;
-  constructor(private upload: UploadService, private confirmationService: ConfirmationService, private router: Router) {
+  private previewUrls = [];
+  constructor(private client: HttpClient, private upload: UploadService, private confirmationService: ConfirmationService, private router: Router) {
     this.soils = [
       {type: GroundEnum.ARGILEUSE},
       {type: GroundEnum.SABLEUSE},
@@ -45,12 +48,12 @@ export class UploadScreenComponent implements OnInit {
       {direction: Orientation.OUEST}
     ];
   }
-  cityPattern = /^[A-Za-z0-9 -]+$/; // Gestion rule 6
-  streetNamePattern = /^[A-Za-z0-9 ]+$/; // Gestion rule 5
+  cityPattern = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 -]+$/; // Gestion rule 6
+  streetNamePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 ]+$/; // Gestion rule 5
   onlyNumbers = /^[0-9]+$/;
   zipCodePattern = /^[0-9][0-9][0-9][0-9][0-9]$/;
-  pictureUrl: string;
   displayUpload = false;
+  uploadFile: FormGroup;
   fields = ['title', 'surface', 'price', 'durationMax', 'streetNum', 'streetName', 'zipCode',
   'city', 'soilType', 'orientation', 'accessWater', 'accessTools', 'directAccess', 'description', 'pictures'];
   uploadForm = new FormGroup( // Garden upload form
@@ -72,15 +75,50 @@ export class UploadScreenComponent implements OnInit {
       accessWater: new FormControl(false),
       accessTools: new FormControl(false),
       directAccess: new FormControl(false),
-      description: new FormControl('', Validators.maxLength(25 * (10 ** 3)))
+      description: new FormControl('', Validators.maxLength(25 * (10 ** 3))),
+      pictures: new FormControl([])
     }
   );
   private control: string;
 
   ngOnInit(): void {
+    this.uploadFile = new FormGroup({
+      profile: new FormControl('')});
+  }
+  onFileSelect(event) {
+    if (event.target.files.length > 0) {
+      for (const file of event.target.files) {
+        this.uploadedFiles.push(file);
+        this.uploadFile.get('profile').setValue(file);
+        const reader = new FileReader();
+        reader.readAsDataURL(file); // read file as data url
+        reader.onload = (pevent) => { // called once readAsDataURL is completed
+          // @ts-ignore
+          this.previewUrls.push(pevent.target.result);
+        };
+      }
+    }
+  }
+  removeImage(index) {
+          this.previewUrls.splice(index, 1);
+          this.uploadedFiles.splice(index, 1);
   }
   async onSubmit() {
     // TODO: Replace the following line with an effective one.
+    let count = 1;
+    for (const file of this.uploadedFiles) {
+      const formData = new FormData();
+      formData.append('file', file);
+      await this.client.post<any>('https://uploadm2.artheriom.fr/upload.php', formData).subscribe(
+        (response) => this.uploadForm.get('pictures').value.push(
+          {
+            fileName: `picture ${count}`,
+            path: response[0]
+          }),
+        (err) => console.log(err)
+      ) ;
+      count ++;
+    }
     if (this.uploadForm.valid) {
       await this.upload.getId().toPromise().then(
         // @ts-ignore
@@ -110,12 +148,7 @@ export class UploadScreenComponent implements OnInit {
               waterAccess: this.uploadForm.get('accessWater').value,
               directAccess: this.uploadForm.get('directAccess').value
             },
-            photos: [
-              {
-                id: this.id,
-                fileName: this.pictureUrl
-              }
-            ]
+            photos: this.uploadForm.get('pictures').value
           };
                      this.confirmPublish();
         },
@@ -144,19 +177,15 @@ export class UploadScreenComponent implements OnInit {
                    } else {
                      this.uploadForm.get(this.control).setValue(null);
                    }
-          }
+                }
+                 this.uploadedFiles = [];
+                 this.previewUrls = [];
             },
           () => {this.message = 'Une erreur est survenue, réessayez plus tard!'; this.displayUpload = true; }
         );
       },
       reject: () => {}
     });
-  }
-  onUpload(event) { // Uploading image files
-    for (const file of event.files) {
-      this.uploadedFiles.push(file);
-    }
-    this.pictureUrl = event.originalEvent.body[0];
   }
 
 }
