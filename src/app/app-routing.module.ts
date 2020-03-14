@@ -14,7 +14,7 @@ import {FillWalletScreenComponent} from './screens/fill-wallet-screen/fill-walle
 import {AuthGuard} from './services/activator/route-activator';
 
 const routes: Routes = [
-  { path: 'accueil', component: HomeScreenComponent },
+  { path: 'acceuil', component: HomeScreenComponent },
   { path: 'upload', component: UploadScreenComponent},
   { path: 'mdp-oublie', component: MdpOublieComponent},
   { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
@@ -29,7 +29,7 @@ const routes: Routes = [
       ]
   },
   { path: 'recharger-compte', component: FillWalletScreenComponent, canActivate: [AuthGuard]},
-  { path: '**',   redirectTo: '/accueil', pathMatch: 'full'},
+  { path: '**',   redirectTo: '/acceuil', pathMatch: 'full'},
 ];
 
 @NgModule({
