@@ -58,7 +58,12 @@ export class ConnexionComponent implements OnInit {
           localStorage.setItem('synToken', response.token);
           this.userService.getUserInfoAuth().toPromise().then(
             // @ts-ignore
-            responseAuth => localStorage.setItem('avatarURL', responseAuth.avatar)
+            responseAuth => {
+				localStorage.setItem('avatarURL', responseAuth.avatar);
+				localStorage.setItem('firstName', responseAuth.firstName);
+				localStorage.setItem('lastName', responseAuth.lastName);
+			}
+	
           )
           this.loginForm.reset();
         }

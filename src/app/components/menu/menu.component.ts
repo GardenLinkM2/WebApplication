@@ -32,17 +32,17 @@ export class MenuComponent implements OnInit {
     this.items = [
 
         {
-          label: 'user',
+          label: 'Mon profil',
           icon: 'pi pi-user-edit',
           routerLink: '/personal-space/user-info'
         },
         {
-          label: 'mes jardins',
+          label: 'Mes jardins',
           icon: 'pi pi-pw pi-file',
           routerLink: '/personal-space/my-gardens'
         },
         {
-          label: 'messagerie',
+          label: 'Mes messages',
           icon: 'pi pi-comment',
           routerLink: '/personal-space/messages'
         }
@@ -67,10 +67,15 @@ export class MenuComponent implements OnInit {
   }
 
   getAvatar() {
-    if (localStorage.getItem('avatarURL') !== 'urltoavatar') {
+    if (localStorage.getItem('avatarURL') !== 'urltoavatar' && localStorage.getItem('avatarURL') !== "") {
       return `url(${localStorage.getItem('avatarURL')})`;
     } else { return  `url(../../../assets/img/defaultavatar.png)`; }
   }
+  getFirstName(){
+	  return localStorage.getItem('firstName');
+  }
+  
+  
 
   logOutUser() {
     this.auth.logout();

@@ -1,20 +1,29 @@
-<nav class="navbar navbar-expand-sm"
-     [class.menu-transparent]="isBackgroundEnabled"
-     [class.shadow]="!isBackgroundEnabled" [class.menu]="!isBackgroundEnabled">
+<nav class="navbar navbar-expand-sm menu-transparent">
   <a class="navbar-brand" routerLink="/accueil">
     <img src="../../../assets/img/logo.png" alt="Logo" class="logo">
   </a>
   <div *ngIf="!(route.url.includes('acceuil') || route.url.includes('upload'))">
-    <button routerLink="/upload" pButton type="button" label="+ Nouvelle annonce" class="ui-button-rounded ui-button-secondary"></button>
+    <button routerLink="/upload" pButton type="button" label="+ Nouvelle annonce" class="ui-button-rounded ui-button-secondary login-custom-button"></button>
   </div>
   <div *ngIf="!route.url.includes('acceuil')">
-    <button routerLink="/" pButton type="button" icon="pi pi-search" label="Rechercher" class="ui-button-rounded ui-button-secondary"></button>
+    <button routerLink="/" pButton type="button" icon="pi pi-search" label="Rechercher" class="ui-button-rounded ui-button-secondary login-custom-button"></button>
   </div>
-  <div class="ml-auto mr-1" *ngIf="localStorageEmpty()">
-    <button routerLink="inscription" pButton type="button" label="Inscription" class="ui-button-rounded ui-button-secondary"></button>
-    <button type="button" (click)="showModalDialog()" pButton label="Connexion" class="ui-button-rounded ui-button-secondary"></button>
+  <div class="ml-auto mr-1 thisdiv" *ngIf="localStorageEmpty()">
+    <button routerLink="inscription" pButton type="button" label="Inscription" class="ui-button-rounded ui-button-secondary login-custom-button"></button>
+    <button type="button" (click)="showModalDialog()" pButton label="Connexion" class="ui-button-rounded ui-button-secondary login-custom-button"></button>
+  </div>
 
-    <p-dialog [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
+  <div class="ml-auto mr-1 thisdiv" *ngIf="!localStorageEmpty()">
+    <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
+	<button #btn class="userMenuA login-custom-button" type="button" pButton (click)="menu.toggle($event)">
+		<button class="userMenu" [ngStyle]="{'background-image': getAvatar()}"></button>
+		<p style="display:inline;color: #f7f7f7;margin-bottom:0;">Bonjour, {{this.getFirstName()}}</p>
+	</button>
+	
+	<button type="button" (click)="logOutUser()" id="deconnexion" pButton icon="pi pi-fw pi-sign-out" style="font-size: 18px;display:inline" class="ui-button-rounded ui-button-secondary login-custom-button"></button>
+  </div>
+	
+<p-dialog [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false" class="modal_box">
 
       <p-header class="modal_header">Connexion</p-header>
@@ -22,15 +31,5 @@
       <app-connexion></app-connexion>
 
     </p-dialog>
-  </div>
-
-  <div class="ml-auto mr-1 thisdiv" *ngIf="!localStorageEmpty()">
-    <p-tieredMenu #menu [model]="items" [popup]="true" ></p-tieredMenu>
-    <button #btn type="button" pButton icon="pi pi-fw pi-list" label=" Espace personnel" (click)="menu.toggle($event)"
-            class="userMenu" [ngStyle]="{'background-image': getAvatar()}">
-
-    </button>
-    <img (click)="logOutUser()" src="../../../assets/img/deconnexion.png" id="deconnexion" routerLink="/"/>
-  </div>
 
 </nav>
