@@ -59,12 +59,14 @@ export class ConnexionComponent implements OnInit {
           this.userService.getUserInfoAuth().toPromise().then(
             // @ts-ignore
             responseAuth => {
-				localStorage.setItem('avatarURL', responseAuth.avatar);
-				localStorage.setItem('firstName', responseAuth.firstName);
-				localStorage.setItem('lastName', responseAuth.lastName);
-			}
-	
-          )
+              // @ts-ignore
+              localStorage.setItem('avatarURL', responseAuth.avatar);
+                    // @ts-ignore
+              localStorage.setItem('firstName', responseAuth.firstName);
+                    // @ts-ignore
+              localStorage.setItem('lastName', responseAuth.lastName);}
+
+          );
           this.loginForm.reset();
         }
       );
