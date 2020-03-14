@@ -40,10 +40,9 @@ export class AuthenticationService {
 
   logout() {
 
-    localStorage.removeItem('synToken');
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('avatarURL');
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigateByUrl('/');
   }
 
 }
