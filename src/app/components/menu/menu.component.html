@@ -26,7 +26,10 @@
 
   <div class="ml-auto mr-1 thisdiv" *ngIf="!localStorageEmpty()">
     <p-tieredMenu #menu [model]="items" [popup]="true" ></p-tieredMenu>
-    <button #btn type="button" pButton icon="pi pi-fw pi-list" label=" Espace personnel" (click)="menu.toggle($event)" class="userMenu"></button>
+    <button #btn type="button" pButton icon="pi pi-fw pi-list" label=" Espace personnel" (click)="menu.toggle($event)"
+            class="userMenu" [ngStyle]="{'background-image': getAvatar()}">
+
+    </button>
     <img (click)="logOutUser()" src="../../../assets/img/deconnexion.png" id="deconnexion" routerLink="/"/>
   </div>
 

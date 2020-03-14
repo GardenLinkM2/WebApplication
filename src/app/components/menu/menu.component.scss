@@ -21,18 +21,42 @@
 }
 
 .userMenu {
-  right: 0.5cm;
+  right: 1cm;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 50px 50px;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border-style: none;
+}
+
+::ng-deep{
+  .userMenu .ui-button-text{
+    display: none;
+  }
+
+  .userMenu .ui-button-icon-left {
+    display: none;
+  }
+  .userMenu:enabled:hover {
+    background-color: #0448254f !important;
+    color: #ffffff;
+    border-color: #006600 !important;
+    border-style: solid;
+  }
+
 }
 
 #deconnexion {
-  position: relative;
   width: 15%;
   height: 15%;
-  float: right;
+  cursor: pointer;
 }
 
 .thisdiv {
   float: right;
-  text-align: left;
+  text-align: right;
   width: 5.5cm;
 }
