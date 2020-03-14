@@ -40,7 +40,8 @@ export class UserInformationComponent implements OnInit {
       email: new FormControl({value: this.newInformation.email}, [Validators.email, Validators.required]),
       phoneNumber: new FormControl({value: this.newInformation.phone}, Validators.required),
       newsletter: new FormControl({value: this.newInformation.newsletter}),
-      confirmPassword: new FormControl({value: null}, Validators.required)
+      confirmPassword: new FormControl({value: null}, Validators.required),
+      avatar: new FormControl({value: ''})
     });
     this.infoForm.setValidators(comparisonValidator());
     this.displaySuccessModification = false;
@@ -71,7 +72,7 @@ export class UserInformationComponent implements OnInit {
         this.newInformation.newsletter = responseAuth.newsletter;
         this.infoForm.get('newsletter').setValue(this.newInformation.newsletter);
         // @ts-ignore
-        if (responseAuth.avatar !== '') {
+        if (responseAuth.avatar !== '' && responseAuth.avatar !== 'urltoavatar') {
           // @ts-ignore
           this.newInformation.avatar = responseAuth.avatar;
         }
@@ -130,7 +131,7 @@ export class UserInformationComponent implements OnInit {
             password: undefined,
             phone: this.infoForm.get('phoneNumber').value,
             email: this.infoForm.get('email').value,
-            avatar: 'assets/img/defaultavatar.png',
+            avatar: this.infoForm.get('avatar').value,
             newsletter: this.infoForm.get('newsletter').value,
           };
           delete this.newInformation.password;
@@ -139,7 +140,7 @@ export class UserInformationComponent implements OnInit {
             password: this.infoForm.get('password').value,
             phone: this.infoForm.get('phoneNumber').value,
             email: this.infoForm.get('email').value,
-            avatar: 'assets/img/defaultavatar.png',
+            avatar: this.infoForm.get('avatar').value,
             newsletter: this.infoForm.get('newsletter').value,
           };
           this.passwordLabel = 'Mot de passe';

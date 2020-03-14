@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/connexion/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserService} from '../../services/user-info/user.service';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class ConnexionComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private connexion: AuthenticationService,
               private router: Router,
-              private modal: ModalService) { }
+              private modal: ModalService,
+              private userService: UserService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -54,6 +56,17 @@ export class ConnexionComponent implements OnInit {
       await this.connexion.syn(localStorage.getItem('accessToken')).toPromise().then(
         response => {
           localStorage.setItem('synToken', response.token);
+          this.userService.getUserInfoAuth().toPromise().then(
+            // @ts-ignore
+            responseAuth => {
+              // @ts-ignore
+              localStorage.setItem('avatarURL', responseAuth.avatar);
+                    // @ts-ignore
+              localStorage.setItem('firstName', responseAuth.firstName);
+                    // @ts-ignore
+              localStorage.setItem('lastName', responseAuth.lastName);}
+
+          );
           this.loginForm.reset();
         }
       );
