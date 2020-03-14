@@ -1,6 +1,6 @@
 <div class="container">
   <div class="container text-center withlogo infocard">
-    <img src="{{avatar}}" class="avatar" (click)="changeAvatar()">
+    <img src="{{avatar}}" class="avatar" (click)="displayChangeImage=true">
   </div>
   <div class=" container text-center withinfo infocard">
     <div class="row">
@@ -70,5 +70,12 @@
     <button *ngIf="activateFields" pButton label="Annuler" class="ui-button-rounded ui-button-danger editing" type="button" (click)="cancelAction()"></button>
     <br><br>
   </div>
+  <p-dialog header="Choisissez une image" [(visible)]="displayChangeImage" [modal]="true" [style]="{width: '20vw'}" [baseZIndex]="10000"
+            [draggable]="false" [resizable]="false">
+      <p-fileUpload url="https://uploadm2.artheriom.fr/upload.php" (onUpload)="changeAvatar($event)"
+                     accept="image/*" maxFileSize="50000000" fileLimit="1"
+                    [showCancelButton]="false" chooseLabel="Parcourir" uploadLabel="Mettre à Jour">>
+      </p-fileUpload>
+  </p-dialog>
 </div>
 

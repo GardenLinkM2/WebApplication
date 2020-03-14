@@ -8,8 +8,13 @@
   height: 150px;
   border-radius: 50%;
   border: 1px solid #515151;
+  background-color: #f7f7f7;
+  cursor: pointer;
 }
 
+.avatar:hover {
+  opacity: 0.9;
+}
 .twobuttons{
   border-style: ridge;
   border-color: orange;
@@ -60,4 +65,8 @@ input {
 
 .editing{
   width: 2.7cm;
+}
+
+.pi-plus{
+  cursor: pointer;
 }

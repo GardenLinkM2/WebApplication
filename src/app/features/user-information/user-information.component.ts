@@ -27,6 +27,7 @@ export class UserInformationComponent implements OnInit {
   newInformation: UpdatedInfo;
   displaySuccessSuppression = false;
   displaySuccessModification: boolean;
+  displayChangeImage = false;
   infoForm: FormGroup;
 
   async ngOnInit() {
@@ -174,7 +175,7 @@ export class UserInformationComponent implements OnInit {
       phone: sessionStorage.getItem('phone'),
       newsletter: sessionStorage.getItem('newsletter') === 'true',
       password: '****************'
-    }
+    };
     this.infoForm.get('phoneNumber').setValue(sessionStorage.getItem('phone'));
     this.infoForm.get('email').setValue(sessionStorage.getItem('email'));
     this.infoForm.get('password').setValue('****************');
@@ -198,7 +199,12 @@ export class UserInformationComponent implements OnInit {
     }
   }
 
-  changeAvatar() {
-
+  changeAvatar(event) {
+    this.avatar = event.originalEvent.body[0];
+    localStorage.setItem('avatarURL', this.avatar);
+    this.userService.updateInformation(this.id, {avatar: this.avatar} ).toPromise().then(
+      () => this.displayChangeImage = false,
+      error => console.log('FAILURE', error)
+    );
   }
 }
