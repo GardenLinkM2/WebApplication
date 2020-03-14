@@ -14,6 +14,7 @@ import {AppRoutingModule} from '../app-routing.module';
 import { InscriptionComponent } from './inscription/inscription.component';
 import { FillWalletComponent } from './fill-wallet/fill-wallet.component';
 import { SpinnerModule } from 'primeng/spinner';
+import {FileUploadModule} from 'primeng/fileupload';
 
 
 @NgModule({
@@ -24,17 +25,18 @@ import { SpinnerModule } from 'primeng/spinner';
     ConnexionComponent,
     FillWalletComponent
     ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    ButtonModule,
-    ConfirmDialogModule,
-    DialogModule,
-    AppRoutingModule,
-    CheckboxModule,
-    SpinnerModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        ButtonModule,
+        ConfirmDialogModule,
+        DialogModule,
+        AppRoutingModule,
+        CheckboxModule,
+        SpinnerModule,
+        FileUploadModule
+    ],
   exports: [
     ResearchComponent,
     InscriptionComponent,
