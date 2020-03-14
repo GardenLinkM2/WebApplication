@@ -66,6 +66,12 @@ export class MenuComponent implements OnInit {
 
   }
 
+  getAvatar() {
+    if (localStorage.getItem('avatarURL') !== 'urltoavatar') {
+      return `url(${localStorage.getItem('avatarURL')})`;
+    } else { return  `url(../../../assets/img/defaultavatar.png)`; }
+  }
+
   logOutUser() {
     this.auth.logout();
   }
