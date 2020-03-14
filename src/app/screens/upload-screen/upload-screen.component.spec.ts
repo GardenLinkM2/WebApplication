@@ -3,6 +3,7 @@ import { UploadScreenComponent } from './upload-screen.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('UploadScreenComponent', () => {
   let component: UploadScreenComponent;
@@ -11,7 +12,7 @@ describe('UploadScreenComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UploadScreenComponent],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
