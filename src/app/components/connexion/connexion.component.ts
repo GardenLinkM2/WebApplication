@@ -55,11 +55,6 @@ export class ConnexionComponent implements OnInit {
         response => {
           localStorage.setItem('synToken', response.token);
           this.loginForm.reset();
-          if (localStorage.getItem('previousURL')) {
-            const url = localStorage.getItem('previousURL');
-            localStorage.removeItem('previousURL');
-            this.router.navigateByUrl(url);
-          }
         }
       );
     } else {
