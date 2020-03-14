@@ -48,22 +48,24 @@ export class ConnexionComponent implements OnInit {
             localStorage.setItem('accessToken', user.access_token);
             this.invalidate = false;
             this.closeDialog();
-
           },
           error => this.invalidate = true
         );
       await this.connexion.syn(localStorage.getItem('accessToken')).toPromise().then(
-        response => localStorage.setItem('synToken', response.token)
+        response => {
+          localStorage.setItem('synToken', response.token);
+          this.loginForm.reset();
+          if (localStorage.getItem('previousURL')) {
+            const url = localStorage.getItem('previousURL');
+            localStorage.removeItem('previousURL');
+            this.router.navigateByUrl(url);
+          }
+        }
       );
     } else {
       this.invalidate = true;
     }
 
-    if (localStorage.getItem('userToken') != null && localStorage.getItem('synToken') != null) {
-      this.router.navigateByUrl('/');
-      this.loginForm.reset();
-      window.location.reload();
-    }
   }
 
 

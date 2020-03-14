@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UploadService} from '../../services/upload-add/upload.service';
 import {Orientation} from '../../@entities/enum/orientation.enum';
 import {GroundEnum} from '../../@entities/enum/ground.enum';
 import {UploadAdBody} from '../../@entities/adUploadBody';
 import {ConfirmationService, Message} from 'primeng/api';
+import {Router} from '@angular/router';
 
 interface Soil {
   type: string;
@@ -20,15 +21,14 @@ interface Direction {
   styleUrls: ['./upload-screen.component.scss'],
   providers: [ConfirmationService]
 })
-export class UploadScreenComponent {
+export class UploadScreenComponent implements OnInit {
   soils: Soil[];
   uploadedFiles: any[] = [];
   directions: Direction[];
-  msgs: Message[] = [];
   message: string;
   private requestBody: UploadAdBody;
   private id: string;
-  constructor(private upload: UploadService, private confirmationService: ConfirmationService) {
+  constructor(private upload: UploadService, private confirmationService: ConfirmationService, private router: Router) {
     this.soils = [
       {type: GroundEnum.ARGILEUSE},
       {type: GroundEnum.SABLEUSE},
@@ -76,47 +76,56 @@ export class UploadScreenComponent {
     }
   );
   private control: string;
+
+  ngOnInit(): void {
+  }
   async onSubmit() {
     // TODO: Replace the following line with an effective one.
     if (this.uploadForm.valid) {
       await this.upload.getId().toPromise().then(
         // @ts-ignore
-        response => this.id = response.data.id,
-        error => console.log('Error', error)
-      );
-      this.requestBody = {
-        id: this.id,
-        name: this.uploadForm.get('title').value,
-        description: this.uploadForm.get('description').value,
-        size: 0,
-        isReserved: false,
-        minUse: this.uploadForm.get('durationMax').value,
-        owner: this.id,
-        validation: 0,
-        location: {
-          streetNumber: Number(this.uploadForm.get('address').get('streetNum').value),
-          street: this.uploadForm.get('address').get('streetName').value,
-          postalCode: Number(this.uploadForm.get('address').get('zipCode').value),
-          city: this.uploadForm.get('address').get('city').value
-        },
-        criteria: {
-          locationTime: 0,
-          area: this.uploadForm.get('surface').value,
-          price: this.uploadForm.get('price').value,
-          orientation: this.uploadForm.get('orientation').value.direction,
-          typeOfClay: this.uploadForm.get('soilType').value.type,
-          equipments: this.uploadForm.get('accessTools').value,
-          waterAccess: this.uploadForm.get('accessWater').value,
-          directAccess: this.uploadForm.get('directAccess').value
-        },
-        photos: [
-          {
+        response => {this.id = response.data.id;
+                     this.requestBody = {
             id: this.id,
-            fileName: this.pictureUrl
-          }
-        ]
-      };
-      this.confirmPublish();
+            name: this.uploadForm.get('title').value,
+            description: this.uploadForm.get('description').value,
+            size: 0,
+            isReserved: false,
+            minUse: this.uploadForm.get('durationMax').value,
+            owner: this.id,
+            validation: 0,
+            location: {
+              streetNumber: Number(this.uploadForm.get('address').get('streetNum').value),
+              street: this.uploadForm.get('address').get('streetName').value,
+              postalCode: Number(this.uploadForm.get('address').get('zipCode').value),
+              city: this.uploadForm.get('address').get('city').value
+            },
+            criteria: {
+              locationTime: 0,
+              area: this.uploadForm.get('surface').value,
+              price: this.uploadForm.get('price').value,
+              orientation: this.uploadForm.get('orientation').value.direction,
+              typeOfClay: this.uploadForm.get('soilType').value.type,
+              equipments: this.uploadForm.get('accessTools').value,
+              waterAccess: this.uploadForm.get('accessWater').value,
+              directAccess: this.uploadForm.get('directAccess').value
+            },
+            photos: [
+              {
+                id: this.id,
+                fileName: this.pictureUrl
+              }
+            ]
+          };
+                     this.confirmPublish();
+        },
+        error => {
+          if (error.status === 401) {
+            this.message = 'Connectez vous pour publier une annonce';
+          } else { this.message = 'Une erreur est survenue, réessayez plus tard!'; }
+          this.displayUpload = true;
+        }
+      );
     }
   }
 
@@ -137,13 +146,10 @@ export class UploadScreenComponent {
                    }
           }
             },
-          error => {this.message = 'Une erreur est survenue, réessayez plus tard!'; this.displayUpload = true; }
+          () => {this.message = 'Une erreur est survenue, réessayez plus tard!'; this.displayUpload = true; }
         );
-        this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'Votre annonce à été publiée !!!'}];
       },
-      reject: () => {
-        this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'publication annulée.'}];
-      }
+      reject: () => {}
     });
   }
   onUpload(event) { // Uploading image files
@@ -152,4 +158,5 @@ export class UploadScreenComponent {
     }
     this.pictureUrl = event.originalEvent.body[0];
   }
+
 }
