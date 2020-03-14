@@ -9,6 +9,7 @@ import {FeaturesModule} from './features/features.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {TokenInterceptor} from './req-interceptor';
+import {AuthGuard} from './services/activator/route-activator';
 
 
 
@@ -26,7 +27,7 @@ import {TokenInterceptor} from './req-interceptor';
     ReactiveFormsModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}, AuthGuard
   ],
   bootstrap: [AppComponent]
 })
