@@ -4,6 +4,7 @@ import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from 
 import {ConfirmationService, Message} from 'primeng/api';
 import {UpdatedInfo} from '../../@entities/updateInfo';
 import {comparisonValidator} from '../../services/validators/cofirm-password';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-information',
@@ -13,7 +14,7 @@ import {comparisonValidator} from '../../services/validators/cofirm-password';
 })
 
 export class UserInformationComponent implements OnInit {
-  constructor(private userService: UserService, private confirmationService: ConfirmationService) { }
+  constructor(private userService: UserService, private confirmationService: ConfirmationService, private router: Router) { }
   firstname: string;
   lastname: string;
   balance: number;
@@ -21,6 +22,7 @@ export class UserInformationComponent implements OnInit {
   passwordLabel: string;
   msgs: Message[] = [];
   activateFields: boolean;
+  avatar = 'assets/img/defaultavatar.png';
   editingPassword: boolean;
   newInformation: UpdatedInfo;
   displaySuccessSuppression = false;
@@ -31,7 +33,6 @@ export class UserInformationComponent implements OnInit {
     this.newInformation = {
       email: null,
       password: null,
-      avatar: 'assets/img/defaultavatar.png',
       newsletter: null,
       phone: null
     };
@@ -40,8 +41,7 @@ export class UserInformationComponent implements OnInit {
       email: new FormControl({value: this.newInformation.email}, [Validators.email, Validators.required]),
       phoneNumber: new FormControl({value: this.newInformation.phone}, Validators.required),
       newsletter: new FormControl({value: this.newInformation.newsletter}),
-      confirmPassword: new FormControl({value: null}, Validators.required),
-      avatar: new FormControl({value: ''})
+      confirmPassword: new FormControl({value: null}, Validators.required)
     });
     this.infoForm.setValidators(comparisonValidator());
     this.displaySuccessModification = false;
@@ -64,17 +64,21 @@ export class UserInformationComponent implements OnInit {
         this.lastname = responseAuth.lastName;
         // @ts-ignore
         this.newInformation.email = responseAuth.email;
+        sessionStorage.setItem('email', this.newInformation.email);
         this.infoForm.get('email').setValue(this.newInformation.email);
         // @ts-ignore
         this.newInformation.phone = responseAuth.phone;
+        sessionStorage.setItem('phone', this.newInformation.phone);
         this.infoForm.get('phoneNumber').setValue(this.newInformation.phone);
         // @ts-ignore
         this.newInformation.newsletter = responseAuth.newsletter;
+        // @ts-ignore
+        sessionStorage.setItem('newsletter', responseAuth.newsletter);
         this.infoForm.get('newsletter').setValue(this.newInformation.newsletter);
         // @ts-ignore
         if (responseAuth.avatar !== '' && responseAuth.avatar !== 'urltoavatar') {
           // @ts-ignore
-          this.newInformation.avatar = responseAuth.avatar;
+          this.avatar = responseAuth.avatar;
         }
         // @ts-ignore
         this.id = responseAuth.id;
@@ -119,48 +123,64 @@ export class UserInformationComponent implements OnInit {
   }
 
   saveChanges() {
-    this.confirmationService.confirm({
-      message: 'Sauvegarder les modifications?',
-      header: 'Modification',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'You have accepted'}];
-        this.activateFields = false;
-        if (this.infoForm.get('password').disabled) {
-          this.newInformation = {
-            password: undefined,
-            phone: this.infoForm.get('phoneNumber').value,
-            email: this.infoForm.get('email').value,
-            avatar: this.infoForm.get('avatar').value,
-            newsletter: this.infoForm.get('newsletter').value,
-          };
-          delete this.newInformation.password;
-        } else {
-          this.newInformation = {
-            password: this.infoForm.get('password').value,
-            phone: this.infoForm.get('phoneNumber').value,
-            email: this.infoForm.get('email').value,
-            avatar: this.infoForm.get('avatar').value,
-            newsletter: this.infoForm.get('newsletter').value,
-          };
-          this.passwordLabel = 'Mot de passe';
-          this.editingPassword = false;
+    if (!this.infoForm.untouched) {
+      this.confirmationService.confirm({
+        message: 'Sauvegarder les modifications?',
+        header: 'Modification',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'You have accepted'}];
+          this.activateFields = false;
+          if (this.infoForm.get('password').disabled) {
+            this.newInformation = {
+              password: undefined,
+              phone: this.infoForm.get('phoneNumber').value,
+              email: this.infoForm.get('email').value,
+              newsletter: this.infoForm.get('newsletter').value,
+            };
+            delete this.newInformation.password;
+          } else {
+            this.newInformation = {
+              password: this.infoForm.get('password').value,
+              phone: this.infoForm.get('phoneNumber').value,
+              email: this.infoForm.get('email').value,
+              newsletter: this.infoForm.get('newsletter').value,
+            };
+            this.passwordLabel = 'Mot de passe';
+            this.editingPassword = false;
+          }
+          this.userService.updateInformation(this.id, this.newInformation).subscribe(
+            () => {
+              this.displaySuccessModification = true;
+              sessionStorage.setItem('email', this.newInformation.email);
+              sessionStorage.setItem('phone', this.newInformation.phone);
+              sessionStorage.setItem('newsletter', this.infoForm.get('newsletter').value); },
+            error => console.log('Failure', error)
+          );
+        },
+        reject: () => {
+          this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
+          this.cancelAction();
         }
-        this.userService.updateInformation(this.id, this.newInformation).subscribe(
-          () => this.displaySuccessModification = true,
-          error => console.log('Failure', error)
-        );
-      },
-      reject: () => {
-        this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
-      }
-    });
+      });
+    } else { this.cancelAction(); }
   }
 
   cancelAction() {
-    window.location.reload();
+    this.activateFields = false;
+    this.editingPassword = false;
+    this.newInformation = {
+      email: sessionStorage.getItem('email'),
+      phone: sessionStorage.getItem('phone'),
+      newsletter: sessionStorage.getItem('newsletter') === 'true',
+      password: '****************'
+    }
+    this.infoForm.get('phoneNumber').setValue(sessionStorage.getItem('phone'));
+    this.infoForm.get('email').setValue(sessionStorage.getItem('email'));
+    this.infoForm.get('password').setValue('****************');
+    this.displaySuccessModification = false;
+    this.infoForm.disable();
   }
-
   editPassword() {
     if  (this.infoForm.get('password').enabled) {
       this.infoForm.get('password').disable();
@@ -176,5 +196,9 @@ export class UserInformationComponent implements OnInit {
       this.editingPassword = true;
       this.passwordLabel = 'Saisir le nouveau mot de passe';
     }
+  }
+
+  changeAvatar() {
+
   }
 }

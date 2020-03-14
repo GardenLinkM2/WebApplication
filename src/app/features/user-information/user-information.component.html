@@ -1,6 +1,6 @@
 <div class="container">
   <div class="container text-center withlogo infocard">
-    <img src="{{newInformation.avatar}}" class="avatar">
+    <img src="{{avatar}}" class="avatar" (click)="changeAvatar()">
   </div>
   <div class=" container text-center withinfo infocard">
     <div class="row">
@@ -47,7 +47,7 @@
     <br>
     <button *ngIf="!activateFields" pButton label="Modifier" class="ui-button-rounded ui-button-success editing" type="button" (click)="switchFieldState()"></button>
     <button *ngIf="activateFields" pButton label="Enregistrer" class="ui-button-rounded ui-button-success editing" type="button" (click)="saveChanges()"
-            [disabled]="!infoForm.valid || infoForm.untouched"></button>
+            [disabled]="!infoForm.valid"></button>
     <span>&nbsp;&nbsp;&nbsp;</span>
     <p-confirmDialog [style]="{width: '25vw'}" [baseZIndex]="10000" acceptLabel="Oui" rejectLabel="Non"
                      acceptButtonStyleClass="ui-button-rounded ui-button-success"
