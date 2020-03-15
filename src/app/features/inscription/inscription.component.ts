@@ -1,5 +1,6 @@
+
 import {InscriptionService} from '../../services/inscription/inscription.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, forwardRef } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import {Router} from '@angular/router';
 
@@ -18,6 +19,8 @@ export class InscriptionComponent implements OnInit {
 
 
   myForm: FormGroup;
+  recaptcha: any[];
+  private captchaValidated: boolean;
 
   constructor(private enrollment: InscriptionService, private router: Router) {}
 
@@ -34,7 +37,6 @@ export class InscriptionComponent implements OnInit {
       phone: new FormControl('', Validators.pattern('[0-9]+')),
       password: new FormControl('', Validators.required),
       repassword: new FormControl('', Validators.required),
-      captcha: new FormControl(false, Validators.requiredTrue),
       condition: new FormControl(false, Validators.requiredTrue),
       newsletter: new FormControl(false, Validators.nullValidator)
     });
@@ -42,10 +44,18 @@ export class InscriptionComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  resolved(captchaResponse: any[]) {
+    this.recaptcha = captchaResponse;
 
-    if (this.myForm.valid) {
-        console.warn(this.myForm);
+    this.captchaValidated = captchaResponse.length === 0 ? false : true;
+    }
+
+  validateCaptcha() {
+    return this.captchaValidated;
+  }
+
+  onSubmit() {
+    if (this.myForm.valid && this.captchaValidated) {
         this.enrollment.enroll(this.myForm)
           .subscribe(
             data => this.router.navigateByUrl('acceuil'),

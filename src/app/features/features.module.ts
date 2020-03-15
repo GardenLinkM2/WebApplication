@@ -17,7 +17,7 @@ import { SpinnerModule } from 'primeng/spinner';
 import { ConfirmLeasingDComponent } from './confirm-leasing-d/confirm-leasing-d.component';
 import {ToastModule} from 'primeng/toast';
 import {FileUploadModule} from 'primeng/fileupload';
-
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,9 @@ import {FileUploadModule} from 'primeng/fileupload';
     CheckboxModule,
     SpinnerModule,
     ToastModule,
-    FileUploadModule
+    FileUploadModule,
+    RecaptchaModule,
+    ReactiveFormsModule
   ],
   exports: [
     ResearchComponent,
