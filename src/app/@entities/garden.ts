@@ -1,16 +1,16 @@
-import {Validation} from './validation';
 import {Criteria} from './criteria';
 import {Photo} from './photo';
+import {Location} from './location';
 
 export interface Garden {
   id: string;
   name: string;
-  size: number;
-  reserve: boolean;
-  type: string;
+  isReserved: boolean;
   minUse: number;
+  description : string;
+  location: Location;
   owner: string;
-  validation: Validation;
+  validation: string;
   criteria: Criteria;
   photos: Photo;
 }

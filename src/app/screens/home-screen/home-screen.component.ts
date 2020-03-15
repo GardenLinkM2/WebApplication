@@ -9,7 +9,7 @@ import {BackgroundService} from '../../services/backgroud-service/background.ser
 })
 export class HomeScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   ADDS_MAX_LENGTH = 4;
-  gardens: Garden[];
+  gardens: any[];
 
   constructor(private backgroundService: BackgroundService, private elementRef: ElementRef) { }
 

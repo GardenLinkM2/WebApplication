@@ -8,7 +8,7 @@ import {Garden} from '../../@entities/garden';
 })
 export class AdCardComponent implements OnInit {
 
-  @Input() garden: Garden;
+  @Input() garden: any;
 
   constructor() { }
 

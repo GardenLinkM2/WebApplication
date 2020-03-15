@@ -11,6 +11,7 @@ import {PersonalSpaceComponent} from './screens/personal-space/personal-space/pe
 import {IndevelopmentComponent} from './components/indevelopment/indevelopment.component';
 import { ConnexionComponent } from './components/connexion/connexion.component';
 import {FillWalletScreenComponent} from './screens/fill-wallet-screen/fill-wallet-screen.component';
+import { LeasingDemandComponent } from './screens/leasing-demand/leasing-demand.component';
 import {AuthGuard} from './services/activator/route-activator';
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'user-info', pathMatch: 'full'}
       ]
   },
+  { path: 'demande-location', component: LeasingDemandComponent},
   { path: 'recharger-compte', component: FillWalletScreenComponent, canActivate: [AuthGuard]},
   { path: '**',   redirectTo: '/acceuil', pathMatch: 'full'},
 ];
