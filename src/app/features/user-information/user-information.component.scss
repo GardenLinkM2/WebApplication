@@ -4,8 +4,9 @@
 
 .avatar {
   vertical-align: middle;
-  width: 25%;
-  height: 150px;
+  top: -45px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   border: 1px solid #515151;
   background-color: #f7f7f7;
@@ -53,7 +54,7 @@ input {
 }
 
 .infocard{
-  width: 50%;
+  width: 70%;
   background-color: #f7f7f7;
 }
 
@@ -69,4 +70,11 @@ input {
 
 .pi-plus{
   cursor: pointer;
+}
+
+
+.customButton {
+  width: 35% !important;
+  border-radius: 10px !important;
+  padding: 2px !important;
 }

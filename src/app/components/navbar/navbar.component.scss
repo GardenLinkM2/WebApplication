@@ -2,7 +2,8 @@
   overflow: hidden;
   background-color: #FFFFFF;
   border-radius: 50px 50px 50px 50px;
-  width: 45%;
+  width: 60%;
+  margin-top: -20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -12,6 +13,7 @@
   color: #000000;
   padding: 14px 34.5px;
   text-decoration: none;
+  width: 33.33%;
   font-size: 17px;
 }
 .topnav a:hover {
@@ -25,13 +27,13 @@
 }
 
 #user {
-  padding-left: 10px;
+  text-align:right;
 }
 
 #gardens {
-  padding-right: 40px;
+  text-align:center;
 }
 
 #msgs{
-  padding-right: 56px;
+  text-align:left;
 }

@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   tabs = [
     {
       route: `/personal-space/${this.user}`,
-      name: 'Mes informations',
+      name: 'Mon profil',
       id: 'user'
     },
     {
@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
     },
     {
       route: `/personal-space/${this.messages}`,
-      name: 'Messages',
+      name: 'Mes messages',
       id: 'msgs'
     }]
   constructor(private router: Router) { }
