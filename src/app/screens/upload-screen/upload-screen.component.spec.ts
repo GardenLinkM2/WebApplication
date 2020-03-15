@@ -26,9 +26,9 @@ describe('UploadScreenComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(component.cityPattern).toEqual(/^[A-Za-z0-9 -]+$/);
+    expect(component.cityPattern).toEqual(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9 -]+$/);
     expect(component.onlyNumbers).toEqual( /^[0-9]+$/);
-    expect(component.streetNamePattern).toEqual(/^[A-Za-z0-9 ]+$/);
+    expect(component.streetNamePattern).toEqual(/^[A-Za-zÀ-ÖØ-öø-ÿ0-9 ]+$/);
     expect(component.zipCodePattern).toEqual(/^[0-9][0-9][0-9][0-9][0-9]$/);
   });
 });

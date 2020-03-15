@@ -7,7 +7,7 @@ import {UploadAdBody} from '../../@entities/adUploadBody';
 import {ConfirmationService, Message} from 'primeng/api';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {BackgroundService} from "../../services/backgroud-service/background.service";
+import {BackgroundService} from '../../services/backgroud-service/background.service';
 
 interface Soil {
   type: string;
