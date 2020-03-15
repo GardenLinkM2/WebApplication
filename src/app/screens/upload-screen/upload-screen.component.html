@@ -1,18 +1,24 @@
 <div class="container bg-white" id="overall">
+
   <div class="row" id="title">
     <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
-    <div class="col-sm"><h2 class="text-center" style="color:#005739; font-size: 150%">PUBLIER UNE ANNONCE</h2></div>
+    <div class="col-sm"><h2 class="text-center" style="color:#005739; font-size: 150%">{{title}}</h2></div>
     <div class="col-sm-3" style="border-style: solid; border-color: #005739"></div>
   </div><br><br>
+
   <div class="container text-center" id="formdiv">
+
     <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" id="up">
+
         <div class="title" >
           <label style="color: #005739; font-weight: bold">
             Titre<span style="color:red">*</span><br>
               <input pInputText type="text" class="form-control" formControlName="title" size="76">
           </label>
         </div>
+
         <div class="row">
+
           <div class="col-sm-6" formGroupName="address">
             <h5 style="color: #005739; font-weight: bold">Adresse</h5>
             <label style="color: #005739">
@@ -28,22 +34,25 @@
               Ville<span style="color:red">*</span><input pInputText type="text" class="form-control rounded" formControlName="city">
             </label>
           </div>
-          <div class="col-sm-6" style="text-align: right"><br><br>
-          <label style="color: #005739; font-weight: bold">
-            Surface<span style="color:red">*</span><br>
-              <input pInputText type="number" placeholder="m²" class="form-control" formControlName="surface">
-          </label><br><br>
-          <label style="color: #005739; font-weight: bold">
-            Prix<span style="color:red">*</span><br>
-              <input pInputText type="number" placeholder="€/mois" class="form-control" formControlName="price">
 
-          </label><br><br>
-          <label style="color: #005739; font-weight: bold">
-            Durée Max<span style="color:red">*</span><br>
-              <input pInputText type="number" placeholder="mois" class="form-control" formControlName="durationMax">
-          </label>
+          <div class="col-sm-6" style="text-align: right"><br><br>
+            <label style="color: #005739; font-weight: bold">
+              Surface<span style="color:red">*</span><br>
+                <input pInputText type="number" placeholder="m²" class="form-control" formControlName="surface">
+            </label><br><br>
+            <label style="color: #005739; font-weight: bold">
+              Prix<span style="color:red">*</span><br>
+                <input pInputText type="number" placeholder="€/mois" class="form-control" formControlName="price">
+
+            </label><br><br>
+            <label style="color: #005739; font-weight: bold">
+              Durée Max<span style="color:red">*</span><br>
+                <input pInputText type="number" placeholder="mois" class="form-control" formControlName="durationMax">
+            </label>
+          </div>
+
         </div>
-        </div>
+
         <div class="optionals">
           <div class="row">
             <div class="col-sm-3">
@@ -90,11 +99,11 @@
           <div>
             <form [formGroup] = "uploadFile">
               <div>
-                <input id="fileInput" [disabled]="!(uploadedFiles.length < MAX_FILES)" type="file"
-                       (change)="onFileSelect($event)" /><br><br>
+                <input id="fileInput" [disabled]="!(previewUrls.length < MAX_FILES)"
+                       type="file" (change)="onFileSelect($event)" /><br><br>
                 <div *ngFor="let url of previewUrls; let index = index">
                     <img class="preview" [src]="url" height="100" width="100">
-                    <span>{{uploadedFiles[index].name}}</span>
+                    <span *ngIf="action!='PUT'">{{uploadedFiles[index].name}}</span>
                     <i class="pi pi-trash" style="color: #006600" (click)="removeImage(index)"></i>
                 </div>
               </div>
@@ -102,11 +111,15 @@
           </div>
           <br>
         </div>
+
         <div class="text-center">
+
           <p-confirmDialog [style]="{width: '25vw'}" [baseZIndex]="10000" acceptLabel="Oui" rejectLabel="Non"
                            acceptButtonStyleClass="ui-button-rounded ui-button-success"
                            rejectButtonStyleClass="ui-button-rounded ui-button-danger"></p-confirmDialog>
-          <button pButton type="submit" label="Publier" class="ui-button-rounded" [disabled]="!uploadForm.valid"></button>
+
+          <button pButton type="submit" label="{{buttonLabel}}" class="ui-button-rounded" [disabled]="!uploadForm.valid"></button>
+
           <p-dialog header="Information" [(visible)]="displayUpload" [modal]="true" [style]="{width: '25vw'}" [baseZIndex]="10000"
                     [draggable]="false" [resizable]="false">
             <p>{{message}}</p>
@@ -115,7 +128,10 @@
                       (click)="displayUpload=false" label="Ok"></button>
             </p-footer>
           </p-dialog>
+
         </div>
     </form>
+
   </div>
+
 </div>

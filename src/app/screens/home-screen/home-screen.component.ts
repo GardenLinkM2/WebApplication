@@ -53,4 +53,8 @@ export class HomeScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.backgroundService.disableBackGround(this.elementRef);
   }
+
+  isAuth() {
+  return localStorage.getItem('userToken');
+  }
 }

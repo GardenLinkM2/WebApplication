@@ -64,6 +64,13 @@ button:focus{
 
 .pi-trash{
   cursor: pointer;
+  color: red !important;
+
+}
+
+
+.pi-trash:hover {
+  font-size: 1.40em;
 }
 
 .fileInput {
