@@ -91,7 +91,7 @@ export class UserInformationComponent implements OnInit {
   }
   confirmSuppression() {
     this.confirmationService.confirm({
-      message: 'Etes vous sure de vouloir supprimer le compte?',
+      message: 'Etes vous sûr de vouloir supprimer le compte?',
       header: 'Suppression',
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {

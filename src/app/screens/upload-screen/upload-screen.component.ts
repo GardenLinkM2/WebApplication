@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UploadService} from '../../services/upload-add/upload.service';
 import {Orientation} from '../../@entities/enum/orientation.enum';
@@ -7,6 +7,7 @@ import {UploadAdBody} from '../../@entities/adUploadBody';
 import {ConfirmationService, Message} from 'primeng/api';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
+import {BackgroundService} from "../../services/backgroud-service/background.service";
 
 interface Soil {
   type: string;
@@ -22,7 +23,7 @@ interface Direction {
   styleUrls: ['./upload-screen.component.scss'],
   providers: [ConfirmationService]
 })
-export class UploadScreenComponent implements OnInit {
+export class UploadScreenComponent implements OnInit, AfterViewInit {
   soils: Soil[];
   uploadedFiles: any[] = [];
   directions: Direction[];
@@ -31,7 +32,7 @@ export class UploadScreenComponent implements OnInit {
   private requestBody: UploadAdBody;
   private id: string;
   private previewUrls = [];
-  constructor(private client: HttpClient, private upload: UploadService, private confirmationService: ConfirmationService, private router: Router) {
+  constructor(private backgroundService: BackgroundService, private elementRef: ElementRef, private client: HttpClient, private upload: UploadService, private confirmationService: ConfirmationService, private router: Router) {
     this.soils = [
       {type: GroundEnum.ARGILEUSE},
       {type: GroundEnum.SABLEUSE},
@@ -85,6 +86,11 @@ export class UploadScreenComponent implements OnInit {
     this.uploadFile = new FormGroup({
       profile: new FormControl('')});
   }
+
+  ngAfterViewInit() {
+    this.backgroundService.enableBackGround(this.elementRef);
+  }
+
   onFileSelect(event) {
     if (event.target.files.length > 0) {
       for (const file of event.target.files) {

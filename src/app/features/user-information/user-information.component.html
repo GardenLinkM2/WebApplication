@@ -29,7 +29,7 @@
           <input pInputText id="phonenum" type="text" value="{{newInformation.phone}}" formControlName="phoneNumber">
         </p>
         <p *ngIf="!activateFields"> Mon porte monnaie<br>
-          <span style="font-size:25px">{{balance}} €<i class="pi pi-plus" style="color: #006600" routerLink="/recharger-compte"></i></span>
+          <span style="vertical-align: middle">{{balance}} € <span class="pi pi-plus" style="padding-top:6px; color: #006600" routerLink="/recharger-compte"></span></span>
         </p>
         <p *ngIf="editingPassword">
           <label for="confirmpassword">Confirmer mot de passe</label><br>
@@ -45,8 +45,8 @@
       </p-checkbox>
     </p>
     <br>
-    <button *ngIf="!activateFields" pButton label="Modifier" class="ui-button-rounded ui-button-success editing" type="button" (click)="switchFieldState()"></button>
-    <button *ngIf="activateFields" pButton label="Enregistrer" class="ui-button-rounded ui-button-success editing" type="button" (click)="saveChanges()"
+    <button *ngIf="!activateFields" pButton label="Modifier mes informations" class="ui-button-rounded ui-button-success editing customButton" type="button" (click)="switchFieldState()"></button>
+    <button *ngIf="activateFields" pButton label="Enregistrer les modifications" class="ui-button-rounded ui-button-success editing customButton" type="button" (click)="saveChanges()"
             [disabled]="!infoForm.valid"></button>
     <span>&nbsp;&nbsp;&nbsp;</span>
     <p-confirmDialog [style]="{width: '25vw'}" [baseZIndex]="10000" acceptLabel="Oui" rejectLabel="Non"
@@ -54,7 +54,7 @@
                      rejectButtonStyleClass="ui-button-rounded ui-button-danger"></p-confirmDialog>
     <p-dialog header="Information" [(visible)]="displaySuccessSuppression" [modal]="true" [style]="{width: '25vw'}" [baseZIndex]="10000"
               [draggable]="false" [resizable]="false">
-      <p>Votre compte à été supprimé avec success.</p>
+      <p>Votre compte a été supprimé avec success.</p>
       <p-footer>
         <button type="button" class="ui-button-rounded ui-button-success editing" pButton icon="pi pi-check" routerLink="acceuil" label="Ok"></button>
       </p-footer>
@@ -66,11 +66,11 @@
         <button type="button" class="ui-button-rounded ui-button-success editing" pButton icon="pi pi-check" (click)="cancelAction()" label="Ok"></button>
       </p-footer>
     </p-dialog>
-    <button *ngIf="!activateFields" pButton label="Supprimer" class="ui-button-rounded ui-button-danger editing" type="button" (click)="confirmSuppression()"></button>
-    <button *ngIf="activateFields" pButton label="Annuler" class="ui-button-rounded ui-button-danger editing" type="button" (click)="cancelAction()"></button>
+    <button *ngIf="!activateFields" pButton label="Supprimer le compte" class="ui-button-rounded ui-button-danger editing customButton" type="button" (click)="confirmSuppression()"></button>
+    <button *ngIf="activateFields" pButton label="Annuler les modifications" class="ui-button-rounded ui-button-danger editing customButton" type="button" (click)="cancelAction()"></button>
     <br><br>
   </div>
-  <p-dialog header="Choisissez une image" [(visible)]="displayChangeImage" [modal]="true" [style]="{width: '20vw'}" [baseZIndex]="10000"
+  <p-dialog header="Choisissez une image" [(visible)]="displayChangeImage" [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000"
             [draggable]="false" [resizable]="false">
       <p-fileUpload url="https://uploadm2.artheriom.fr/upload.php" (onUpload)="changeAvatar($event)"
                      accept="image/*" maxFileSize="50000000" fileLimit="1"
