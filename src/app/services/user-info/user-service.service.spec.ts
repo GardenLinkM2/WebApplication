@@ -39,7 +39,6 @@ describe('UserServiceService', () => {
     let updatedInfo: UpdatedInfo;
     updatedInfo = {
       password: 'password',
-      avatar: 'avatar',
       email: 'example@example.com',
       phone: '0600000000',
       newsletter: true
