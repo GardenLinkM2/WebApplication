@@ -17,6 +17,7 @@ import {AuthGuard} from './services/activator/route-activator';
 const routes: Routes = [
   { path: 'acceuil', component: HomeScreenComponent },
   { path: 'upload', component: UploadScreenComponent},
+  { path: 'edit-ad', component: UploadScreenComponent, canActivate: [AuthGuard]},
   { path: 'mdp-oublie', component: MdpOublieComponent},
   { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
   { path: 'inscription', component: InscriptionComponent},

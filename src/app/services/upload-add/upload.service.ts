@@ -9,13 +9,18 @@ import {UploadAdBody} from '../../@entities/adUploadBody';
   providedIn: 'root'
 })
 export class UploadService {
-  private url = environment.url + 'api/Gardens';
   constructor(private client: HttpClient) { }
   getId() {
     return this.client.get(environment.url + 'api/Users/me');
   }
   postGarden(requestBody: UploadAdBody) {
-    return this.client.post(this.url, requestBody);
+    return this.client.post(environment.url + 'api/Gardens', requestBody);
   }
-
+  getGardenbyId(id) {
+    return this.client.get(environment.url + `api/Gardens/${id}`);
+  }
+  modifyGarden(requestBody: UploadAdBody, id) {
+    requestBody.id = id;
+    return this.client.put(environment.url + `api/Gardens/${id}`, requestBody);
+  }
 }

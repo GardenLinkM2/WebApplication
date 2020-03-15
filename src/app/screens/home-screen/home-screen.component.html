@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="row pt-1">
-    <div class="col text-white text-right">
+    <div class="col text-white text-right" *ngIf="!isAuth()">
       Avez vous un jardin à proposer ? <a routerLink="/inscription" class="link" >Inscrivez-vous</a> et trouvez des locataires
     </div>
   </div>

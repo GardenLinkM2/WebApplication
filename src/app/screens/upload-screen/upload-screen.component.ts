@@ -4,11 +4,9 @@ import {UploadService} from '../../services/upload-add/upload.service';
 import {Orientation} from '../../@entities/enum/orientation.enum';
 import {GroundEnum} from '../../@entities/enum/ground.enum';
 import {UploadAdBody} from '../../@entities/adUploadBody';
-import {ConfirmationService, Message} from 'primeng/api';
+import {ConfirmationService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {BackgroundService} from '../../services/backgroud-service/background.service';
-
 interface Soil {
   type: string;
 }
@@ -23,16 +21,22 @@ interface Direction {
   styleUrls: ['./upload-screen.component.scss'],
   providers: [ConfirmationService]
 })
-export class UploadScreenComponent implements OnInit, AfterViewInit {
+export class UploadScreenComponent implements OnInit {
   soils: Soil[];
   uploadedFiles: any[] = [];
   directions: Direction[];
   message: string;
   MAX_FILES = 5;
+  action = 'POST';
+  responsdata: any;
+  buttonLabel = 'publier';
+  title = 'PUBLIER UNE ANNONCE';
   private requestBody: UploadAdBody;
   private id: string;
   private previewUrls = [];
-  constructor(private backgroundService: BackgroundService, private elementRef: ElementRef, private client: HttpClient, private upload: UploadService, private confirmationService: ConfirmationService, private router: Router) {
+  private confirmationMessage = 'Souhaitez vous publier le bien?';
+  constructor(private client: HttpClient, private upload: UploadService, private confirmationService: ConfirmationService,
+              private router: Router) {
     this.soils = [
       {type: GroundEnum.ARGILEUSE},
       {type: GroundEnum.SABLEUSE},
@@ -57,6 +61,7 @@ export class UploadScreenComponent implements OnInit, AfterViewInit {
   uploadFile: FormGroup;
   fields = ['title', 'surface', 'price', 'durationMax', 'streetNum', 'streetName', 'zipCode',
   'city', 'soilType', 'orientation', 'accessWater', 'accessTools', 'directAccess', 'description', 'pictures'];
+  private control: string;
   uploadForm = new FormGroup( // Garden upload form
     {
       title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
@@ -78,17 +83,74 @@ export class UploadScreenComponent implements OnInit, AfterViewInit {
       directAccess: new FormControl(false),
       description: new FormControl('', Validators.maxLength(25 * (10 ** 3))),
       pictures: new FormControl([])
-    }
-  );
-  private control: string;
-
-  ngOnInit(): void {
+    });
+  async ngOnInit() {
     this.uploadFile = new FormGroup({
-      profile: new FormControl('')});
-  }
-
-  ngAfterViewInit() {
-    this.backgroundService.enableBackGround(this.elementRef);
+      profile: new FormControl('')
+    });
+    if (this.router.url.includes('edit-ad')) {
+      this.title = 'MODIFIER VOTRE ANNONCE';
+      this.buttonLabel = 'Enregistrer';
+      this.action = 'PUT';
+      this.confirmationMessage = 'Enregistrer les modifications ?';
+      await this.upload.getGardenbyId(sessionStorage.getItem('adToEdit')).toPromise().then(
+        // @ts-ignore
+        response => this.responsdata = response.data,
+        failure => console.log(failure)
+      );
+      if (this.responsdata.photos) {
+        for (const pictures of this.responsdata.photos) {
+          this.previewUrls.push(pictures.path);
+        }
+      }
+      this.uploadForm.get('title').setValue(this.responsdata.name);
+      this.uploadForm.get('surface').setValue(this.responsdata.criteria.area);
+      this.uploadForm.get('price').setValue(this.responsdata.criteria.price);
+      this.uploadForm.get('durationMax').setValue(this.responsdata.minUse);
+      this.uploadForm.get('address').get('streetName').setValue(this.responsdata.location.street);
+      this.uploadForm.get('address').get('zipCode').setValue(this.responsdata.location.postalCode);
+      this.uploadForm.get('address').get('city').setValue(this.responsdata.location.city);
+      if (this.responsdata.location.streetNumber <= 0) {
+        this.uploadForm.get('address').get('streetNum').setValue('');
+      } else {
+        this.uploadForm.get('address').get('streetNum').setValue(this.responsdata.location.streetNumber);
+      }
+      if (this.responsdata.criteria.typeOfClay) {
+        this.uploadForm.get('soilType').setValue(this.responsdata.criteria.typeOfClay);
+      } else {
+        this.uploadForm.get('soilType').setValue('');
+      }
+      if (this.responsdata.criteria.orientation) {
+        this.uploadForm.get('orientation').setValue(this.responsdata.criteria.orientation);
+      } else {
+        this.uploadForm.get('orientation').setValue('');
+      }
+      if (this.responsdata.criteria.waterAccess) {
+        this.uploadForm.get('accessWater').setValue(this.responsdata.criteria.waterAccess);
+      } else {
+        this.uploadForm.get('accessWater').setValue(false);
+      }
+      if (this.responsdata.criteria.equipments) {
+        this.uploadForm.get('accessTools').setValue(this.responsdata.criteria.equipments);
+      } else {
+        this.uploadForm.get('accessTools').setValue(false);
+      }
+      if (this.responsdata.criteria.directAccess) {
+        this.uploadForm.get('directAccess').setValue(this.responsdata.criteria.directAccess);
+      } else {
+        this.uploadForm.get('directAccess').setValue(false);
+      }
+      if (this.responsdata.description) {
+        this.uploadForm.get('description').setValue(this.responsdata.description);
+      } else {
+        this.uploadForm.get('description').setValue('');
+      }
+      if (this.responsdata.photos) {
+        this.uploadForm.get('pictures').setValue(this.responsdata.photos);
+      } else {
+        this.uploadForm.get('pictures').setValue([]);
+      }
+    }
   }
 
   onFileSelect(event) {
@@ -105,10 +167,16 @@ export class UploadScreenComponent implements OnInit, AfterViewInit {
       }
     }
   }
+
   removeImage(index) {
-          this.previewUrls.splice(index, 1);
-          this.uploadedFiles.splice(index, 1);
+    if ( this.action !== 'PUT' ) {
+      this.uploadedFiles.splice(index, 1);
+    } else {
+      this.uploadForm.get('pictures').value.splice(index, 1);
+    }
+    this.previewUrls.splice(index, 1);
   }
+
   async onSubmit() {
     // TODO: Replace the following line with an effective one.
     let count = 1;
@@ -128,7 +196,7 @@ export class UploadScreenComponent implements OnInit, AfterViewInit {
     if (this.uploadForm.valid) {
       await this.upload.getId().toPromise().then(
         // @ts-ignore
-        response => {this.id = response.data.id;
+        response => {this.id = response.data.id; console.log(this.uploadForm);
                      this.requestBody = {
             id: this.id,
             name: this.uploadForm.get('title').value,
@@ -158,8 +226,8 @@ export class UploadScreenComponent implements OnInit, AfterViewInit {
           };
                      this.confirmPublish();
         },
-        error => {
-          if (error.status === 401) {
+        failure => {
+          if (failure.status === 401) {
             this.message = 'Connectez vous pour publier une annonce';
           } else { this.message = 'Une erreur est survenue, réessayez plus tard!'; }
           this.displayUpload = true;
@@ -170,25 +238,33 @@ export class UploadScreenComponent implements OnInit, AfterViewInit {
 
   confirmPublish() {
     this.confirmationService.confirm({
-      message: 'Souhaitez vous publier le bien?',
+      message: this.confirmationMessage,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.upload.postGarden(this.requestBody).subscribe(
-          () => {this.message = 'Votre annonce a été mise en ligne'; this.displayUpload = true;
-                 for (this.control of this.fields) {
-                   if (['streetNum', 'streetName', 'zipCode',
-                     'city'].includes(this.control)) {
-                      this.uploadForm.get('address').get(this.control).setValue(null);
-                   } else {
-                     this.uploadForm.get(this.control).setValue(null);
-                   }
+        if (this.action === 'POST') {
+          this.upload.postGarden(this.requestBody).subscribe(
+            () => {this.message = 'Votre annonce a été mise en ligne'; this.displayUpload = true;
+                   for (this.control of this.fields) {
+                if (['streetNum', 'streetName', 'zipCode',
+                  'city'].includes(this.control)) {
+                  this.uploadForm.get('address').get(this.control).setValue(null);
+                } else {
+                  this.uploadForm.get(this.control).setValue(null);
                 }
-                 this.uploadedFiles = [];
-                 this.previewUrls = [];
+              }
+                   this.uploadedFiles = [];
+                   this.previewUrls = [];
             },
-          () => {this.message = 'Une erreur est survenue, réessayez plus tard!'; this.displayUpload = true; }
-        );
+            () => {this.message = 'Une erreur est survenue, réessayez plus tard!'; this.displayUpload = true; }
+          );
+        } else {
+          this.upload.modifyGarden(this.requestBody, sessionStorage.getItem('adToEdit')).subscribe(
+            () => {this.message = 'Votre annonce a été modifiée'; this.displayUpload = true; },
+            () => {this.message = 'Une erreur est survenue, réessayez plus tard!'; this.displayUpload = true; }
+          );
+          sessionStorage.removeItem('adToEdit');
+        }
       },
       reject: () => {}
     });
