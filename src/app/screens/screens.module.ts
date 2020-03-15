@@ -23,6 +23,7 @@ import {DialogModule} from 'primeng/dialog';
 import { FillWalletScreenComponent } from './fill-wallet-screen/fill-wallet-screen.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { CardModule } from "primeng/card";
+import { LeasingDemandComponent } from './leasing-demand/leasing-demand.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CardModule } from "primeng/card";
     MdpOublieComponent,
     RecoverPwdScreenComponent,
     PersonalSpaceComponent,
-    FillWalletScreenComponent
+    FillWalletScreenComponent,
+    LeasingDemandComponent
   ],
   imports: [
     CommonModule,
