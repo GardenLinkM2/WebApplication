@@ -57,3 +57,28 @@ button:focus{
   position: relative;
   top: 2cm;
 }
+
+.preview {
+  margin-right: 10%;
+}
+
+.pi-trash{
+  cursor: pointer;
+}
+
+.fileInput {
+  cursor: pointer;
+}
+
+
+#overall {
+  margin-bottom: 100px;
+  padding-bottom: 20px;
+}
+
+
+.ui-button {
+  width: 35% !important;
+  border-radius: 10px !important;
+  padding: 2px !important;
+}

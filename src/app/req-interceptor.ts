@@ -4,10 +4,12 @@ import {Observable} from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  private synToken = localStorage.getItem('synToken');
-  private userToken = localStorage.getItem('userToken');
+  private synToken: string;
+  private userToken: string;
   private modifiedReq: HttpRequest<any>;
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.synToken = localStorage.getItem('synToken');
+    this.userToken = localStorage.getItem('userToken');
     this.modifiedReq = req.clone();
     if (req.url.includes('backend') && this.synToken) {
       this.modifiedReq = req.clone({
