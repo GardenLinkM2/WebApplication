@@ -1,1 +1,59 @@
-<p>mes-jardins works!</p>
+<html>
+<head>
+  <title>Ma première page avec du style</title>
+</head>
+
+<body>
+  <div class="row" class="container">
+
+    <div id="jardins" class="gardenElement" class="row mb-3">
+      <h2>Mes jardins</h2>
+
+      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="!gardensEmpty">
+        <div *ngFor="let add of selectFirstAdds(); last as isLast;"
+            class="col-md px-0" [class.mr-md-2]="!isLast">
+          <app-ad-card [garden]="add"></app-ad-card>
+        </div>
+      </div>
+
+      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="gardensEmpty">
+        <p>Vous n'avez aucun jardin en ligne.</p>
+      </div>
+
+    </div>
+
+    <div id="locations" class="gardenElement" class="row mb-3">
+      <h2>Mes locations</h2>
+
+      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="!gardensEmpty">
+        <div *ngFor="let add of selectFirstAdds(); last as isLast;"
+            class="col-md px-0" [class.mr-md-2]="!isLast">
+          <app-ad-card [garden]="add"></app-ad-card>
+        </div>
+      </div>
+
+      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="gardensEmpty">
+        <p>Vous n'avez loué aucun jardin.</p>
+      </div>
+
+    </div>
+
+    <div id="demandes" class="gardenElement" class="row mb-3">
+      <h2>Demandes envoyées</h2>
+
+      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="!gardensEmpty">
+        <div *ngFor="let add of selectFirstAdds(); last as isLast;"
+            class="col-md px-0" [class.mr-md-2]="!isLast">
+          <app-ad-card [garden]="add"></app-ad-card>
+        </div>
+      </div>
+
+      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="gardensEmpty">
+        <p>Vous n'avez envoyé aucune demande.</p>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>
