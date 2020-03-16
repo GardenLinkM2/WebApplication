@@ -4,24 +4,28 @@ import { AuthenticationService } from '../../services/connexion/authentication.s
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../services/user-info/user.service';
+import {MessageService} from 'primeng/api';
 
 
 @Component({
   selector: 'app-connexion',
   templateUrl: './connexion.component.html',
-  styleUrls: ['./connexion.component.scss']
+  styleUrls: ['./connexion.component.scss'],
+  providers: [
+    MessageService
+  ]
 })
 export class ConnexionComponent implements OnInit {
 
   loginForm: FormGroup;
-  invalidate: boolean;
   displayModal: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private connexion: AuthenticationService,
               private router: Router,
               private modal: ModalService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private messageService: MessageService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -30,11 +34,19 @@ export class ConnexionComponent implements OnInit {
     });
 
     this.modal.currentModalState.subscribe(display => this.displayModal = display);
-    this.invalidate = false;
   }
 
   closeDialog() {
     this.modal.closeDialog();
+  }
+
+
+  showWrongCredentials() {
+    this.messageService.add({severity: 'error', summary: 'Erreur', detail: 'E-mail ou mot de passe incorrect.'});
+  }
+
+  showEmptyForm() {
+    this.messageService.add({severity: 'info', summary: 'Informations', detail: 'Veuillez renseigner un e-mail et un mot de passe.'});
   }
 
 
@@ -48,10 +60,9 @@ export class ConnexionComponent implements OnInit {
             this.connexion.tokenIntroscpection(user.access_token);
             localStorage.setItem('userToken', user.user_token);
             localStorage.setItem('accessToken', user.access_token);
-            this.invalidate = false;
-            this.closeDialog();
           },
-          error => this.invalidate = true
+          error => this.showWrongCredentials()
+
         );
       await this.connexion.syn(localStorage.getItem('accessToken')).toPromise().then(
         response => {
@@ -67,11 +78,17 @@ export class ConnexionComponent implements OnInit {
               localStorage.setItem('lastName', responseAuth.lastName);}
 
           );
-          this.loginForm.reset();
         }
+
       );
+
+      this.closeDialog();
+      this.loginForm.reset();
+
+
+
     } else {
-      this.invalidate = true;
+      this.showEmptyForm();
     }
 
   }

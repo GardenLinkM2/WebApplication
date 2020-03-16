@@ -4,11 +4,15 @@ import { ModalService } from './../../services/modal-service/modal.service';
 import {AfterViewInit, Component, OnInit, Input} from '@angular/core';
 import {BackgroundService} from '../../services/backgroud-service/background.service';
 import {MenuItem} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  providers: [
+    MessageService
+  ]
 })
 export class MenuComponent implements OnInit {
 
@@ -20,7 +24,8 @@ export class MenuComponent implements OnInit {
   constructor(private backgroundService: BackgroundService,
               private modal: ModalService,
               private auth: AuthenticationService,
-              private route: Router) { }
+              private route: Router,
+              private messageService: MessageService) { }
 
   ngOnInit() {
     this.backgroundService.backGroundChanges.subscribe(value => {
@@ -71,11 +76,29 @@ export class MenuComponent implements OnInit {
       return `url(${localStorage.getItem('avatarURL')})`;
     } else { return  `url(../../../assets/img/defaultavatar.png)`; }
   }
-  getFirstName(){
-	  return localStorage.getItem('firstName');
+
+  getFirstName() {
+    return localStorage.getItem('firstName');
   }
-  
-  
+
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({key: 'c', sticky: true, severity: 'warn', summary: 'Déconnexion',
+                              detail: 'êtes-vous sûr de vouloir vous déconnecter'});
+  }
+
+  onConfirm() {
+    this.messageService.clear('c');
+    this.logOutUser();
+  }
+
+  onReject() {
+    this.messageService.clear('c');
+  }
+
+  clear() {
+    this.messageService.clear();
+  }
 
   logOutUser() {
     this.auth.logout();
