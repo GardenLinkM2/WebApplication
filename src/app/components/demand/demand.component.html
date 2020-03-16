@@ -1,0 +1,46 @@
+<p-toolbar>
+    <div id="ui-toolbar-group-left" class="row">
+        <div id="hire-info" class="col">
+            <div id="user" class="row justify-content-start">
+                <div>
+                    <img class="user-icon" src="{{pickAvatar()}}">
+                </div>
+                <div id="user-name" class="col-xs-1 align-self-center">{{user.firstName}} {{user.lastName}}</div>
+            </div>
+    
+            <div class="row">
+                <span class="lenght-display col align-self-end">{{leasing.time}} mois</span>
+                <span class="price-display col align-self-center">{{leasing.time * garden.criteria.price}} €</span>
+            </div>
+        </div>
+
+        <div class="vl"></div>
+
+        <div id="garden-info" class="col">
+            <span class="title">{{garden.name}}</span>
+            <div class="row address">
+                <div class="col">
+                    <span class="label">Rue: </span><span>{{garden.location.streetNumber}} {{garden.location.street}}</span>
+                </div>
+                <div class="col">
+                    <span class="label">Code postal: </span><span>{{garden.location.postalCode}}</span>
+                </div>
+                <div class="col">
+                    <span class="label">Ville: </span><span>{{garden.location.city}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-toolbar-group-right">
+        <button pButton type="button" style="margin-right: 5px;" label="Accepter" icon="pi pi-check" (click)="acceptConfirm()" class="ui-button-rounded ui-button-success"></button>
+        <button pButton type="button" label="Refuser" icon="pi pi-times" (click)="refuseConfirm()" class="ui-button-rounded ui-button-danger"></button>
+    </div>
+</p-toolbar>
+
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" label="Confirmer" class="ui-button-rounded ui-button-success" (click)="cd.accept()"></button>
+        <button type="button" pButton icon="pi pi-times" label="Annuler" class="ui-button-rounded ui-button-danger" (click)="cd.reject()"></button>
+    </p-footer>
+</p-confirmDialog>

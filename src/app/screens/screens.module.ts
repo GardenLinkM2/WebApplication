@@ -24,6 +24,8 @@ import { FillWalletScreenComponent } from './fill-wallet-screen/fill-wallet-scre
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { CardModule } from "primeng/card";
 import { LeasingDemandComponent } from './leasing-demand/leasing-demand.component';
+import { TreatDemandsComponent } from './treat-demands/treat-demands.component';
+import { ToastModule } from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { LeasingDemandComponent } from './leasing-demand/leasing-demand.componen
     RecoverPwdScreenComponent,
     PersonalSpaceComponent,
     FillWalletScreenComponent,
-    LeasingDemandComponent
+    LeasingDemandComponent,
+    TreatDemandsComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +56,8 @@ import { LeasingDemandComponent } from './leasing-demand/leasing-demand.componen
     HttpClientModule,
     DialogModule,
     ConfirmDialogModule,
-    CardModule
+    CardModule,
+    ToastModule
   ],
   exports: [
     HomeScreenComponent,

@@ -12,6 +12,11 @@ import { IndevelopmentComponent } from './indevelopment/indevelopment.component'
 import {DialogModule} from 'primeng/dialog';
 import {TieredMenuModule} from 'primeng/tieredmenu';
 import { PageTitleComponent } from "./page-title/page-title.component";
+import { DemandComponent } from './demand/demand.component';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+
 
 
 
@@ -21,7 +26,8 @@ import { PageTitleComponent } from "./page-title/page-title.component";
     AdCardComponent,
     NavbarComponent,
     IndevelopmentComponent,
-    PageTitleComponent
+    PageTitleComponent,
+    DemandComponent
   ],
   imports: [
     CommonModule,
@@ -31,12 +37,16 @@ import { PageTitleComponent } from "./page-title/page-title.component";
     DialogModule,
     FeaturesModule,
     TieredMenuModule,
+    ToolbarModule,
+    ConfirmDialogModule,
+    ToastModule
   ],
   exports: [
     MenuComponent,
     AdCardComponent,
     NavbarComponent,
-    PageTitleComponent
+    PageTitleComponent,
+    DemandComponent
   ]
 })
 export class ComponentsModule { }

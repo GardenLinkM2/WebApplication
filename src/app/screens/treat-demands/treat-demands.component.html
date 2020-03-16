@@ -1,0 +1,4 @@
+<app-page-title [title]="title"></app-page-title>
+<app-demand *ngFor="let demand of demands" [leasing]="demand" (treated)="onTreated($event)"></app-demand>    
+<p-toast *ngIf="demands && demands.length > 0" position="bottom-right"></p-toast>
+<p-messages *ngIf="!demands || demands.length == 0" [closable]="false"></p-messages>
