@@ -13,6 +13,7 @@ import { ConnexionComponent } from './components/connexion/connexion.component';
 import {FillWalletScreenComponent} from './screens/fill-wallet-screen/fill-wallet-screen.component';
 import { LeasingDemandComponent } from './screens/leasing-demand/leasing-demand.component';
 import {AuthGuard} from './services/activator/route-activator';
+import { TreatDemandsComponent } from './screens/treat-demands/treat-demands.component';
 
 const routes: Routes = [
   { path: 'acceuil', component: HomeScreenComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'edit-ad', component: UploadScreenComponent, canActivate: [AuthGuard]},
   { path: 'mdp-oublie', component: MdpOublieComponent},
   { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
+  { path: 'consulter-demandes', component: TreatDemandsComponent},
   { path: 'inscription', component: InscriptionComponent},
   { path: 'connexion', component: ConnexionComponent},
   { path: 'personal-space', component: PersonalSpaceComponent, canActivate: [AuthGuard],

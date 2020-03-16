@@ -12,5 +12,5 @@ export interface Garden {
   owner: string;
   validation: string;
   criteria: Criteria;
-  photos: Photo;
+  photos: Photo[];
 }
