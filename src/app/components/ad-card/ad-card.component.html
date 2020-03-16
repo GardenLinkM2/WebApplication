@@ -1,25 +1,35 @@
-<p-card [subheader]="garden.name" styleClass="ui-card-shadow">
+<p-card [subheader]="garden.name" styleClass="ui-card-shadow h-100">
   <div class="row">
     <div class="col">
-      {{garden.criteria.price}} € / Semaine
+      {{garden.criteria.price}} € / Mois
     </div>
   </div>
   <p-header>
-    <img src="../../../assets/img/background.jpg">
+    <img *ngIf="garden.photos && garden.photos[0].fileName && garden.photos[0].fileName.trim() != 0" [src]="garden.photos[0].path">
+    <img *ngIf="!garden.photos || !garden.photos[0].fileName || garden.photos[0].fileName.trim() == 0" [src]="baseImage">
   </p-header>
   <div class="row">
     <div class="col">
       {{garden.criteria.area}} m <sup>2</sup>
     </div>
   </div>
-  <div class="row">
+  <div class="row py-2">
     <div class="col">
-    {{garden.criteria.location.id}}
+      <div class="row">
+        <div class="col">
+          {{garden.location.streetNumber}} {{garden.location.street}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {{garden.location.postalCode}}, {{garden.location.city}}
+        </div>
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col">
-      {{garden.minUse}} semaine <span *ngIf="false">s</span>
+      {{garden.minUse}} mois
     </div>
   </div>
   <p-footer>

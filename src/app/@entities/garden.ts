@@ -7,7 +7,7 @@ export interface Garden {
   name: string;
   isReserved: boolean;
   minUse: number;
-  description : string;
+  description: string;
   location: Location;
   owner: string;
   validation: string;

@@ -66,12 +66,12 @@
 
       <div class="form-row w-100 pb-2">
         <select class="col-md form-control form-control-sm mx-1 my-1" id="groundSel" formControlName="groundSel" [value]="undefined">
-          <option value="undefined">Type de sol</option>
-          <option *ngFor="let groundType of groundTypes" value="groundType[0]">{{groundType[1]}}</option>
+          <option value="undefined" *ngIf="this.searchForm.get('groundSel').pristine">Type de sol</option>
+          <option *ngFor="let groundType of groundTypes" [value]="groundType[1]">{{groundType[1]}}</option>
         </select>
         <select class="col-md form-control form-control-sm mx-1 my-1" id="orientation" formControlName="orientationSel" [value]="undefined">
-          <option value="undefined">Orientation</option>
-          <option *ngFor="let orientationType of orientationTypes" value="orientationType[0]">{{orientationType[1]}}</option>
+          <option value="undefined" *ngIf="this.searchForm.get('orientationSel').pristine">Orientation</option>
+          <option *ngFor="let orientationType of orientationTypes" [value]="orientationType[1]">{{orientationType[1]}}</option>
         </select>
       </div>
 
