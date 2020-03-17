@@ -25,7 +25,6 @@ const routes: Routes = [
   { path: 'mdp-oublie', component: MdpOublieComponent},
   { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
   { path: 'signaler-annonce/:id', component: ReportAdComponent},
-  { path: '**',   redirectTo: '/accueil', pathMatch: 'full'}
   { path: 'consulter-demandes', component: TreatDemandsComponent},
   { path: 'inscription', component: InscriptionComponent},
   { path: 'connexion', component: ConnexionComponent},
