@@ -35,7 +35,6 @@ export class MesJardinsComponent implements OnInit {
     });
 
     this.getRentedGardens();
-      console.log(this.rentedGardenId);
 
 
   }
@@ -54,7 +53,6 @@ export class MesJardinsComponent implements OnInit {
   getGardens() {
     this.userService.getUserGardens().subscribe((result: { data: Garden[]; count: number; }) => {
       if (result && result.data) {
-        //console.log(result.data);
         this.selectFirstAdds(result.data, result.count);
       } else {
         this.gardens = [];
@@ -69,11 +67,9 @@ export class MesJardinsComponent implements OnInit {
   }
 
   getGardenIdByLeasing(lease: Leasing[], size: number) {
-    console.log(lease);
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < size; i++) {
-      if (lease[i].state !== 'Refused') {
-      console.log(lease[i].garden);
+      if (lease[i].state !== 'Refused' && lease[i].renter === localStorage.getItem('id')) {
       this.rentedGardenId.push(lease[i].garden);
       }
     }
@@ -81,9 +77,8 @@ export class MesJardinsComponent implements OnInit {
 
   getRentedGardens() {
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i< this.rentedGardenId.length; i++) {
+    for (let i = 0; i < this.rentedGardenId.length; i++) {
       this.gardenService.getGardenById(this.rentedGardenId[i]).subscribe((result: {data: Garden}) => {
-        console.log(result);
         this.separateDemandeAndLocation(result.data);
       });
     }

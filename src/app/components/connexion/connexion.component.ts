@@ -75,7 +75,10 @@ export class ConnexionComponent implements OnInit {
                     // @ts-ignore
               localStorage.setItem('firstName', responseAuth.firstName);
                     // @ts-ignore
-              localStorage.setItem('lastName', responseAuth.lastName);}
+              localStorage.setItem('lastName', responseAuth.lastName);
+                    // @ts-ignore
+              localStorage.setItem('id',responseAuth.id);
+            }
 
           );
         }
