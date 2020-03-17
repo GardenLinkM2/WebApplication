@@ -33,4 +33,8 @@ export class UserService {
   getUserById(userId: string) {
     return this.client.get(this.urlauth + `users/${userId}`);
   }
+
+  getUserGardens() {
+    return this.client.get(this.urlback + 'users/me/gardens');
+  }
 }
