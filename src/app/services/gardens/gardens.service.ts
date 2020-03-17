@@ -13,7 +13,7 @@ export class GardensService {
   constructor(private client: HttpClient, private filterConstructService: FilterConstructService) { }
 
   getGardenById(id: string) {
-    return this.client.get(this.gardenUrl + id);
+    return this.client.get(this.gardenUrl + '/' + id);
   }
 
   getGardens() {

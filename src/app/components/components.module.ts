@@ -18,6 +18,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
 
+import {CarousselComponent} from './caroussel/caroussel.component';
+import {AdDetailsCommentsComponent} from './ad-details-comments/ad-details-comments.component';
 
 
 @NgModule({
@@ -27,7 +29,11 @@ import { ToastModule } from 'primeng/toast';
     NavbarComponent,
     IndevelopmentComponent,
     PageTitleComponent,
-    DemandComponent
+    DemandComponent,
+    PageTitleComponent,
+    AdCardComponent,
+    CarousselComponent,
+    AdDetailsCommentsComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +52,11 @@ import { ToastModule } from 'primeng/toast';
     AdCardComponent,
     NavbarComponent,
     PageTitleComponent,
-    DemandComponent
+    DemandComponent,
+    PageTitleComponent,
+    AdCardComponent,
+    CarousselComponent,
+    AdDetailsCommentsComponent
   ]
 })
 export class ComponentsModule { }

@@ -8,6 +8,7 @@ import {UserInformationComponent} from './features/user-information/user-informa
 
 import {MdpOublieComponent} from './screens/mdp-oublie/mdp-oublie.component';
 import {RecoverPwdScreenComponent} from './screens/recover-pwd-screen/recover-pwd-screen.component';
+import {AdDetailsScreenComponent} from './screens/ad-details-screen/ad-details-screen.component';
 import {PersonalSpaceComponent} from './screens/personal-space/personal-space/personal-space.component';
 import {IndevelopmentComponent} from './components/indevelopment/indevelopment.component';
 import { ConnexionComponent } from './components/connexion/connexion.component';
@@ -35,6 +36,7 @@ const routes: Routes = [
   },
   { path: 'demande-location', component: LeasingDemandComponent},
   { path: 'recharger-compte', component: FillWalletScreenComponent, canActivate: [AuthGuard]},
+  { path: 'ad-details/:id', component: AdDetailsScreenComponent},
   { path: '**',   redirectTo: '/acceuil', pathMatch: 'full'},
 ];
 
