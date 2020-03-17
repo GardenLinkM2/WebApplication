@@ -5,6 +5,12 @@ import {FeaturesModule} from '../features/features.module';
 import {ComponentsModule} from '../components/components.module';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import {AppRoutingModule} from '../app-routing.module';
+<<<<<<< src/app/screens/screens.module.ts
+import { ReportAdComponent } from './report-ad/report-ad.component';
+import { CardModule } from "../../../node_modules/primeng/card";
+import { InputTextareaModule } from "../../../node_modules/primeng/inputtextarea";
+=======
+>>>>>>> src/app/screens/screens.module.ts
 import { UploadScreenComponent } from './upload-screen/upload-screen.component';
 import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
 import { RecoverPwdScreenComponent } from './recover-pwd-screen/recover-pwd-screen.component';
@@ -16,6 +22,8 @@ import {DropdownModule} from 'primeng/dropdown';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FileUploadModule} from 'primeng/fileupload';
 import {HttpClientModule} from '@angular/common/http';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 import { PersonalSpaceComponent } from './personal-space/personal-space/personal-space.component';
 import {DialogModule} from 'primeng/dialog';
 import { FillWalletScreenComponent } from './fill-wallet-screen/fill-wallet-screen.component';
@@ -27,6 +35,7 @@ import { TreatDemandsComponent } from './treat-demands/treat-demands.component';
 import { ToastModule } from "primeng/toast";
 import { MesJardinsComponent } from './mes-jardins/mes-jardins.component';
 
+
 @NgModule({
   declarations: [
     HomeScreenComponent,
@@ -35,6 +44,7 @@ import { MesJardinsComponent } from './mes-jardins/mes-jardins.component';
     UploadScreenComponent,
     MdpOublieComponent,
     RecoverPwdScreenComponent,
+    ReportAdComponent,
     PersonalSpaceComponent,
     FillWalletScreenComponent,
     LeasingDemandComponent,
@@ -49,7 +59,6 @@ import { MesJardinsComponent } from './mes-jardins/mes-jardins.component';
     FeaturesModule,
     ComponentsModule,
     AppRoutingModule,
-    ComponentsModule,
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
@@ -58,9 +67,10 @@ import { MesJardinsComponent } from './mes-jardins/mes-jardins.component';
     BrowserAnimationsModule,
     FileUploadModule,
     HttpClientModule,
-    DialogModule,
-    ConfirmDialogModule,
     CardModule,
+    InputTextareaModule,
+    ConfirmDialogModule,
+    DialogModule,
     ToastModule
   ],
   exports: [

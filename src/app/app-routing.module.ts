@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {HomeScreenComponent} from './screens/home-screen/home-screen.component';
 import {UploadScreenComponent} from './screens/upload-screen/upload-screen.component';
 import {UserInformationComponent} from './features/user-information/user-information.component';
+import { ReportAdComponent } from './screens/report-ad/report-ad.component';
 
 import {MdpOublieComponent} from './screens/mdp-oublie/mdp-oublie.component';
 import {RecoverPwdScreenComponent} from './screens/recover-pwd-screen/recover-pwd-screen.component';
@@ -23,6 +24,8 @@ const routes: Routes = [
   { path: 'edit-ad', component: UploadScreenComponent, canActivate: [AuthGuard]},
   { path: 'mdp-oublie', component: MdpOublieComponent},
   { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
+  { path: 'signaler-annonce/:id', component: ReportAdComponent},
+  { path: '**',   redirectTo: '/accueil', pathMatch: 'full'}
   { path: 'consulter-demandes', component: TreatDemandsComponent},
   { path: 'inscription', component: InscriptionComponent},
   { path: 'connexion', component: ConnexionComponent},
