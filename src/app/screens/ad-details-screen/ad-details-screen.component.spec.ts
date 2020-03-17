@@ -1,31 +1,30 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {AdCardComponent} from './ad-card.component';
-import {CardModule} from 'primeng/card';
-import {Location} from '../../@entities/location';
-import {Criteria} from '../../@entities/criteria';
-import {Photo} from '../../@entities/photo';
+import { AdDetailsScreenComponent } from './ad-details-screen.component';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
-describe('AdCardComponent', () => {
-  let component: AdCardComponent;
-  let fixture: ComponentFixture<AdCardComponent>;
+describe('AdDetailsScreenComponent', () => {
+  let component: AdDetailsScreenComponent;
+  let fixture: ComponentFixture<AdDetailsScreenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AdCardComponent],
+      declarations: [ AdDetailsScreenComponent ],
       imports: [
-        CardModule,
-        RouterTestingModule
-      ]
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdCardComponent);
+    fixture = TestBed.createComponent(AdDetailsScreenComponent);
     component = fixture.componentInstance;
-    component.garden = {
+    component.ad = {
       id: '',
       name: '',
       isReserved: false,

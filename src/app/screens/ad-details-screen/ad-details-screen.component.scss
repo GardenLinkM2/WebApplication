@@ -1,0 +1,20 @@
+:host {
+  ::ng-deep {
+    .ui-panel-images{
+      width: 100% !important;
+      height: auto !important;
+    }
+    .ui-galleria {
+      width: 100% !important;
+      height: auto !important;
+    }
+    .ui-galleria-panel {
+      width: 100% !important;
+      height: auto !important;
+    }
+    .ui-galleria-panel-wrapper {
+      max-width: 100% !important;
+    }
+  }
+}
+

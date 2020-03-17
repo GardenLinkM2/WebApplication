@@ -5,8 +5,6 @@ import {FeaturesModule} from '../features/features.module';
 import {ComponentsModule} from '../components/components.module';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import {AppRoutingModule} from '../app-routing.module';
-
-
 import { UploadScreenComponent } from './upload-screen/upload-screen.component';
 import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
 import { RecoverPwdScreenComponent } from './recover-pwd-screen/recover-pwd-screen.component';
@@ -24,6 +22,7 @@ import { FillWalletScreenComponent } from './fill-wallet-screen/fill-wallet-scre
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { CardModule } from "primeng/card";
 import { LeasingDemandComponent } from './leasing-demand/leasing-demand.component';
+import { AdDetailsScreenComponent } from './ad-details-screen/ad-details-screen.component';
 import { TreatDemandsComponent } from './treat-demands/treat-demands.component';
 import { ToastModule } from "primeng/toast";
 import { MesJardinsComponent } from './mes-jardins/mes-jardins.component';
@@ -40,6 +39,9 @@ import { MesJardinsComponent } from './mes-jardins/mes-jardins.component';
     FillWalletScreenComponent,
     LeasingDemandComponent,
     TreatDemandsComponent,
+    LeasingDemandComponent,
+    RecoverPwdScreenComponent,
+    AdDetailsScreenComponent,
     MesJardinsComponent
   ],
   imports: [

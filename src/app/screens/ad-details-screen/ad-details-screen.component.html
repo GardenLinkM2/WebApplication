@@ -1,0 +1,105 @@
+<div class="container-fluid bg-white p-3 rounded" *ngIf="ad">
+  <div class="row">
+    <div class="col-4">
+      <div class="row border-bottom pb-2">
+        <app-caroussel [images]="ad.photos"></app-caroussel>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h4 class="h4">Localisation</h4>
+          <div class="row">
+            <div class="col">
+              <div style="height: 150px" class="bg-light">
+                Google map component
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="container-fluid">
+        <div class="row border-bottom pb-1">
+          <div class="col">
+            <h2 class="h2">{{ad.name}}</h2>
+            <h3 class="h3 text-success">{{ad.criteria.price}} € par mois</h3>
+            <div class="text-right">
+              <button class="btn btn-sm btn-success rounded-pill "><span class="px-4">Louer</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row border-bottom py-2">
+          <div class="col">
+            <h4 class="h4">Détails</h4>
+            <div class="row pt-1">
+              <div class="col font-weight-bold">
+                <span *ngIf="ad.criteria.waterAccess">Accès à l'eau</span>
+                <span *ngIf="!ad.criteria.waterAccess">Pas d'accès à l'eau</span>
+              </div>
+              <div class="col font-weight-bold">
+                <span *ngIf="ad.criteria.equipments">Outils fournis</span>
+                <span *ngIf="!ad.criteria.equipments">Pas d'outils fournis</span>
+              </div>
+              <div class="col font-weight-bold">
+                <span *ngIf="ad.criteria.directAccess">Accès direct</span>
+                <span *ngIf="!ad.criteria.directAccess">Pas d'accès direct</span>
+              </div>
+            </div>
+            <div class="row pt-1">
+              <div class="col">
+                <span class="font-weight-bold">Type de sol</span><br>
+                {{ad.criteria.typeOfClay}}
+              </div>
+              <div class="col">
+                <span class="font-weight-bold">Orientation</span><br>
+                {{ad.criteria.orientation}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col">
+            <h4 class="h4">Description</h4>
+            <div class="text-justify">
+              {{ad.description}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="container-fluid">
+        <div class="row pb-3">
+          <div class="col" *ngIf="owner">
+            <p-card  styleClass="ui-card-shadow">
+              <p-header>
+                <div class="text-center">
+                  <img src="profile photo" [src]="owner ? owner.avatar : '../../../assets/img/defaultavatar.png'" class="w-50">
+                </div>
+                <div class="text-center h3 pt-1">{{owner.firstName}}</div>
+                <div class="text-center h3">{{owner.lastName}}</div>
+              </p-header>
+                <button type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"><i class="pi pi-comments"></i>Discuter</button>
+            </p-card>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <app-ad-details-comments></app-ad-details-comments>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row border-bottom pt-2">
+    <div class="col">
+      <h4 class="h4">Offres qui pourraient vous interesser</h4>
+    </div>
+  </div>
+  <div class="row pt-2">
+    <div *ngFor="let otherAd of otherAds; last as isLast"
+         class="col pl-0" [class.pr-1]="!isLast" [class.pr-0]="isLast">
+      <app-ad-card [garden]="otherAd"></app-ad-card>
+    </div>
+  </div>
+</div>

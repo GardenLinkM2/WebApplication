@@ -1,0 +1,12 @@
+<div class="container-fluid rounded-lg">
+  <div class="row">
+    <div class="col">
+      <img [src]="selectedImage.path" class="w-100 rounded-top">
+    </div>
+  </div>
+  <div class="d-flex bg-light pt-1 pb-2  px-1 rounded-bottom">
+    <div class="mr-1" *ngFor="let image of images; index as i">
+      <img [src]="image.path" class="rounded-lg" style="max-height: 40px" [class.blur]="image.id!=selectedImage.id" (click)="onChangeSelectedImage(i)">
+    </div>
+  </div>
+</div>
