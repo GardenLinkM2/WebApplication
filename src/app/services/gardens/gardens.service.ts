@@ -8,7 +8,7 @@ import {FilterConstructService} from '../filter-construct.service';
 })
 export class GardensService {
 
-  private gardenUrl = environment.url + 'api/Gardens';
+  private gardenUrl = environment.url + 'api/Gardens/';
 
   constructor(private client: HttpClient, private filterConstructService: FilterConstructService) { }
 

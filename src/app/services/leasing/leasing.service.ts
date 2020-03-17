@@ -29,6 +29,10 @@ export class LeasingService {
     );
   }
 
+  getUserLeasings() {
+    return this.client.get(this.urlback + `Leasing/me`);
+  }
+
   treatLeasing(idLeasing : string, leasing : Leasing) {
     return this.client.put(this.urlback  + `Leasing/${idLeasing}`, leasing);
   }

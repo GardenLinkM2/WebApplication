@@ -26,6 +26,7 @@ import { CardModule } from "primeng/card";
 import { LeasingDemandComponent } from './leasing-demand/leasing-demand.component';
 import { TreatDemandsComponent } from './treat-demands/treat-demands.component';
 import { ToastModule } from "primeng/toast";
+import { MesJardinsComponent } from './mes-jardins/mes-jardins.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ToastModule } from "primeng/toast";
     PersonalSpaceComponent,
     FillWalletScreenComponent,
     LeasingDemandComponent,
-    TreatDemandsComponent
+    TreatDemandsComponent,
+    MesJardinsComponent
   ],
   imports: [
     CommonModule,

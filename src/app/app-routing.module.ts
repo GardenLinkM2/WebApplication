@@ -1,3 +1,4 @@
+import { MesJardinsComponent } from './screens/mes-jardins/mes-jardins.component';
 import { InscriptionComponent } from './features/inscription/inscription.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -27,7 +28,7 @@ const routes: Routes = [
   { path: 'personal-space', component: PersonalSpaceComponent, canActivate: [AuthGuard],
     children: [
       { path: 'user-info', component: UserInformationComponent },
-      { path: 'my-gardens', component: IndevelopmentComponent},
+      { path: 'my-gardens', component: MesJardinsComponent},
       { path: 'messages', component: IndevelopmentComponent},
       {path: '', redirectTo: 'user-info', pathMatch: 'full'}
       ]
