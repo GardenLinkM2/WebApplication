@@ -4,9 +4,10 @@ import {UploadService} from '../../services/upload-add/upload.service';
 import {Orientation} from '../../@entities/enum/orientation.enum';
 import {GroundEnum} from '../../@entities/enum/ground.enum';
 import {UploadAdBody} from '../../@entities/adUploadBody';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
+
 interface Soil {
   type: string;
 }
@@ -19,7 +20,7 @@ interface Direction {
   selector: 'app-upload-screen',
   templateUrl: './upload-screen.component.html',
   styleUrls: ['./upload-screen.component.scss'],
-  providers: [ConfirmationService]
+  providers: [ConfirmationService, MessageService]
 })
 export class UploadScreenComponent implements OnInit {
   soils: Soil[];
@@ -35,7 +36,10 @@ export class UploadScreenComponent implements OnInit {
   private id: string;
   private previewUrls = [];
   private confirmationMessage = 'Souhaitez vous publier le bien?';
-  constructor(private client: HttpClient, private upload: UploadService, private confirmationService: ConfirmationService,
+  constructor(private client: HttpClient,
+              private upload: UploadService,
+              private confirmationService: ConfirmationService,
+              private messageService: MessageService,
               private router: Router) {
     this.soils = [
       {type: GroundEnum.ARGILEUSE},
@@ -57,7 +61,6 @@ export class UploadScreenComponent implements OnInit {
   streetNamePattern = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 ]+$/; // Gestion rule 5
   onlyNumbers = /^[0-9]+$/;
   zipCodePattern = /^[0-9][0-9][0-9][0-9][0-9]$/;
-  displayUpload = false;
   uploadFile: FormGroup;
   fields = ['title', 'surface', 'price', 'durationMax', 'streetNum', 'streetName', 'zipCode',
   'city', 'soilType', 'orientation', 'accessWater', 'accessTools', 'directAccess', 'description', 'pictures'];
@@ -228,9 +231,9 @@ export class UploadScreenComponent implements OnInit {
         },
         failure => {
           if (failure.status === 401) {
-            this.message = 'Connectez vous pour publier une annonce';
-          } else { this.message = 'Une erreur est survenue, réessayez plus tard!'; }
-          this.displayUpload = true;
+            this.showInfo();
+          } else { this.showError(); }
+
         }
       );
     }
@@ -244,7 +247,7 @@ export class UploadScreenComponent implements OnInit {
       accept: () => {
         if (this.action === 'POST') {
           this.upload.postGarden(this.requestBody).subscribe(
-            () => {this.message = 'Votre annonce a été mise en ligne'; this.displayUpload = true;
+            () => {this.showSuccess();
                    for (this.control of this.fields) {
                 if (['streetNum', 'streetName', 'zipCode',
                   'city'].includes(this.control)) {
@@ -256,18 +259,34 @@ export class UploadScreenComponent implements OnInit {
                    this.uploadedFiles = [];
                    this.previewUrls = [];
             },
-            () => {this.message = 'Une erreur est survenue, réessayez plus tard!'; this.displayUpload = true; }
+            () => this.showError()
           );
         } else {
           this.upload.modifyGarden(this.requestBody, sessionStorage.getItem('adToEdit')).subscribe(
-            () => {this.message = 'Votre annonce a été modifiée'; this.displayUpload = true; },
-            () => {this.message = 'Une erreur est survenue, réessayez plus tard!'; this.displayUpload = true; }
+            () => this.showSuccessEdit(),
+            () => this.showError()
           );
           sessionStorage.removeItem('adToEdit');
         }
       },
       reject: () => {}
     });
+  }
+
+  showSuccess() {
+    this.messageService.add({severity: 'success', summary: '', detail: 'Votre annonce a été mise en ligne'});
+  }
+
+  showSuccessEdit() {
+    this.messageService.add({severity: 'success', summary: '', detail: 'Votre annonce a été modifiée'});
+  }
+
+  showInfo() {
+    this.messageService.add({severity: 'info', summary: '', detail: 'Connectez vous pour publier une annonce'});
+  }
+
+  showError() {
+    this.messageService.add({severity: 'error', summary: '', detail: 'Une erreur est survenue, réessayez plus tard!'});
   }
 
 }
