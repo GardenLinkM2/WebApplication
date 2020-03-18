@@ -19,6 +19,7 @@ export class AdDetailsCommentsComponent implements OnInit {
   comments: Score[] = [];
   newComment = '';
   commentsTotalNumber = 0;
+  commentsShown: ({commentId: string; isReported: boolean})[] = [];
 
   constructor(private scoresService: ScoresService, private userService: UserService) {
   }
@@ -33,6 +34,7 @@ export class AdDetailsCommentsComponent implements OnInit {
     if (comment.comment.trim().length > 0) {
       this.scoresService.postScoreToGarden(this.garden.id, comment).subscribe((result: { data: Score }) => {
         this.comments.push(result.data);
+        this.commentsShown.push({commentId: result.data.id, isReported: false });
         this.ngOnInit();
         this.newComment = '';
       });
@@ -40,7 +42,11 @@ export class AdDetailsCommentsComponent implements OnInit {
   }
 
   getComment() {
+    this.commentsShown = [];
     this.scoresService.getScoresByGarden(this.garden.id).subscribe((result: { data: Score[]; count: number; }) => {
+      for (const com of result.data) {
+        this.commentsShown.push({commentId: com.id, isReported: false});
+      }
       this.comments = result.data;
       const userIdSet: Set<string> = this.getUserSetForComment();
       for (const userId of userIdSet) {
@@ -75,5 +81,15 @@ export class AdDetailsCommentsComponent implements OnInit {
     const user = this.findCommenterById(raterId);
     document.getElementById('text-area').focus();
     this.newComment = '@' + user.firstName + ' ' + user.lastName + ' ' + this.newComment;
+  }
+
+  onReport(reportId: string) {
+    this.scoresService.reportComment(reportId).subscribe(() => {
+      this.getCommentShown(reportId).isReported = true;
+    });
+  }
+
+  getCommentShown(reportId: string) {
+    return this.commentsShown.find(com => !com.commentId.localeCompare(reportId)) || {commentId: '', isReported: false};
   }
 }

@@ -37,7 +37,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'user-info', pathMatch: 'full'}
       ]
   },
-  { path: 'demande-location', component: LeasingDemandComponent},
+  { path: 'demande-location/:id', component: LeasingDemandComponent},
   { path: 'recharger-compte', component: FillWalletScreenComponent, canActivate: [AuthGuard]},
   { path: 'ad-details/:id', component: AdDetailsScreenComponent},
   { path: '**',   redirectTo: '/acceuil', pathMatch: 'full'},
