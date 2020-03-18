@@ -53,7 +53,7 @@ export class ConnexionComponent implements OnInit {
   async onSubmit() {
 
     if (this.loginForm.valid) {
-      this.connexion.logout();
+
       await this.connexion.login(this.loginForm).toPromise()
         .then(
           user => {
@@ -77,7 +77,7 @@ export class ConnexionComponent implements OnInit {
                     // @ts-ignore
               localStorage.setItem('lastName', responseAuth.lastName);
                     // @ts-ignore
-              localStorage.setItem('id',responseAuth.id);
+              localStorage.setItem('id', responseAuth.id);
             }
 
           );
