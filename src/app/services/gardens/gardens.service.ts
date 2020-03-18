@@ -23,7 +23,9 @@ export class GardensService {
   searchGarden(filters) {
     const filter = this.filterConstructService.constructUrl(filters);
     return this.client.get(this.gardenUrl + filter);
-    // ?$filter=criteria/locationTime ge 0 and criteria/locationTime le 36 and criteria/area ge 0 and criteria/area le 10000 and criteria/price ge 0.0 and criteria/price le 10000.0
   }
 
+  deleteById(adId: string) {
+    return this.client.delete(this.gardenUrl + adId);
+  }
 }

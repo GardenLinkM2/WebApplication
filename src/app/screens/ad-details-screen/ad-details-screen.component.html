@@ -2,16 +2,16 @@
   <div class="row">
     <div class="col-4">
       <div class="row border-bottom pb-2">
-        <app-caroussel [images]="ad.photos"></app-caroussel>
+        <div class="col">
+          <app-caroussel [images]="ad.photos"></app-caroussel>
+        </div>
       </div>
       <div class="row">
         <div class="col">
           <h4 class="h4">Localisation</h4>
           <div class="row">
-            <div class="col">
-              <div style="height: 150px" class="bg-light">
-                Google map component
-              </div>
+            <div class="col py-2">
+              <app-map [localisation]="ad.location"></app-map>
             </div>
           </div>
         </div>
@@ -23,8 +23,12 @@
           <div class="col">
             <h2 class="h2">{{ad.name}}</h2>
             <h3 class="h3 text-success">{{ad.criteria.price}} € par mois</h3>
-            <div class="text-right">
-              <button class="btn btn-sm btn-success rounded-pill "><span class="px-4">Louer</span></button>
+            <div class="text-right" *ngIf="!isMine">
+              <button class="btn btn-sm btn-success rounded-pill " (click)="onRent()"><span class="px-4">Louer</span></button>
+            </div>
+            <div class="text-right" *ngIf="isMine">
+              <button class="btn btn-sm btn-warning rounded-pill mr-2" (click)="onModify()"><span class="px-4">Modifier</span></button>
+              <button class="btn btn-sm btn-danger rounded-pill" (click)="onDelete()"><span class="px-4">Supprimer</span></button>
             </div>
           </div>
         </div>
@@ -74,7 +78,7 @@
             <p-card  styleClass="ui-card-shadow">
               <p-header>
                 <div class="text-center">
-                  <img src="profile photo" [src]="owner ? owner.avatar : '../../../assets/img/defaultavatar.png'" class="w-50">
+                  <img src="profile photo" [src]="owner ? owner.avatar : '../../../assets/img/defaultavatar.png'" class="w-50" style="max-width: 100px">
                 </div>
                 <div class="text-center h3 pt-1">{{owner.firstName}}</div>
                 <div class="text-center h3">{{owner.lastName}}</div>
@@ -84,8 +88,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="col">
-            <app-ad-details-comments></app-ad-details-comments>
+          <div class="col" *ngIf="ad && owner">
+            <app-ad-details-comments [garden]="ad" [owner]="owner"></app-ad-details-comments>
           </div>
         </div>
       </div>

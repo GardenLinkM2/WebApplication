@@ -41,7 +41,6 @@ export class HomeScreenComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isSearch = false;
     this.gardensService.getGardens().subscribe((result: { data: Garden[]; count: number; }) => {
       if (result && result.data) {
-        console.log(result.data);
         this.selectFirstAdds(result.data, result.count);
       } else {
         this.gardens = [];
