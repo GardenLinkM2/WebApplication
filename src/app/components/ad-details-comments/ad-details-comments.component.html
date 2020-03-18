@@ -1,1 +1,65 @@
-<p>ad-details-comments works!</p>
+<div class="container-fluid" *ngIf="false">
+  <div class="row border-bottom mb-2">
+    <h5 class="h5">Commentaire<span *ngIf="comments.length>0">s</span> (<span>{{comments.length}}</span>)</h5>
+  </div>
+  <div class="row" *ngFor="let comment of comments">
+    <div class="col-2"><img src="{{findCommenterById(comment.rater).avatar}}" alt="avatar"></div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col">{{findCommenterById(comment.rater).firstName}}</div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {{comment.comment}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row border-top">
+    <div class="col-sm">
+      <textarea [rows]="3" pInputTextarea autoResize="autoResize" [(ngModel)]="newComment"></textarea>
+    </div>
+    <div class="col-sm">
+      <button pButton type="button" (click)="onPostComment()" class="ui-button-rounded ui-button"
+              icon="pi pi-play"></button>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <p-virtualScroller [value]="comments" scrollHeight="200px" [first]="comments.length-1">
+    <p-header>
+      <h6 class="h6">Commentaire<span *ngIf="comments.length>0">s</span> ( {{comments.length}} )</h6>
+    </p-header>
+    <ng-template pTemplate="item" let-comment>
+      <div class="container-fluid">
+        <div class="row pb-1" *ngIf="findCommenterById(comment.rater)">
+          <div class="col-2 px-1 py-1">
+            <img src="{{findCommenterById(comment.rater).avatar}}" alt="avatar" class="w-100">
+          </div>
+          <div class="col-10">
+            <div class="row">
+              <div class="col text-success px-0 mx-1">{{findCommenterById(comment.rater).firstName}}</div>
+            </div>
+            <div class="row">
+              <div class="col message px-1 mx-1">
+                {{comment.comment}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col" (click)="onRepondre(comment.rater)" style="cursor: pointer;">
+                <span class="small">Répondre</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <p-footer>
+      <div class="ui-inputgroup ui-fluid">
+        <textarea [rows]="1" pInputTextarea autoResize="autoResize" [(ngModel)]="newComment" id="text-area"></textarea>
+        <button pButton type="button" (click)="onPostComment()" class="ui-button"
+                icon="pi pi-play"></button>
+      </div>
+    </p-footer>
+  </p-virtualScroller>
+</div>

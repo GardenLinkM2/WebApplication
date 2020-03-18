@@ -20,6 +20,10 @@ import { ToastModule } from 'primeng/toast';
 
 import {CarousselComponent} from './caroussel/caroussel.component';
 import {AdDetailsCommentsComponent} from './ad-details-comments/ad-details-comments.component';
+import {MapComponent} from './map/map.component';
+import {FormsModule} from '@angular/forms';
+import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
 @NgModule({
@@ -33,7 +37,8 @@ import {AdDetailsCommentsComponent} from './ad-details-comments/ad-details-comme
     PageTitleComponent,
     AdCardComponent,
     CarousselComponent,
-    AdDetailsCommentsComponent
+    AdDetailsCommentsComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +50,10 @@ import {AdDetailsCommentsComponent} from './ad-details-comments/ad-details-comme
     TieredMenuModule,
     ToolbarModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    FormsModule,
+    VirtualScrollerModule,
+    InputTextareaModule
   ],
   exports: [
     MenuComponent,
@@ -56,7 +64,8 @@ import {AdDetailsCommentsComponent} from './ad-details-comments/ad-details-comme
     PageTitleComponent,
     AdCardComponent,
     CarousselComponent,
-    AdDetailsCommentsComponent
+    AdDetailsCommentsComponent,
+    MapComponent
   ]
 })
 export class ComponentsModule { }

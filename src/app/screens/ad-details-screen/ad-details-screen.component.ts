@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {GardensService} from '../../services/gardens/gardens.service';
 import {UserService} from '../../services/user-info/user.service';
 import {User} from '../../@entities/user';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-ad-details-screen',
@@ -13,9 +14,8 @@ import {User} from '../../@entities/user';
 export class AdDetailsScreenComponent implements OnInit {
   ad: Garden;
   owner: User;
-  images: any[];
-  imageIndex = 0;
   otherAds: Garden[];
+  isMine = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private gardensService: GardensService,
@@ -24,10 +24,15 @@ export class AdDetailsScreenComponent implements OnInit {
   }
 
   ngOnInit() {
+    // TODO: changer l'annonce si id change
     if (this.activatedRoute.snapshot.params.id) {
-      this.gardensService.getGardenById(this.activatedRoute.snapshot.params.id).subscribe((result: {data: Garden; }) => {
+      this.gardensService.getGardenById(this.activatedRoute.snapshot.params.id).subscribe((result: { data: Garden; }) => {
         if (result.data) {
-          this.ad  = result.data;
+          this.ad = result.data;
+
+          if (!this.ad.owner.localeCompare(localStorage.getItem('id'))) {
+            this.isMine = true;
+          }
           this.getOwner(this.ad.owner);
         } else {
           this.router.navigateByUrl('/');
@@ -41,7 +46,6 @@ export class AdDetailsScreenComponent implements OnInit {
 
   getInterestingGarden() {
     this.gardensService.getGardens().subscribe((result: { data: Garden[]; count: number; }) => {
-      console.log(result)
       if (result && result.data) {
         const max = result.count > 5 ? 5 : result.count;
         this.otherAds = result.data.slice(0, max);
@@ -55,6 +59,24 @@ export class AdDetailsScreenComponent implements OnInit {
     this.userService.getUserById(userId).subscribe((result: User) => {
       this.owner = result;
     });
+  }
+
+  delete() {
+    this.gardensService.deleteById(this.ad.id).subscribe(() => {
+      this.router.navigateByUrl('/acceuil');
+    });
+  }
+
+  onModify() {
+    sessionStorage.setItem('adToEdit', this.ad.id);
+    this.router.navigateByUrl('/edit-ad');
+  }
+
+  onRent() {
+
+  }
+
+  onDelete() {
   }
 
 }
