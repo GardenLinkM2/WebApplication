@@ -120,14 +120,7 @@
 
           <button pButton type="submit" label="{{buttonLabel}}" class="ui-button-rounded" [disabled]="!uploadForm.valid"></button>
 
-          <p-dialog header="Information" [(visible)]="displayUpload" [modal]="true" [style]="{width: '25vw'}" [baseZIndex]="10000"
-                    [draggable]="false" [resizable]="false">
-            <p>{{message}}</p>
-            <p-footer>
-              <button type="button" class="ui-button-rounded ui-button-success editing" pButton icon="pi pi-check"
-                      (click)="displayUpload=false" label="Ok"></button>
-            </p-footer>
-          </p-dialog>
+
 
         </div>
     </form>
@@ -135,3 +128,5 @@
   </div>
 
 </div>
+
+<p-toast [style]="{marginTop: '80px'}" position="bottom-right"></p-toast>
