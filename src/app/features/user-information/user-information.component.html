@@ -1,6 +1,9 @@
 <div class="container">
   <div class="container text-center withlogo infocard">
-    <img src="{{avatar}}" class="avatar" (click)="displayChangeImage=true">
+    <button class="avatar" type="button" pButton icon="pi pi-bars" label="Show"
+            [ngStyle]="{'background-image': 'url('+avatar+')'}"
+            (click)="menu.toggle($event)"></button>
+    <p-tieredMenu #menu [model]="options" [popup]="true"></p-tieredMenu>
   </div>
   <div class=" container text-center withinfo infocard">
     <div class="row">
@@ -59,13 +62,6 @@
         <button type="button" class="ui-button-rounded ui-button-success editing" pButton icon="pi pi-check" routerLink="acceuil" label="Ok"></button>
       </p-footer>
     </p-dialog>
-    <p-dialog header="Information" [(visible)]="displaySuccessModification" [modal]="true" [style]="{width: '25vw'}" [baseZIndex]="10000"
-              [draggable]="false" [resizable]="false">
-      <p>Les modifications saisies ont été enregistrées.</p>
-      <p-footer>
-        <button type="button" class="ui-button-rounded ui-button-success editing" pButton icon="pi pi-check" (click)="cancelAction()" label="Ok"></button>
-      </p-footer>
-    </p-dialog>
     <button *ngIf="!activateFields" pButton label="Supprimer le compte" class="ui-button-rounded ui-button-danger editing customButton" type="button" (click)="confirmSuppression()"></button>
     <button *ngIf="activateFields" pButton label="Annuler les modifications" class="ui-button-rounded ui-button-danger editing customButton" type="button" (click)="cancelAction()"></button>
     <br><br>
@@ -79,3 +75,4 @@
   </p-dialog>
 </div>
 
+<p-toast [style]="{marginTop: '80px'}" position="bottom-right"></p-toast>
