@@ -13,6 +13,7 @@ div {
   cursor: pointer;
   width: 8.8cm;
   height: 2cm;
+  border-radius: 25px;
 }
 
 div:hover p{
@@ -44,5 +45,5 @@ i {
 }
 
 i:hover{
-  font-size: 1.50em;
+  color: red;
 }

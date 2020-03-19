@@ -1,8 +1,7 @@
 <div class="container-fluid">
   <div class="row">
-
     <div class="col-4 contacts" style="margin-right: 10px">
-      <app-contacts
+      <app-contacts [selectedThreadId]="id"
         *ngFor="let thread of userThreads"
         [threadId]="thread.id" [userId]="getReceiver(thread.sender, thread.receiver)"
         [fisrtMessage]="getFirstMessage(thread.messages)"
@@ -10,7 +9,6 @@
         (sendId)="onThreadIdChange($event)"
         (sendDeleteEvent)="onDeleteEvent($event)"></app-contacts>
     </div>
-
     <div class="col discussion">
 
       <div class="row contactBanner" *ngIf="id">
@@ -20,7 +18,7 @@
       </div>
       <div class="row showMessages" id="showMessages">
         <p *ngFor="let message of messages" style="color: white" align="{{align(message)}}">
-          <span class="py-1 px-2" [ngStyle]="textBordeShape(message)">{{message.text}}</span>
+          <span class="py-1 px-2" [ngStyle]="textBorderShape(message)">{{message.text}}</span>
         </p>
       </div>
       <div class="sendMessage">
@@ -32,4 +30,10 @@
 
     </div>
   </div>
+
+  <p-confirmDialog [style]="{width: '25vw'}" [baseZIndex]="10000" acceptLabel="Oui" rejectLabel="Non"
+                   acceptButtonStyleClass="ui-button-rounded ui-button-success"
+                   rejectButtonStyleClass="ui-button-rounded ui-button-danger">
+  </p-confirmDialog>
+  <p-toast [style]="{marginTop: '80px'}" position="bottom-right"></p-toast>
 </div>

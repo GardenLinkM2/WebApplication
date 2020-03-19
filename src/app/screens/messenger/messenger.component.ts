@@ -1,35 +1,86 @@
 import {Component, OnInit} from '@angular/core';
 import {Thread} from '../../@entities/thread';
 import {ChatService} from '../../services/chat/chat.service';
-import {Message} from '../../@entities/message';
+import {ThreadMessage} from '../../@entities/threadMessage';
 import {FormControl, FormGroup} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-messenger',
   templateUrl: './messenger.component.html',
-  styleUrls: ['./messenger.component.scss']
+  styleUrls: ['./messenger.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class MessengerComponent implements OnInit {
-
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, private activatedRoute: ActivatedRoute,
+              private confirmationService: ConfirmationService, private messageService: MessageService) {
   }
 
-  id: string;
+  id = '';
   avatar: string;
   firstname: string;
   lastname: string;
+  existingThreadId: string;
   userThreads: Array<Thread>;
-  messages: Array<Message>;
+  messages: Array<ThreadMessage>;
   text = new FormGroup({
     text: new FormControl('')
   });
 
   async ngOnInit() {
+    const ownerId = this.activatedRoute.snapshot.params.ownerId;
+    let threadExist = false;
     await this.chatService.getAllThreads().toPromise().then(
       // @ts-ignore
       response => this.userThreads = response.data,
       () => console.log('Error fetching threads')
     );
+    for (const thread of this.userThreads) {
+      if (thread.receiver === ownerId || thread.sender === ownerId) {
+        threadExist = true;
+        this.existingThreadId = thread.id;
+        break;
+      }
+    }
+    if (ownerId) {
+      if (!threadExist) {
+        const newThread: Thread = {
+          id: undefined,
+          sender: localStorage.getItem('id'),
+          receiver: ownerId,
+          isArchived: false,
+          subject: '',
+          messages: [
+            {
+              id: undefined,
+              text: undefined,
+              creationDate: new Date(Date.now()).toISOString(),
+              sender: localStorage.getItem('id'),
+              isRead: false,
+              photos: []
+            }
+          ]
+        };
+        await this.chatService.createNewThread(newThread).toPromise().then(
+          async response => {
+            // @ts-ignore
+            this.id = response.data.id;
+            await this.chatService.getAllThreads().toPromise().then(
+              response2 => {
+                // @ts-ignore
+                this.userThreads = response2.data;
+                this.sortThreads();
+              },
+              () => console.log('Error fetching threads')
+            );
+          },
+          () => console.log('Thread creation failed'),
+        );
+      } else {
+        this.id = this.existingThreadId;
+      }
+    }
     this.sortThreads();
   }
 
@@ -124,7 +175,7 @@ export class MessengerComponent implements OnInit {
     this.lastname = event.lastname;
   }
 
-  align(message: Message) {
+  align(message: ThreadMessage) {
     if (message.sender === localStorage.getItem('id')) {
       return 'right';
     } else {
@@ -132,7 +183,7 @@ export class MessengerComponent implements OnInit {
     }
   }
 
-  textBordeShape(message: Message) {
+  textBorderShape(message: ThreadMessage) {
     if (message.sender === localStorage.getItem('id')) {
       return {'border-radius': '19px 10px 19px 15px', 'background-color': '#006600'};
     } else {
@@ -141,7 +192,7 @@ export class MessengerComponent implements OnInit {
   }
 
   async sendMessage() {
-    const toSend: Message = {
+    const toSend: ThreadMessage = {
       id: undefined,
       text: this.text.get('text').value,
       creationDate: new Date(Date.now()).toISOString(),
@@ -163,24 +214,39 @@ export class MessengerComponent implements OnInit {
         );
         this.text.get('text').setValue('');
       },
-      failure => console.log('Sending message failed')
+      () => console.log('Sending message failed')
     );
   }
 
-  getFirstMessage(messages: Array<Message>) {
+  getFirstMessage(messages: Array<ThreadMessage>) {
     return messages[0] ? messages[messages.length - 1].text : '';
   }
 
   onDeleteEvent(event) {
-    this.chatService.deleteThread(event).subscribe(
-      () => {
-        for (const thread of this.userThreads) {
-          if (thread.id === this.id) {
-            this.userThreads.splice(this.userThreads.indexOf(thread), 1);
-          }
-        }
+    this.confirmDeleteMessage(event);
+  }
+
+  confirmDeleteMessage(event) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.chatService.deleteThread(event).subscribe(
+          () => {
+            for (const thread of this.userThreads) {
+              if (thread.id === this.id) {
+                this.userThreads.splice(this.userThreads.indexOf(thread), 1);
+                this.messageService.add({severity: 'success', detail: 'La discussion à été supprimée!'});
+              }
+            }
+          },
+          () => this.messageService.
+          add({severity: 'info', detail: 'Vous ne pouvez pas supprimer une discussion que vous n\'avez pas créée'})
+        );
       },
-      failure => console.log('Thread deletion has failed')
-    );
+      reject: () => {
+      }
+    });
   }
 }
