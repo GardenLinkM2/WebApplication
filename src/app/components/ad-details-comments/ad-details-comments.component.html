@@ -42,7 +42,14 @@
             </div>
             <div class="row">
               <div class="col message px-1 mx-1">
-                {{comment.comment}}
+                <div class="row">
+                  <div class="col-sm-10">
+                    <span>{{comment.comment}}</span>
+                  </div>
+                  <div class="col-sm-2 pt-1" *ngIf="!getCommentShown(comment.id).isReported && (findCommenterById(comment.rater).id.localeCompare(comment.rater))">
+                    <span class="text-danger ml-auto" style="cursor: pointer;"  (click)="onReport(comment.id)"><i class="pi pi-exclamation-triangle"></i></span>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="row">

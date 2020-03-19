@@ -19,12 +19,19 @@
     </div>
     <div class="col-4">
       <div class="container-fluid">
-        <div class="row border-bottom pb-1">
+        <div class="row pb-1">
           <div class="col">
             <h2 class="h2">{{ad.name}}</h2>
+          </div>
+          <div class="col text-right">
+            <span class="text-danger" style="cursor: pointer;"  [routerLink]="'/signaler-annonce/' + ad.id"><i class="pi pi-exclamation-triangle"></i></span>
+          </div>
+        </div>
+        <div class="row border-bottom pb-1">
+          <div class="col">
             <h3 class="h3 text-success">{{ad.criteria.price}} € par mois</h3>
             <div class="text-right" *ngIf="!isMine">
-              <button class="btn btn-sm btn-success rounded-pill " (click)="onRent()"><span class="px-4">Louer</span></button>
+              <button class="btn btn-sm btn-success rounded-pill" [routerLink]="'/demande-location/' + this.ad.id" ><span class="px-4">Louer</span></button>
             </div>
             <div class="text-right" *ngIf="isMine">
               <button class="btn btn-sm btn-warning rounded-pill mr-2" (click)="onModify()"><span class="px-4">Modifier</span></button>
@@ -52,11 +59,13 @@
             <div class="row pt-1">
               <div class="col">
                 <span class="font-weight-bold">Type de sol</span><br>
-                {{ad.criteria.typeOfClay}}
+                <span *ngIf="ad.criteria.typeOfClay">{{ad.criteria.typeOfClay}}</span>
+                <span *ngIf="!ad.criteria.typeOfClay">Non renseigné</span>
               </div>
               <div class="col">
                 <span class="font-weight-bold">Orientation</span><br>
-                {{ad.criteria.orientation}}
+                <span *ngIf="ad.criteria.orientation">{{ad.criteria.orientation}}</span>
+                <span *ngIf="!ad.criteria.orientation">Non renseigné</span>
               </div>
             </div>
           </div>
@@ -83,7 +92,8 @@
                 <div class="text-center h3 pt-1">{{owner.firstName}}</div>
                 <div class="text-center h3">{{owner.lastName}}</div>
               </p-header>
-                <button type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"><i class="pi pi-comments"></i>Discuter</button>
+                <button *ngIf="!isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"><i class="pi pi-comments"></i>Discuter</button>
+                <button *ngIf="isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100">Demandes</button>
             </p-card>
           </div>
         </div>

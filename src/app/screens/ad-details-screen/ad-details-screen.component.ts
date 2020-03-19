@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Garden} from '../../@entities/garden';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {GardensService} from '../../services/gardens/gardens.service';
 import {UserService} from '../../services/user-info/user.service';
 import {User} from '../../@entities/user';
@@ -17,6 +17,7 @@ export class AdDetailsScreenComponent implements OnInit {
   otherAds: Garden[];
   isMine = false;
 
+  // TODO: refresh comments refresh map, si types non reseigné l'afficher
   constructor(private activatedRoute: ActivatedRoute,
               private gardensService: GardensService,
               private router: Router,
@@ -24,24 +25,13 @@ export class AdDetailsScreenComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: changer l'annonce si id change
-    if (this.activatedRoute.snapshot.params.id) {
-      this.gardensService.getGardenById(this.activatedRoute.snapshot.params.id).subscribe((result: { data: Garden; }) => {
-        if (result.data) {
-          this.ad = result.data;
+    this.init();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.init();
+      }
+    });
 
-          if (!this.ad.owner.localeCompare(localStorage.getItem('id'))) {
-            this.isMine = true;
-          }
-          this.getOwner(this.ad.owner);
-        } else {
-          this.router.navigateByUrl('/');
-        }
-      });
-    } else {
-      this.router.navigateByUrl('/');
-    }
-    this.getInterestingGarden();
   }
 
   getInterestingGarden() {
@@ -72,11 +62,27 @@ export class AdDetailsScreenComponent implements OnInit {
     this.router.navigateByUrl('/edit-ad');
   }
 
-  onRent() {
-
-  }
-
   onDelete() {
   }
 
+  init() {
+    if (this.activatedRoute.snapshot.params.id) {
+      this.gardensService.getGardenById(this.activatedRoute.snapshot.params.id).subscribe((result: { data: Garden; }) => {
+        console.log(result)
+        if (result.data) {
+          this.ad = result.data;
+
+          if (!this.ad.owner.localeCompare(localStorage.getItem('id'))) {
+            this.isMine = true;
+          }
+          this.getOwner(this.ad.owner);
+        } else {
+          this.router.navigateByUrl('/');
+        }
+      });
+    } else {
+      this.router.navigateByUrl('/');
+    }
+    this.getInterestingGarden();
+  }
 }

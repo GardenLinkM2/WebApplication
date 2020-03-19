@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-leasing-demand',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./leasing-demand.component.scss']
 })
 export class LeasingDemandComponent implements OnInit {
-
-  constructor() { }
+  gardenId = '';
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.gardenId = this.activatedRoute.snapshot.params.id;
   }
 
   title : string = "Demande de location";
