@@ -1,5 +1,4 @@
-import { FeaturesModule } from './../features/features.module';
-import { ConnexionComponent } from './connexion/connexion.component';
+import { FeaturesModule } from '../features/features.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
@@ -11,7 +10,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { IndevelopmentComponent } from './indevelopment/indevelopment.component';
 import {DialogModule} from 'primeng/dialog';
 import {TieredMenuModule} from 'primeng/tieredmenu';
-import { PageTitleComponent } from "./page-title/page-title.component";
+import { PageTitleComponent } from './page-title/page-title.component';
 import { DemandComponent } from './demand/demand.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -24,6 +23,7 @@ import {MapComponent} from './map/map.component';
 import {FormsModule} from '@angular/forms';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { ContactsComponent } from './contacts/contacts.component';
 
 
 @NgModule({
@@ -38,7 +38,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     AdCardComponent,
     CarousselComponent,
     AdDetailsCommentsComponent,
-    MapComponent
+    MapComponent,
+    ContactsComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +66,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     AdCardComponent,
     CarousselComponent,
     AdDetailsCommentsComponent,
-    MapComponent
+    MapComponent,
+    ContactsComponent
   ]
 })
 export class ComponentsModule { }

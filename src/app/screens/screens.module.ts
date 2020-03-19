@@ -6,8 +6,8 @@ import {ComponentsModule} from '../components/components.module';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import {AppRoutingModule} from '../app-routing.module';
 import { ReportAdComponent } from './report-ad/report-ad.component';
-import { CardModule } from "../../../node_modules/primeng/card";
-import { InputTextareaModule } from "../../../node_modules/primeng/inputtextarea";
+import { CardModule } from 'primeng/card';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import {UploadScreenComponent} from './upload-screen/upload-screen.component';
 import {RecoverPwdScreenComponent} from './recover-pwd-screen/recover-pwd-screen.component';
 import {FillWalletScreenComponent} from './fill-wallet-screen/fill-wallet-screen.component';
@@ -27,7 +27,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FileUploadModule} from 'primeng/fileupload';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
+import { MessengerComponent } from './messenger/messenger.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import {ToastModule} from 'primeng/toast';
     LeasingDemandComponent,
     RecoverPwdScreenComponent,
     AdDetailsScreenComponent,
-    MesJardinsComponent
+    MesJardinsComponent,
+    MessengerComponent
   ],
   imports: [
     CommonModule,

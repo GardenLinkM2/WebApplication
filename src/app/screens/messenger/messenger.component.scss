@@ -1,0 +1,52 @@
+.discussion {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+  height: 15cm;
+  margin-left: auto;
+}
+
+.contacts {
+  height: 15cm;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+}
+
+.showMessages {
+  display: flex;
+  flex-flow: column;
+  height: 87%;
+  overflow-y: auto;
+}
+
+.container-fluid {
+  margin-top: 2cm;
+}
+
+.ui-button-rounded {
+  margin-left: 6%;
+}
+
+.contactBanner img{
+  vertical-align: middle;
+  top: -45px;
+  margin-right: 2%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #515151;
+  background-color: #f7f7f7;
+}
+.contactBanner div{
+ padding-left: 10px;
+  width: 100%;
+}
+
+.contactBanner {
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 104.2%;
+}
+
+span {
+  border-style: none;
+  border-width: thin;
+}
