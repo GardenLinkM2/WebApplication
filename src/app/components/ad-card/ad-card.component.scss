@@ -3,11 +3,16 @@
     & .ui-card-shadow {
       min-width: 200px;
       max-width: 400px;
+      overflow: hidden;
     }
     & .ui-card-header {
       height: 150px;
       overflow: hidden;
       background-color: #E6E6E6;
+    }
+    & .ui-card-subtitle {
+      width: 200px;
+      word-break: break-all;
     }
   }
 }
