@@ -17,6 +17,7 @@ import {FillWalletScreenComponent} from './screens/fill-wallet-screen/fill-walle
 import { LeasingDemandComponent } from './screens/leasing-demand/leasing-demand.component';
 import {AuthGuard} from './services/activator/route-activator';
 import { TreatDemandsComponent } from './screens/treat-demands/treat-demands.component';
+import {MessengerComponent} from './screens/messenger/messenger.component';
 
 const routes: Routes = [
   { path: 'acceuil', component: HomeScreenComponent },
@@ -32,7 +33,7 @@ const routes: Routes = [
     children: [
       { path: 'user-info', component: UserInformationComponent },
       { path: 'my-gardens', component: MesJardinsComponent},
-      { path: 'messages', component: IndevelopmentComponent},
+      { path: 'messages', component: MessengerComponent},
       {path: '', redirectTo: 'user-info', pathMatch: 'full'}
       ]
   },

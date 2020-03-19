@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4 contacts" style="margin-right: 10px">
+      <app-contacts *ngFor="let thread of userThreads"
+                    [threadId]="thread.id" [userId]="getReceiver(thread.sender, thread.receiver)"
+                    [fisrtMessage]="getFirstMessage(thread.messages)"
+                    (sendContactbanner)="onReiceveContactBanner($event)"
+                    (sendId)="onThreadIdChange($event)"
+                    (sendDeleteEvent)="onDeleteEvent($event)"></app-contacts>
+    </div>
+    <div class="col discussion">
+      <div class="row contactBanner" *ngIf="id">
+        <div>
+          <img src="{{avatar}}"><span>{{firstname}} {{lastname}}</span>
+        </div>
+      </div>
+      <div class="row showMessages">
+        <p *ngFor="let message of messages" style="color: white" align="{{align(message)}}">
+          <span [ngStyle]="textBordeShape(message)">{{message.text}}</span>
+        </p>
+      </div>
+      <div class="sendMessage">
+        <form [formGroup]="text" (ngSubmit)="sendMessage()">
+          <input pInputText id="message" type="text" style="width: 80%" formControlName="text">
+          <button pButton type="button" class="ui-button-rounded" label="Envoyer" (click)="sendMessage()"></button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
