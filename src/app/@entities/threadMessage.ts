@@ -1,6 +1,6 @@
 import {Photo} from './photo';
 
-export interface Message {
+export interface ThreadMessage {
   id: string;
   text: string;
   creationDate: string;

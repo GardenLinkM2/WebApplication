@@ -1,4 +1,4 @@
-import {Message} from './message';
+import {ThreadMessage} from './threadMessage';
 
 export interface Thread {
   id: string;
@@ -6,5 +6,5 @@ export interface Thread {
   isArchived: boolean;
   sender: string;
   receiver: string;
-  messages: Array<Message>;
+  messages: Array<ThreadMessage>;
 }

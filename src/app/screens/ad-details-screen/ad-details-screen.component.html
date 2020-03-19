@@ -92,7 +92,8 @@
                 <div class="text-center h3 pt-1">{{owner.firstName}}</div>
                 <div class="text-center h3">{{owner.lastName}}</div>
               </p-header>
-                <button *ngIf="!isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"><i class="pi pi-comments"></i>Discuter</button>
+                <button *ngIf="!isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"
+                        [routerLink]="'/personal-space/messages/'+owner.id"><i class="pi pi-comments"></i>Discuter</button>
                 <button *ngIf="isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100">Demandes</button>
             </p-card>
           </div>

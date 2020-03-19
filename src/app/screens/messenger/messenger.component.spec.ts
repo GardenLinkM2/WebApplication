@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MessengerComponent } from './messenger.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('MessengerComponent', () => {
   let component: MessengerComponent;
@@ -12,7 +13,7 @@ describe('MessengerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MessengerComponent ],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule, RouterTestingModule]
     })
     .compileComponents();
   }));

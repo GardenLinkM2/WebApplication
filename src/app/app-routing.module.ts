@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'upload', component: UploadScreenComponent},
   { path: 'edit-ad', component: UploadScreenComponent, canActivate: [AuthGuard]},
   { path: 'mdp-oublie', component: MdpOublieComponent},
-  { path: 'lostPassword/:token', component: RecoverPwdScreenComponent},
+  { path: 'reinitialisation-mdp/:token', component: RecoverPwdScreenComponent},
   { path: 'signaler-annonce/:id', component: ReportAdComponent},
   { path: 'consulter-demandes', component: TreatDemandsComponent},
   { path: 'inscription', component: InscriptionComponent},
@@ -34,6 +34,7 @@ const routes: Routes = [
       { path: 'user-info', component: UserInformationComponent },
       { path: 'my-gardens', component: MesJardinsComponent},
       { path: 'messages', component: MessengerComponent},
+      { path: 'messages/:ownerId', component: MessengerComponent},
       {path: '', redirectTo: 'user-info', pathMatch: 'full'}
       ]
   },
