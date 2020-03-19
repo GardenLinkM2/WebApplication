@@ -14,7 +14,7 @@ import { Leasing } from 'src/app/@entities/leasing';
 })
 export class MesJardinsComponent implements OnInit {
 
-  ADDS_MAX_LENGTH = 4;
+  ADDS_MAX_LENGTH = 5;
   gardens: Garden[] = [];
   locations: Garden[] = [];
   demandes: Garden[] = [];
@@ -42,7 +42,7 @@ export class MesJardinsComponent implements OnInit {
   selectFirstAdds(gardens: Garden[], count: number): void {
     this.gardens = [];
     let max = this.ADDS_MAX_LENGTH;
-    if (count < this.ADDS_MAX_LENGTH) {
+    if (count > this.ADDS_MAX_LENGTH) {
       max = count;
     }
     for (let i = 0; i < max; i++) {
