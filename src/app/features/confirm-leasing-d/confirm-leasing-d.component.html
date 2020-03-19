@@ -57,20 +57,27 @@
     
     <div class="confirm-demand col">
         <form [formGroup]="sendDemandForm" (ngSubmit)="onSubmit()" >
+
             <div class="row">
-                <div class="col-8">
-                    <span class="label">Durée: </span>
-                    <p-spinner class="customSpinner" formControlName="time" placeholder="0" [min]="0" [max]="max" [step]="1"></p-spinner> <span class="label"> mois</span>
+                <div class="col">
+                    <label class="label" for="beginID">Début: </label>
+                    <input id="beginID" formControlName="begin" type="date" pInputText>
                 </div>
                 <div class="col label">
-                    <span>Prix: </span> <span class="monney-display">{{(garden.criteria.price)*(sendDemandForm.get('time').value)}} €</span>
+                    <span>Prix: </span> <span class="monney-display">{{price}} €</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="label">Durée: </span>
+                <p-spinner class="customSpinner" formControlName="time" placeholder="0" [min]="0" [max]="max" [step]="1"></p-spinner> <span class="label"> mois</span>
                 </div>
             </div>
             <br><br><br>
     
             <div class="row">
                 <span class="col-6 align-self-end label">Porte-monnaie après paiement:     </span>
-                <span class="col-4 align-self-end money-display">{{ (wallet.amount)*1 - (garden.criteria.price)*(sendDemandForm.get('time').value) }} €</span>
+                <span class="col-4 align-self-end money-display">{{ (wallet.amount)*1 - (garden.criteria.price) }} €</span>
             </div>
             
             <br><br><br>

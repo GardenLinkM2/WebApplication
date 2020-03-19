@@ -1,17 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {ConfirmationService} from 'primeng/api';
-import {Router} from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
-import {UserService} from '../../services/user-info/user.service';
-import {GardensService} from '../../services/gardens/gardens.service';
-import {LeasingService} from '../../services/leasing/leasing.service';
-import {Location} from '@angular/common';
-import {Leasing} from 'src/app/@entities/leasing';
-import {State} from 'src/app/@entities/enum/state.enum';
-import {Wallet} from 'src/app/@entities/wallet';
-import {Garden} from 'src/app/@entities/garden';
-import {MessageService} from 'primeng/api';
+import { UserService } from "../../services/user-info/user.service";
+import { GardensService } from "../../services/gardens/gardens.service";
+import { LeasingService } from "../../services/leasing/leasing.service";
+import { Location, DeprecatedDatePipe } from "@angular/common";
+import { Leasing } from 'src/app/@entities/leasing';
+import { State } from 'src/app/@entities/enum/state.enum';
+import { Wallet } from 'src/app/@entities/wallet';
+import { Garden } from 'src/app/@entities/garden';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-confirm-leasing-d',
@@ -26,14 +27,13 @@ import {MessageService} from 'primeng/api';
 export class ConfirmLeasingDComponent implements OnInit {
 
   @Input() gardenId: string;
-
-  constructor(private messageService: MessageService, private leasinService: LeasingService,
-              private _location: Location, private router: Router,
-              private confirmationService: ConfirmationService, private userService: UserService,
-              private gardenService: GardensService) {
-  }
+  constructor(private messageService: MessageService,private leasinService : LeasingService,
+    private _location: Location,
+    private confirmationService: ConfirmationService, private userService : UserService ,
+    private gardenService : GardensService) { }
 
   async ngOnInit() {
+    
     await this.userService.getUserWallet().toPromise().then(
       response => {
         this.wallet.amount = response['data'].balance;
@@ -84,7 +84,18 @@ export class ConfirmLeasingDComponent implements OnInit {
     );
 
     this.max = Math.min(this.garden.minUse, (this.wallet.amount / this.garden.criteria.price));
-
+    this.sendDemandForm.get('begin').valueChanges.subscribe(
+      value => {
+        this.beginDate = Date.parse(value)/1000;
+        this.displayPrice();
+      }
+    );
+    this.sendDemandForm.get('time').valueChanges.subscribe(
+      value => {
+        this.endDate = this.beginDate + (value*30*24*3600);
+        this.displayPrice();
+      }
+    );
   }
 
   garden: Garden = {
@@ -121,38 +132,51 @@ export class ConfirmLeasingDComponent implements OnInit {
     amount: null
   };
 
-  max: number;
+  max : number;
+  myId : string;
+  demand : Leasing;
+  beginDate : number;
+  endDate : number;
+  price : number = 0;
 
   sendDemandForm = new FormGroup({
-    time: new FormControl('', [
+    begin : new FormControl('', Validators.required),
+    time : new FormControl('', [
       Validators.required,
-      Validators.max(this.max),
       Validators.min(1),
-      Validators.pattern('^[0-9]*$')
     ])
   });
-
-  myId: string;
-
-  demand: Leasing;
 
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  displayPrice(){
+    if(!(this.beginDate && this.endDate)){
+      this.price = this.garden.criteria.price;
+    }
+    else {
+      let months : number = this.endDate - this.beginDate;
+      let tPrice : number = (months/(30*24*3600)) * this.garden.criteria.price;
+      this.price = tPrice;
+    }
+  }
+    
   onSubmit() {
+    console.log(this.beginDate);
+    console.log(this.endDate);
     this.demand = {
-      id: this.garden.id,
-      creation: Date.now(),
-      time: this.sendDemandForm.get('time').value,
-      begin: 0,
-      end: 0,
-      renew: false,
-      state: State.InDemand,
-      garden: this.garden.id,
-      renter: this.myId,
-      owner: this.garden.owner
-    };
+      id : this.garden.id,
+      creation : Date.now()/1000,
+      time : 0,
+      begin : this.beginDate,
+      end : this.endDate,
+      renew : false,
+      state : State.InDemand,
+      garden : this.garden.id,
+      renter : this.myId,
+      owner : this.garden.owner
+    }
     this.confirm();
   }
 
