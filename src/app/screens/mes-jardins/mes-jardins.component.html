@@ -14,8 +14,8 @@
         </div>
       </div>
       <div class="row w-100 mx-0 px-0 mb-1" *ngIf="gardens.length > 0" class="gardenElement">
-        <div *ngFor="let add of this.gardens;" class="col-md px-1 mb-2" class="card">
-          <app-ad-card [garden]="add"></app-ad-card>
+        <div *ngFor="let add of this.gardens;" class="px-1 mb-2 mr-1">
+            <app-ad-card [garden]="add"></app-ad-card>
         </div>
       </div>
 
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="row w-100 mx-0 px-0 mb-1" *ngIf="locations.length > 0" class="gardenElement">
-        <div *ngFor="let add of this.locations;" class="col-md px-1 mb-2" class="card">
+        <div *ngFor="let add of this.locations;" class="px-1 mb-2 mr-1">
           <app-ad-card [garden]="add"></app-ad-card>
         </div>
       </div>
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="row w-100 mx-0 px-0 mb-1" *ngIf="demandes.length > 0" class="gardenElement">
-        <div *ngFor="let add of this.demandes;" class="col-md px-1 mb-2" class="card">
+        <div *ngFor="let add of this.demandes;" class="px-1 mb-2 mr-1" >
           <app-ad-card [garden]="add"></app-ad-card>
         </div>
       </div>

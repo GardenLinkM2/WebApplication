@@ -5,6 +5,7 @@ import {AfterViewInit, Component, OnInit, Input} from '@angular/core';
 import {BackgroundService} from '../../services/backgroud-service/background.service';
 import {MenuItem} from 'primeng/api';
 import {MessageService} from 'primeng/api';
+import { LeasingService } from '../../services/leasing/leasing.service';
 
 @Component({
   selector: 'app-menu',
@@ -19,15 +20,24 @@ export class MenuComponent implements OnInit {
   isUserNotConnected = true;
   isBackgroundEnabled = false;
   displayModal: boolean;
+  newDemand: boolean = false;
   items: MenuItem[];
 
   constructor(private backgroundService: BackgroundService,
               private modal: ModalService,
               private auth: AuthenticationService,
               private route: Router,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              private leasingService: LeasingService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    await this.leasingService.getDemands(localStorage.getItem('id')).subscribe(
+      response => {
+        if(response.length != 0) this.newDemand = true;
+      }
+    )
+
     this.backgroundService.backGroundChanges.subscribe(value => {
       this.isBackgroundEnabled = value;
     });
@@ -50,6 +60,11 @@ export class MenuComponent implements OnInit {
           label: 'Mes messages',
           icon: 'pi pi-comment',
           routerLink: '/personal-space/messages'
+        },
+        {
+          label: 'Demandes reçues',
+          icon: 'pi pi-inbox',
+          routerLink: '/consulter-demandes'
         }
     ];
   }
