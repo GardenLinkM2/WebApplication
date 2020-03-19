@@ -247,8 +247,8 @@ export class UploadScreenComponent implements OnInit {
       accept: () => {
         if (this.action === 'POST') {
           this.upload.postGarden(this.requestBody).subscribe(
-            () => {this.showSuccess();
-                   for (this.control of this.fields) {
+            response => {this.showSuccess();
+                         for (this.control of this.fields) {
                 if (['streetNum', 'streetName', 'zipCode',
                   'city'].includes(this.control)) {
                   this.uploadForm.get('address').get(this.control).setValue(null);
@@ -256,14 +256,17 @@ export class UploadScreenComponent implements OnInit {
                   this.uploadForm.get(this.control).setValue(null);
                 }
               }
-                   this.uploadedFiles = [];
-                   this.previewUrls = [];
+                         this.uploadedFiles = [];
+                         this.previewUrls = [];
+                         // @ts-ignore
+                         this.router.navigateByUrl(`ad-details/${response.data.id}`);
             },
             () => this.showError()
           );
         } else {
           this.upload.modifyGarden(this.requestBody, sessionStorage.getItem('adToEdit')).subscribe(
-            () => this.showSuccessEdit(),
+            // @ts-ignore
+            response => {this.showSuccessEdit(); this.router.navigateByUrl(`ad-details/${response.data.id}`); },
             () => this.showError()
           );
           sessionStorage.removeItem('adToEdit');
