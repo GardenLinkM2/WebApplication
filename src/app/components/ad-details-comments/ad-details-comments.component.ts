@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Garden} from '../../@entities/garden';
 import {User} from '../../@entities/user';
 import {Score} from '../../@entities/score';
@@ -11,7 +11,7 @@ import {UserService} from '../../services/user-info/user.service';
   templateUrl: './ad-details-comments.component.html',
   styleUrls: ['./ad-details-comments.component.scss']
 })
-export class AdDetailsCommentsComponent implements OnInit {
+export class AdDetailsCommentsComponent implements OnInit, OnChanges {
 
   @Input() garden: Garden;
   @Input() owner: User;
@@ -26,6 +26,10 @@ export class AdDetailsCommentsComponent implements OnInit {
 
   ngOnInit() {
     this.getComment();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.ngOnInit();
   }
 
   onPostComment() {
@@ -43,17 +47,19 @@ export class AdDetailsCommentsComponent implements OnInit {
 
   getComment() {
     this.commentsShown = [];
-    this.scoresService.getScoresByGarden(this.garden.id).subscribe((result: { data: Score[]; count: number; }) => {
-      for (const com of result.data) {
-        this.commentsShown.push({commentId: com.id, isReported: false});
-      }
-      this.comments = result.data;
-      const userIdSet: Set<string> = this.getUserSetForComment();
-      for (const userId of userIdSet) {
-        this.getUser(userId);
-      }
-      this.commentsTotalNumber = result.count;
-    });
+    if (localStorage.getItem('id')) {
+      this.scoresService.getScoresByGarden(this.garden.id).subscribe((result: { data: Score[]; count: number; }) => {
+        for (const com of result.data) {
+          this.commentsShown.push({commentId: com.id, isReported: false});
+        }
+        this.comments = result.data;
+        const userIdSet: Set<string> = this.getUserSetForComment();
+        for (const userId of userIdSet) {
+          this.getUser(userId);
+        }
+        this.commentsTotalNumber = result.count;
+      });
+    }
   }
 
   getUserSetForComment() {
