@@ -18,6 +18,7 @@ import { ConfirmLeasingDComponent } from './confirm-leasing-d/confirm-leasing-d.
 import {ToastModule} from 'primeng/toast';
 import {FileUploadModule} from 'primeng/fileupload';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import {TieredMenuModule} from 'primeng/tieredmenu';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
     ToastModule,
     FileUploadModule,
     RecaptchaModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TieredMenuModule
   ],
   exports: [
     ResearchComponent,
