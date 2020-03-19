@@ -41,10 +41,7 @@ export class MesJardinsComponent implements OnInit {
 
   selectFirstAdds(gardens: Garden[], count: number): void {
     this.gardens = [];
-    let max = this.ADDS_MAX_LENGTH;
-    if (count > this.ADDS_MAX_LENGTH) {
-      max = count;
-    }
+    const max = count;
     for (let i = 0; i < max; i++) {
       this.gardens.push(gardens[i]);
     }
