@@ -7,6 +7,7 @@ import {UploadAdBody} from '../../@entities/adUploadBody';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
+import {minUseMaxUse} from '../../services/validators/minuse-maxuse';
 
 interface Soil {
   type: string;
@@ -70,7 +71,10 @@ export class UploadScreenComponent implements OnInit {
       title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
       surface: new FormControl('', [Validators.required, Validators.max(10 ** 4), Validators.pattern(this.onlyNumbers)]),
       price: new FormControl('', [Validators.required, Validators.max(10 ** 4), Validators.pattern(this.onlyNumbers)]),
-      durationMax: new FormControl('', [Validators.required, Validators.pattern(this.onlyNumbers)]),
+      durationMax: new FormControl('', [Validators.required, Validators.pattern(this.onlyNumbers), Validators.min(1),
+        Validators.max(36)]),
+      durationMin:  new FormControl('', [Validators.required, Validators.pattern(this.onlyNumbers), Validators.min(1),
+        Validators.max(36)]),
       address: new FormGroup({
         streetNum: new FormControl('', Validators.pattern(this.onlyNumbers)),
         streetName: new FormControl('', [Validators.required, Validators.minLength(6),
@@ -88,6 +92,7 @@ export class UploadScreenComponent implements OnInit {
       pictures: new FormControl([])
     });
   async ngOnInit() {
+    this.uploadForm.setValidators(minUseMaxUse());
     this.uploadFile = new FormGroup({
       profile: new FormControl('')
     });
@@ -109,7 +114,8 @@ export class UploadScreenComponent implements OnInit {
       this.uploadForm.get('title').setValue(this.responsdata.name);
       this.uploadForm.get('surface').setValue(this.responsdata.criteria.area);
       this.uploadForm.get('price').setValue(this.responsdata.criteria.price);
-      this.uploadForm.get('durationMax').setValue(this.responsdata.minUse);
+      this.uploadForm.get('durationMax').setValue(this.responsdata.criteria.locationTime);
+      this.uploadForm.get('durationMin').setValue(this.responsdata.minUse);
       this.uploadForm.get('address').get('streetName').setValue(this.responsdata.location.street);
       this.uploadForm.get('address').get('zipCode').setValue(this.responsdata.location.postalCode);
       this.uploadForm.get('address').get('city').setValue(this.responsdata.location.city);
@@ -206,7 +212,7 @@ export class UploadScreenComponent implements OnInit {
             description: this.uploadForm.get('description').value,
             size: 0,
             isReserved: false,
-            minUse: this.uploadForm.get('durationMax').value,
+            minUse: this.uploadForm.get('durationMin').value,
             owner: this.id,
             validation: 0,
             location: {
@@ -216,7 +222,7 @@ export class UploadScreenComponent implements OnInit {
               city: this.uploadForm.get('address').get('city').value
             },
             criteria: {
-              locationTime: 0,
+              locationTime: this.uploadForm.get('durationMax').value,
               area: this.uploadForm.get('surface').value,
               price: this.uploadForm.get('price').value,
               orientation: this.uploadForm.get('orientation').value.direction,
