@@ -19,7 +19,7 @@
     <button #btn class="userMenuA login-custom-button" type="button" pButton (click)="menu.toggle($event)">
       <button class="userMenu" [ngStyle]="{'background-image': getAvatar()}"></button>
       <p style="display:inline; color: #f7f7f7; margin-bottom:0;">Bonjour, {{this.getFirstName()}}</p>
-      <i *ngIf="newDemand" style="color: red;" class="pi pi-inbox"></i>
+      <i *ngIf="newDemand" class="pi pi-inbox"></i>
     </button>
 
     <button type="button" (click)="showConfirm()" id="deconnexion" pButton icon="pi pi-fw pi-sign-out" style="font-size: 18px;display:inline" class="ui-button-rounded ui-button-secondary login-custom-button"></button>

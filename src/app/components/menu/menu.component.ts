@@ -1,11 +1,11 @@
-import { Router } from '@angular/router';
-import { AuthenticationService } from './../../services/connexion/authentication.service';
-import { ModalService } from './../../services/modal-service/modal.service';
-import {AfterViewInit, Component, OnInit, Input} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthenticationService} from '../../services/connexion/authentication.service';
+import {ModalService} from '../../services/modal-service/modal.service';
+import {Component, OnInit} from '@angular/core';
 import {BackgroundService} from '../../services/backgroud-service/background.service';
 import {MenuItem} from 'primeng/api';
 import {MessageService} from 'primeng/api';
-import { LeasingService } from '../../services/leasing/leasing.service';
+import {LeasingService} from '../../services/leasing/leasing.service';
 
 @Component({
   selector: 'app-menu',
@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
   isUserNotConnected = true;
   isBackgroundEnabled = false;
   displayModal: boolean;
-  newDemand: boolean = false;
+  newDemand = false;
   items: MenuItem[];
 
   constructor(private backgroundService: BackgroundService,
@@ -28,15 +28,18 @@ export class MenuComponent implements OnInit {
               private auth: AuthenticationService,
               private route: Router,
               private messageService: MessageService,
-              private leasingService: LeasingService) { }
+              private leasingService: LeasingService) {
+  }
 
   async ngOnInit() {
 
     await this.leasingService.getDemands(localStorage.getItem('id')).subscribe(
       response => {
-        if(response.length != 0) this.newDemand = true;
+        if (response.length !== 0) {
+          this.newDemand = true;
+        }
       }
-    )
+    );
 
     this.backgroundService.backGroundChanges.subscribe(value => {
       this.isBackgroundEnabled = value;
@@ -46,26 +49,26 @@ export class MenuComponent implements OnInit {
 
     this.items = [
 
-        {
-          label: 'Mon profil',
-          icon: 'pi pi-user-edit',
-          routerLink: '/personal-space/user-info'
-        },
-        {
-          label: 'Mes jardins',
-          icon: 'pi pi-pw pi-file',
-          routerLink: '/personal-space/my-gardens'
-        },
-        {
-          label: 'Mes messages',
-          icon: 'pi pi-comment',
-          routerLink: '/personal-space/messages'
-        },
-        {
-          label: 'Demandes reçues',
-          icon: 'pi pi-inbox',
-          routerLink: '/consulter-demandes'
-        }
+      {
+        label: 'Mon profil',
+        icon: 'pi pi-user-edit',
+        routerLink: '/personal-space/user-info'
+      },
+      {
+        label: 'Mes jardins',
+        icon: 'pi pi-pw pi-file',
+        routerLink: '/personal-space/my-gardens'
+      },
+      {
+        label: 'Mes messages',
+        icon: 'pi pi-comment',
+        routerLink: '/personal-space/messages'
+      },
+      {
+        label: 'Demandes reçues',
+        icon: 'pi pi-inbox',
+        routerLink: '/consulter-demandes',
+      }
     ];
   }
 
@@ -87,9 +90,11 @@ export class MenuComponent implements OnInit {
   }
 
   getAvatar() {
-    if (localStorage.getItem('avatarURL') !== 'urltoavatar' && localStorage.getItem('avatarURL') !== "") {
+    if (localStorage.getItem('avatarURL') !== 'urltoavatar' && localStorage.getItem('avatarURL') !== '') {
       return `url(${localStorage.getItem('avatarURL')})`;
-    } else { return  `url(../../../assets/img/defaultavatar.png)`; }
+    } else {
+      return `url(../../../assets/img/defaultavatar.png)`;
+    }
   }
 
   getFirstName() {
@@ -98,8 +103,10 @@ export class MenuComponent implements OnInit {
 
   showConfirm() {
     this.messageService.clear();
-    this.messageService.add({key: 'c', sticky: true, severity: 'warn', summary: 'Déconnexion',
-                              detail: 'êtes-vous sûr de vouloir vous déconnecter'});
+    this.messageService.add({
+      key: 'c', sticky: true, severity: 'warn', summary: 'Déconnexion',
+      detail: 'êtes-vous sûr de vouloir vous déconnecter'
+    });
   }
 
   onConfirm() {
@@ -109,10 +116,6 @@ export class MenuComponent implements OnInit {
 
   onReject() {
     this.messageService.clear('c');
-  }
-
-  clear() {
-    this.messageService.clear();
   }
 
   logOutUser() {
