@@ -9,8 +9,9 @@
             </div>
     
             <div class="row">
-                <span class="lenght-display col align-self-end">{{leasing.time}} mois</span>
-                <span class="price-display col align-self-center">{{leasing.time * garden.criteria.price}} €</span>
+                <span class="lenght-display col align-self-end">À partir du {{displayDate()}}</span>
+                <span class="lenght-display col align-self-end">{{leasing.time/(30*24*3600)}} mois</span>
+                <span class="price-display col align-self-center">{{(leasing.time/(30*24*3600)) * garden.criteria.price}} €</span>
             </div>
         </div>
 
@@ -20,7 +21,7 @@
             <span class="title">{{garden.name}}</span>
             <div class="row address">
                 <div class="col">
-                    <span class="label">Rue: </span><span>{{garden.location.streetNumber}} {{garden.location.street}}</span>
+                    <span class="label">Adresse: </span><span>{{garden.location.streetNumber}} {{garden.location.street}}</span>
                 </div>
                 <div class="col">
                     <span class="label">Code postal: </span><span>{{garden.location.postalCode}}</span>

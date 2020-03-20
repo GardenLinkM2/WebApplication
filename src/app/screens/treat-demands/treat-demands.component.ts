@@ -32,6 +32,10 @@ export class TreatDemandsComponent implements OnInit {
     this.showMessage();
   }
 
+  myId : string;
+  demands : Leasing [];
+  title = "Demandes reçues";
+
   onTreated(event : any){
     this.demands.splice(this.demands.findIndex(l => l.id == event.id), 1);
     if(!this.demands || this.demands.length == 0) {
@@ -54,9 +58,5 @@ export class TreatDemandsComponent implements OnInit {
   showMessage() {
     this.msgService.add({severity: 'info', detail: 'Vous n\'avez aucune demande non traitée.'});
   }
-
-  myId : string;
-  demands : Leasing [];
-  title = "Demandes reçues";
 
 }
