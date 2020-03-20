@@ -1,3 +1,4 @@
+import { ModalService } from './../../services/modal-service/modal.service';
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Garden} from '../../@entities/garden';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
@@ -26,6 +27,7 @@ export class AdDetailsScreenComponent implements OnInit {
   isLeasingAccepted = false;
   leasing: Leasing;
   isConnected = false;
+  displayModal: boolean;
 
   constructor(private activatedRoute: ActivatedRoute,
               private gardensService: GardensService,
@@ -33,7 +35,8 @@ export class AdDetailsScreenComponent implements OnInit {
               private userService: UserService,
               private leasingService: LeasingService,
               private confirmationService: ConfirmationService,
-              private localStorageService: LocalStorageService) {
+              private localStorageService: LocalStorageService,
+              private modal: ModalService) {
   }
 
   ngOnInit() {
@@ -49,6 +52,16 @@ export class AdDetailsScreenComponent implements OnInit {
       }
     });
 
+    this.modal.currentModalState.subscribe(display => this.displayModal = display);
+
+  }
+
+  showModalDialog() {
+    if (localStorage.getItem('synToken') !== null) {
+      this.router.navigateByUrl('/demande-location/' + this.ad.id);
+    } else {
+      this.modal.showModalDialog();
+    }
   }
 
   getInterestingGarden() {
@@ -89,7 +102,7 @@ export class AdDetailsScreenComponent implements OnInit {
 
   delete() {
     this.gardensService.deleteById(this.ad.id).subscribe(() => {
-      this.router.navigateByUrl('/acceuil');
+      this.router.navigateByUrl('/personal-space/my-gardens');
     });
   }
 

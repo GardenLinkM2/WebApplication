@@ -32,8 +32,7 @@
           <div class="col">
             <h3 class="h3 text-success">{{ad.criteria.price}} € par mois</h3>
             <div class="text-right" *ngIf="!isMine">
-              <button class="btn btn-sm btn-success rounded-pill" *ngIf="!isMeDemandingLeasing"
-                      [routerLink]="'/demande-location/' + this.ad.id"><span class="px-4">Louer</span></button>
+              <button class="btn btn-sm btn-success rounded-pill" *ngIf="!isMeDemandingLeasing" (click)="showModalDialog()"><span class="px-4">Louer</span></button>
               <div class="row pt-1" *ngIf="isMeDemandingLeasing && !isLeasingAccepted">
                 <div class="col mt-1 text-warning h4 text-left">
                   (En attente)
@@ -115,7 +114,8 @@
               <button *ngIf="!isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"
                       [routerLink]="'/personal-space/messages/'+owner.id"><i class="pi pi-comments"></i>Discuter
               </button>
-              <button *ngIf="isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100">Demandes
+              <button *ngIf="isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"
+                      [routerLink]="'/consulter-demandes'">Demandes
               </button>
             </p-card>
           </div>
