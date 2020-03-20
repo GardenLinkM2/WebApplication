@@ -228,7 +228,7 @@ export class MessengerComponent implements OnInit {
 
   confirmDeleteMessage(event) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Supprimer la discussion?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
