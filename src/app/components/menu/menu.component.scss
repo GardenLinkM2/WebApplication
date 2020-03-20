@@ -45,6 +45,13 @@ vertical-align: middle;
   margin-right:100px !important;
 }
 
+.pi-inbox {
+  color: red;
+  position: absolute;
+  left: 33px;
+  top: -4px;
+}
+
 
 .menu-transparent {
 	height: 70px;
@@ -59,13 +66,13 @@ border: 2px solid transparent !important;
 margin-left: 0px;
 margin-right: 0px;
 border-radius: 0px !important;
-} 
+}
 
 
 .login-custom-button:hover, .login-custom-button:active,  .login-custom-button:hover p, .login-custom-button:active p {
 color: #289428 !important;
 border-bottom-color: #289428 !important;
-} 
+}
 
 .userMenu {
 margin-left: 10px;
