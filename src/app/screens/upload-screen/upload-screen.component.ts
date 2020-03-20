@@ -187,20 +187,17 @@ export class UploadScreenComponent implements OnInit {
   }
 
   async onSubmit() {
-    // TODO: Replace the following line with an effective one.
-    let count = 1;
     for (const file of this.uploadedFiles) {
       const formData = new FormData();
       formData.append('file', file);
       await this.client.post<any>('https://uploadm2.artheriom.fr/upload.php', formData).subscribe(
         (response) => this.uploadForm.get('pictures').value.push(
           {
-            fileName: `picture ${count}`,
+            fileName: response[0],
             path: response[0]
           }),
         (err) => console.log(err)
       ) ;
-      count ++;
     }
     if (this.uploadForm.valid) {
       await this.upload.getId().toPromise().then(
