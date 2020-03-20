@@ -7,6 +7,7 @@ import { UserService } from '../../services/user-info/user.service';
 import { LeasingService } from '../../services/leasing/leasing.service';
 import { State } from 'src/app/@entities/enum/state.enum';
 import { Payment } from 'src/app/@entities/payment';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -14,10 +15,35 @@ import { Payment } from 'src/app/@entities/payment';
   templateUrl: './demand.component.html',
   styleUrls: ['./demand.component.scss'],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    DatePipe
   ]
 })
+
+
 export class DemandComponent implements OnInit {
+
+  constructor(private leasingS: LeasingService , private userS: UserService,
+    private gardenS: GardensService, private confirmationService: ConfirmationService,
+    public datepipe: DatePipe) { }
+
+  async ngOnInit() {
+    await this.gardenS.getGardenById(this.leasing.garden).subscribe(
+      Response => {
+        // @ts-ignore
+        this.garden = Response.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    await this.userS.getUserById(this.leasing.renter).toPromise().then(
+      Response => {
+        this.user = Response;
+      }
+    );
+  }
 
   @Output() treated = new EventEmitter<any>();
 
@@ -79,29 +105,14 @@ export class DemandComponent implements OnInit {
     leasing: ''
   };
 
-  constructor(private leasingS: LeasingService , private userS: UserService,
-              private gardenS: GardensService, private confirmationService: ConfirmationService) { }
-
-  async ngOnInit() {
-    await this.gardenS.getGardenById(this.leasing.garden).subscribe(
-      Response => {
-        // @ts-ignore
-        this.garden = Response.data;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-
-    await this.userS.getUserById(this.leasing.renter).toPromise().then(
-      Response => {
-        this.user = Response;
-      }
-    );
-  }
+  
 
   pickAvatar() {
     return this.user.avatar === '' ? 'assets/img/defaultavatar.png' : this.user.avatar;
+  }
+
+  displayDate(){
+    return this.datepipe.transform(new Date(this.leasing.begin*1000),'dd/MM/yyyy');
   }
 
   treat(id: string, action: string, user: string) {
@@ -120,22 +131,27 @@ export class DemandComponent implements OnInit {
         header: null,
         icon: null,
         accept: () => {
-          this.leasing.state = State.InProgress;
-          this.leasing.begin = Math.floor((new Date().getTime()) / 1000);
-          this.leasing.end = this.leasing.begin + this.leasing.time * (2.628) * 10 ** 6;
-          this.leasingS.treatLeasing(this.leasing.id, this.leasing).subscribe(
-            Response => {
-              this.payment.leasing = this.leasing.id;
-              this.payment.sum = this.leasing.time * this.garden.criteria.price;
-              this.payment.date = new Date();
-              this.payment.id = this.leasing.id;
-              this.leasingS.payLeasing(this.payment).subscribe(
-                () => {  }
-              );
+          this.payment.leasing = this.leasing.id;
+          this.payment.sum = this.garden.criteria.price;
+          this.payment.date = new Date();
+          this.payment.id = this.leasing.id;
+          this.leasingS.payLeasing(this.payment).subscribe(
+            response => { 
+              this.leasing.state = State.InProgress;
+              this.leasingS.treatLeasing(this.leasing.id, this.leasing).subscribe(
+                response => {
+                  console.log(response);
+                },
+                error => {
+                  console.log("Error lors du traitement du leasing");
+                  console.log(error);
+                }
+              ),
               // @ts-ignore
-              this.treat(Response.data.id, 'accept', this.user.firstName);
+              this.treat(response.data.id, 'accept', this.user.firstName);
             },
             error => {
+              console.log("Error lors du paiement.");
               console.log(error);
             }
           );
