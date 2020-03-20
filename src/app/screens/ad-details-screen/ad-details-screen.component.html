@@ -23,19 +23,38 @@
           <div class="col">
             <h2 class="h2">{{ad.name}}</h2>
           </div>
-          <div class="col text-right">
-            <span class="text-danger" style="cursor: pointer;"  [routerLink]="'/signaler-annonce/' + ad.id"><i class="pi pi-exclamation-triangle"></i></span>
+          <div class="col text-right" *ngIf="isConnected">
+            <span class="text-danger" style="cursor: pointer;" [routerLink]="'/signaler-annonce/' + ad.id"><i
+              class="pi pi-exclamation-triangle"></i></span>
           </div>
         </div>
         <div class="row border-bottom pb-1">
           <div class="col">
             <h3 class="h3 text-success">{{ad.criteria.price}} € par mois</h3>
             <div class="text-right" *ngIf="!isMine">
-              <button class="btn btn-sm btn-success rounded-pill" [routerLink]="'/demande-location/' + this.ad.id" ><span class="px-4">Louer</span></button>
+              <button class="btn btn-sm btn-success rounded-pill" *ngIf="!isMeDemandingLeasing"
+                      [routerLink]="'/demande-location/' + this.ad.id"><span class="px-4">Louer</span></button>
+              <div class="row pt-1" *ngIf="isMeDemandingLeasing && !isLeasingAccepted">
+                <div class="col mt-1 text-warning h4 text-left">
+                  (En attente)
+                </div>
+                <div class="col text-right">
+                  <button class="btn btn-sm btn-danger rounded-pill py-1" (click)="onCancelDemandOfLeasing()">Annuler la
+                    demande
+                  </button>
+                </div>
+              </div>
+              <div class="row pt-1" *ngIf="isLeasingAccepted">
+                <div class="col mt-1 text-warning h4 text-center">
+                  (Acceptée)
+                </div>
+              </div>
             </div>
             <div class="text-right" *ngIf="isMine">
-              <button class="btn btn-sm btn-warning rounded-pill mr-2" (click)="onModify()"><span class="px-4">Modifier</span></button>
-              <button class="btn btn-sm btn-danger rounded-pill" (click)="onDelete()"><span class="px-4">Supprimer</span></button>
+              <button class="btn btn-sm btn-warning rounded-pill mr-2" (click)="onModify()"><span
+                class="px-4">Modifier</span></button>
+              <button class="btn btn-sm btn-danger rounded-pill" (click)="onDelete()"><span
+                class="px-4">Supprimer</span></button>
             </div>
           </div>
         </div>
@@ -84,23 +103,29 @@
       <div class="container-fluid">
         <div class="row pb-3">
           <div class="col" *ngIf="owner">
-            <p-card  styleClass="ui-card-shadow">
+            <p-card styleClass="ui-card-shadow">
               <p-header>
                 <div class="text-center">
-                  <img src="profile photo" [src]="owner ? owner.avatar : '../../../assets/img/defaultavatar.png'" class="w-50" style="max-width: 100px">
+                  <img src="profile photo" [src]="owner ? owner.avatar : '../../../assets/img/defaultavatar.png'"
+                       class="w-50" style="max-width: 100px">
                 </div>
                 <div class="text-center h3 pt-1">{{owner.firstName}}</div>
                 <div class="text-center h3">{{owner.lastName}}</div>
               </p-header>
-                <button *ngIf="!isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"
-                        [routerLink]="'/personal-space/messages/'+owner.id"><i class="pi pi-comments"></i>Discuter</button>
-                <button *ngIf="isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100">Demandes</button>
+              <button *ngIf="!isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"
+                      [routerLink]="'/personal-space/messages/'+owner.id"><i class="pi pi-comments"></i>Discuter
+              </button>
+              <button *ngIf="isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100">Demandes
+              </button>
             </p-card>
           </div>
         </div>
         <div class="row">
-          <div class="col" *ngIf="ad && owner">
+          <div class="col" *ngIf="ad && owner && isConnected">
             <app-ad-details-comments [garden]="ad" [owner]="owner"></app-ad-details-comments>
+          </div>
+          <div class="col" *ngIf="!isConnected">
+            Vous devez être connecté pour voir les commentaires
           </div>
         </div>
       </div>
@@ -117,4 +142,11 @@
       <app-ad-card [garden]="otherAd"></app-ad-card>
     </div>
   </div>
+
+  <p-confirmDialog acceptLabel="Confirmer" rejectLabel="Annuler"
+                   acceptButtonStyleClass="ui-button-rounded ui-button-success"
+                   rejectButtonStyleClass="ui-button-rounded ui-button-danger">
+  </p-confirmDialog>
 </div>
+
+

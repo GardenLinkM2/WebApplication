@@ -40,4 +40,8 @@ export class LeasingService {
   payLeasing(payment : Payment) {
     return this.client.post(this.urlback + `Payments`, payment);
   }
+
+  deleteLeasingById(id: string) {
+    return this.client.delete(this.urlback + 'Leasing/' + id);
+  }
 }

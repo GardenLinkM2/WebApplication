@@ -32,14 +32,15 @@ export class MenuComponent implements OnInit {
   }
 
   async ngOnInit() {
-
-    await this.leasingService.getDemands(localStorage.getItem('id')).subscribe(
-      response => {
-        if (response.length !== 0) {
-          this.newDemand = true;
+    if (localStorage.getItem('synToken')) {
+      await this.leasingService.getDemands(localStorage.getItem('id')).subscribe(
+        response => {
+          if (response.length !== 0) {
+            this.newDemand = true;
+          }
         }
-      }
-    );
+      );
+    }
 
     this.backgroundService.backGroundChanges.subscribe(value => {
       this.isBackgroundEnabled = value;

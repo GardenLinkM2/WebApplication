@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../services/user-info/user.service';
 import {MessageService} from 'primeng/api';
+import {LocalStorageService} from '../../services/local-storage/local-storage.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class ConnexionComponent implements OnInit {
               private router: Router,
               private modal: ModalService,
               private userService: UserService,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -77,7 +79,7 @@ export class ConnexionComponent implements OnInit {
                     // @ts-ignore
               localStorage.setItem('lastName', responseAuth.lastName);
                     // @ts-ignore
-              localStorage.setItem('id', responseAuth.id);
+              this.localStorageService.setItem('id', responseAuth.id);
             }
 
           );

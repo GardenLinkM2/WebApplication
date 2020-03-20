@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Photo} from '../../@entities/photo';
 
 @Component({
@@ -6,7 +6,7 @@ import {Photo} from '../../@entities/photo';
   templateUrl: './caroussel.component.html',
   styleUrls: ['./caroussel.component.scss']
 })
-export class CarousselComponent implements OnInit {
+export class CarousselComponent implements OnInit, OnChanges {
 
   @Input() images: Photo[];
   selectedImage: Photo;
@@ -22,6 +22,10 @@ export class CarousselComponent implements OnInit {
 
   onChangeSelectedImage(index) {
     this.selectedImage = this.images[index];
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.ngOnInit();
   }
 
 }
