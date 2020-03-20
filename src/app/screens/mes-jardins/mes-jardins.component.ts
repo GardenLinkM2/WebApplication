@@ -19,7 +19,8 @@ export class MesJardinsComponent implements OnInit {
   locations: Garden[] = [];
   demandes: Garden[] = [];
   gardenId: string[] = [];
-  rentedGardenId: string[] = [];
+  rentedInDemand: string[] = [];
+  rentedInProgress: string[] = [];
   leaselist: Leasing[];
 
   constructor(private userService: UserService,
@@ -66,26 +67,29 @@ export class MesJardinsComponent implements OnInit {
   getGardenIdByLeasing(lease: Leasing[], size: number) {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < size; i++) {
-      if (lease[i].state !== 'Refused' && lease[i].renter === localStorage.getItem('id')) {
-      this.rentedGardenId.push(lease[i].garden);
+      if (lease[i].state === 'InDemand' && lease[i].renter === localStorage.getItem('id')) {
+        this.rentedInDemand.push(lease[i].garden);
+      }
+
+      if (lease[i].state === 'InProgress' && lease[i].renter === localStorage.getItem('id')) {
+        this.rentedInProgress.push(lease[i].garden);
       }
     }
   }
 
   getRentedGardens() {
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < this.rentedGardenId.length; i++) {
-      this.gardenService.getGardenById(this.rentedGardenId[i]).subscribe((result: {data: Garden}) => {
-        this.separateDemandeAndLocation(result.data);
+    for (let i = 0; i < this.rentedInDemand.length; i++) {
+      this.gardenService.getGardenById(this.rentedInDemand[i]).subscribe((result: {data: Garden}) => {
+        this.demandes.push(result.data);
       });
     }
-  }
 
-  separateDemandeAndLocation(garden: Garden) {
-    if (garden.isReserved === false) {
-      this.demandes.push(garden);
-    } else {
-      this.locations.push(garden);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.rentedInProgress.length; i++) {
+      this.gardenService.getGardenById(this.rentedInProgress[i]).subscribe((result: {data: Garden}) => {
+        this.locations.push(result.data);
+      });
     }
   }
 
