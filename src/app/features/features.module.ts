@@ -19,6 +19,7 @@ import {ToastModule} from 'primeng/toast';
 import {FileUploadModule} from 'primeng/fileupload';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import {TieredMenuModule} from 'primeng/tieredmenu';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {TieredMenuModule} from 'primeng/tieredmenu';
     FileUploadModule,
     RecaptchaModule,
     ReactiveFormsModule,
-    TieredMenuModule
+    TieredMenuModule,
+    ProgressSpinnerModule
   ],
   exports: [
     ResearchComponent,

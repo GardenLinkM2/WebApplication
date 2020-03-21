@@ -29,6 +29,12 @@ export class LeasingService {
     );
   }
 
+  getDemandSent(renter: string, garden: string) {
+    return this.client.get(this.urlback + `Leasing/me`).pipe(
+      map(responses => responses["data"].filter(l => (l.state === State.InDemand || l.state === State.InProgress) && l.renter === renter && l.garden == garden) ),
+    );
+  }
+
   getUserLeasings() {
     return this.client.get(this.urlback + `Leasing/me`);
   }
