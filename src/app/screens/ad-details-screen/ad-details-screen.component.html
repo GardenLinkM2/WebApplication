@@ -138,7 +138,7 @@
   </div>
   <div class="row pt-2">
     <div *ngFor="let otherAd of otherAds; last as isLast"
-         class="col pl-0" [class.pr-1]="!isLast" [class.pr-0]="isLast">
+         class="col pl-0 mb-2" [class.pr-1]="!isLast" [class.pr-0]="isLast">
       <app-ad-card [garden]="otherAd"></app-ad-card>
     </div>
   </div>
