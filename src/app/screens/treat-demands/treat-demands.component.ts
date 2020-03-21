@@ -18,8 +18,6 @@ export class TreatDemandsComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.showProgressSpinner();
-
     await this.leasingS.getUserMe().toPromise().then(
       response => {
         this.myId = response["data"].id;
@@ -29,10 +27,12 @@ export class TreatDemandsComponent implements OnInit {
     await this.leasingS.getDemands(this.myId).subscribe(
       Response => {
         this.demands = Response;
+        this.spin = false;
+        if(this.demands.length == 0){
+          this.showMessage();
+        }
       }
     )
-
-    this.showMessage();
   }
 
   myId : string;
@@ -40,19 +40,13 @@ export class TreatDemandsComponent implements OnInit {
   title = "Demandes reçues";
   spin: boolean = true;
 
-  showProgressSpinner() {
-    setTimeout(() => {
-      this.spin = false;
-    }, 1500);
-  }
-
   onTreated(event : any){
     this.demands.splice(this.demands.findIndex(l => l.id == event.id), 1);
     if(!this.demands || this.demands.length == 0) {
       setTimeout(() => {
         this.writeMessage(event.action, event.user);
-        this.showMessage();
-      } , 1000);
+        this.msgService.add({severity: 'info', detail: 'Vous n\'avez aucune demande non traitée.'});
+      } ,500);
     }
     else 
       setTimeout(() => this.writeMessage(event.action, event.user), 1000);
@@ -66,7 +60,10 @@ export class TreatDemandsComponent implements OnInit {
   }
 
   showMessage() {
-    this.msgService.add({severity: 'info', detail: 'Vous n\'avez aucune demande non traitée.'});
+    setTimeout(() => {
+      if(this.demands.length ==0){
+        this.msgService.add({severity: 'info', detail: 'Vous n\'avez aucune demande non traitée.'});
+      }
+    }, 500)
   }
-
 }
