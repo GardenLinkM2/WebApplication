@@ -56,7 +56,8 @@
 
             <br>
 
-            <p-checkbox id="condition" formControlName="condition" label="J'accepte les CGU" binary="true"></p-checkbox>
+            <p-checkbox id="condition" formControlName="condition" label="" binary="true"></p-checkbox>
+            <label id="cgu">J'accepte les <a [routerLink]="['/conditions-generales-utilisation']">CGU</a></label>
             <br>
             <p-checkbox id="newsletter" formControlName="newsletter" label="Newsletter" binary="true"></p-checkbox>
 
