@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UploadService} from '../../services/upload-add/upload.service';
 import {Orientation} from '../../@entities/enum/orientation.enum';
@@ -8,6 +8,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {minUseMaxUse} from '../../services/validators/minuse-maxuse';
+import {ModalService} from '../../services/modal-service/modal.service';
 
 interface Soil {
   type: string;
@@ -28,6 +29,7 @@ export class UploadScreenComponent implements OnInit {
   uploadedFiles: any[] = [];
   directions: Direction[];
   message: string;
+  displayModal: boolean;
   MAX_FILES = 5;
   action = 'POST';
   responsdata: any;
@@ -41,7 +43,8 @@ export class UploadScreenComponent implements OnInit {
               private upload: UploadService,
               private confirmationService: ConfirmationService,
               private messageService: MessageService,
-              private router: Router) {
+              private router: Router,
+              private modal: ModalService) {
     this.soils = [
       {type: GroundEnum.ARGILEUSE},
       {type: GroundEnum.SABLEUSE},
@@ -93,10 +96,11 @@ export class UploadScreenComponent implements OnInit {
     });
   async ngOnInit() {
     this.uploadForm.setValidators(minUseMaxUse());
+    this.modal.currentModalState.subscribe(display => this.displayModal = display);
     this.uploadFile = new FormGroup({
       profile: new FormControl('')
     });
-    if (this.router.url.includes('edit-ad')) {
+    if (this.router.url.includes('modifier-annonce')) {
       this.title = 'MODIFIER VOTRE ANNONCE';
       this.buttonLabel = 'Enregistrer';
       this.action = 'PUT';
@@ -202,7 +206,7 @@ export class UploadScreenComponent implements OnInit {
     if (this.uploadForm.valid) {
       await this.upload.getId().toPromise().then(
         // @ts-ignore
-        response => {this.id = response.data.id; console.log(this.uploadForm);
+        response => {this.id = response.data.id;
                      this.requestBody = {
             id: this.id,
             name: this.uploadForm.get('title').value,
@@ -293,6 +297,12 @@ export class UploadScreenComponent implements OnInit {
 
   showError() {
     this.messageService.add({severity: 'error', summary: '', detail: 'Une erreur est survenue, réessayez plus tard!'});
+  }
+
+  showModalDialog() {
+    if (this.buttonLabel === 'publier' && !localStorage.getItem('synToken')) {
+      this.modal.showModalDialog();
+    }
   }
 
 }

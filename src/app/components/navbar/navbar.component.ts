@@ -7,26 +7,25 @@ import {Router} from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  private user = 'user-info';
-  private gardens = 'my-gardens';
+  private user = 'mes-info';
+  private gardens = 'mes-jardins';
   private messages = 'messages';
-  private active = '';
   tabs = [
     {
-      route: `/personal-space/${this.user}`,
+      route: `/espace-personel/${this.user}`,
       name: 'Mon profil',
       id: 'user'
     },
     {
-      route: `/personal-space/${this.gardens}`,
+      route: `/espace-personel/${this.gardens}`,
       name: 'Mes jardins',
       id: 'gardens'
     },
     {
-      route: `/personal-space/${this.messages}`,
+      route: `/espace-personel/${this.messages}`,
       name: 'Mes messages',
       id: 'msgs'
-    }]
+    }];
   constructor(private router: Router) { }
   ngOnInit() {
   }

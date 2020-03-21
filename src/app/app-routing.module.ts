@@ -11,7 +11,6 @@ import {MdpOublieComponent} from './screens/mdp-oublie/mdp-oublie.component';
 import {RecoverPwdScreenComponent} from './screens/recover-pwd-screen/recover-pwd-screen.component';
 import {AdDetailsScreenComponent} from './screens/ad-details-screen/ad-details-screen.component';
 import {PersonalSpaceComponent} from './screens/personal-space/personal-space/personal-space.component';
-import {IndevelopmentComponent} from './components/indevelopment/indevelopment.component';
 import { ConnexionComponent } from './components/connexion/connexion.component';
 import {FillWalletScreenComponent} from './screens/fill-wallet-screen/fill-wallet-screen.component';
 import { LeasingDemandComponent } from './screens/leasing-demand/leasing-demand.component';
@@ -21,26 +20,26 @@ import {MessengerComponent} from './screens/messenger/messenger.component';
 
 const routes: Routes = [
   { path: 'acceuil', component: HomeScreenComponent },
-  { path: 'upload', component: UploadScreenComponent},
-  { path: 'edit-ad', component: UploadScreenComponent, canActivate: [AuthGuard]},
+  { path: 'publier', component: UploadScreenComponent},
+  { path: 'modifier-annonce', component: UploadScreenComponent, canActivate: [AuthGuard]},
   { path: 'mdp-oublie', component: MdpOublieComponent},
   { path: 'reinitialisation-mdp/:token', component: RecoverPwdScreenComponent},
   { path: 'signaler-annonce/:id', component: ReportAdComponent},
   { path: 'consulter-demandes', component: TreatDemandsComponent},
   { path: 'inscription', component: InscriptionComponent},
   { path: 'connexion', component: ConnexionComponent},
-  { path: 'personal-space', component: PersonalSpaceComponent, canActivate: [AuthGuard],
+  { path: 'espace-personel', component: PersonalSpaceComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'user-info', component: UserInformationComponent },
-      { path: 'my-gardens', component: MesJardinsComponent},
+      { path: 'mes-info', component: UserInformationComponent },
+      { path: 'mes-jardins', component: MesJardinsComponent},
       { path: 'messages', component: MessengerComponent},
       { path: 'messages/:ownerId', component: MessengerComponent},
-      {path: '', redirectTo: 'user-info', pathMatch: 'full'}
+      {path: '', redirectTo: 'mes-info', pathMatch: 'full'}
       ]
   },
   { path: 'demande-location/:id', component: LeasingDemandComponent},
   { path: 'recharger-compte', component: FillWalletScreenComponent, canActivate: [AuthGuard]},
-  { path: 'ad-details/:id', component: AdDetailsScreenComponent},
+  { path: 'details-annonce/:id', component: AdDetailsScreenComponent},
   { path: '**',   redirectTo: '/acceuil', pathMatch: 'full'},
 ];
 

@@ -34,12 +34,12 @@ export class UserInformationComponent implements OnInit {
     {
       label: 'Modifier',
       icon: 'pi pi-pencil',
-      command: (event) => { this.displayChangeImage = true; },
+      command: () => { this.displayChangeImage = true; },
     },
     {
       label: 'Supprimer',
       icon: 'pi pi-trash',
-      command: (event) => { this.removeProfilePicture(); },
+      command: () => { this.removeProfilePicture(); },
     }
   ];
 
@@ -168,7 +168,7 @@ export class UserInformationComponent implements OnInit {
               sessionStorage.setItem('email', this.newInformation.email);
               sessionStorage.setItem('phone', this.newInformation.phone);
               sessionStorage.setItem('newsletter', this.infoForm.get('newsletter').value); },
-            error => this.showError()
+            () => this.showError()
           );
         },
         reject: () => {

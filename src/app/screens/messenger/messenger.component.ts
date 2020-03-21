@@ -85,7 +85,6 @@ export class MessengerComponent implements OnInit {
   }
 
   sortThreads() {
-    console.log(this.userThreads);
     this.userThreads.sort((a, b) => {
       if ((a.messages !== undefined && b.messages !== undefined) &&
         (Date.parse(a.messages[a.messages.length - 1].creationDate) < Date.parse(b.messages[b.messages.length - 1].creationDate))) {
@@ -131,7 +130,6 @@ export class MessengerComponent implements OnInit {
             // @ts-ignore
             this.messages = curThread.messages;
             this.scroll();
-            console.log('ICICICIC');
           }
           let aschanged = false;
           // @ts-ignore
@@ -162,7 +160,6 @@ export class MessengerComponent implements OnInit {
   }
 
   scroll() {
-    console.log(document.getElementById('showMessages').scrollHeight);
     setTimeout(() => {
         document.getElementById('showMessages').scrollTop = document.getElementById('showMessages').scrollHeight;
       },
