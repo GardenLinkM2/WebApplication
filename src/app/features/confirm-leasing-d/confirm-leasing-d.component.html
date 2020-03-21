@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col">
                     <label class="label" for="beginID">Début: </label>
-                    <input id="beginID" formControlName="begin" type="date" pInputText>
+                    <input id="beginID" formControlName="begin" type="date" pInputText min="{{getDateNow()}}">
                 </div>
                 <div class="col label">
                     <span>Prix: </span> <span class="monney-display">{{price}} €</span>
