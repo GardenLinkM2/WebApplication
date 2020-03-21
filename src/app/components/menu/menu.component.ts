@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
   displayModal: boolean;
   newDemand = false;
   items: MenuItem[];
-  myRoute;
+  myRoute = '';
 
   constructor(private backgroundService: BackgroundService,
               private modal: ModalService,
@@ -37,7 +37,7 @@ export class MenuComponent implements OnInit {
     this.myRoute = this.route.url;
     this.route.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.myRoute = event.url;
+        this.myRoute = this.route.url;
       }
     });
     this.checkNotif();
