@@ -32,7 +32,7 @@ export class ConfirmLeasingDComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.showProgessSpinner();
+    // this.showProgessSpinner();
     this.checkIfDemandSent();
 
     await this.userService.getUserWallet().toPromise().then(
@@ -74,6 +74,7 @@ export class ConfirmLeasingDComponent implements OnInit {
           waterAccess: response['data'].criteria.waterAccess
         };
         this.garden.photos = response['data'].photos;
+        this.spin = false;
       }
     );
 
@@ -155,11 +156,6 @@ export class ConfirmLeasingDComponent implements OnInit {
     ])
   });
 
-  showProgessSpinner() {
-    setTimeout(() => {
-      this.spin = false;
-    }, 1500)
-  }
 
   checkIfDemandSent() {
     this.leasinService.getDemandSent(localStorage.getItem('id'), this.gardenId).toPromise().then(
@@ -169,7 +165,7 @@ export class ConfirmLeasingDComponent implements OnInit {
         }
         else {
           this.isDemandAlreadySent = false;
-        }
+        };
       }
     );
   }
@@ -219,7 +215,7 @@ export class ConfirmLeasingDComponent implements OnInit {
         this.leasinService.postNewLeasing(this.demand).subscribe(
           () => {
             this.messageService.add({severity: 'success', summary: 'OK ', detail: 'Votre demande a été envoyée.'});
-            setTimeout(() => this._location.back(), 2000);
+            setTimeout(() => this._location.back(), 1000);
           },
           error => {
             console.error(error);

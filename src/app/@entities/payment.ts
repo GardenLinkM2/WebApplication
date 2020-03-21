@@ -1,6 +1,6 @@
 export interface Payment {
     id : string,
     sum : number,
-    date : Date,
+    date : number,
     leasing : string
 }
