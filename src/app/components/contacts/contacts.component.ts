@@ -19,7 +19,7 @@ export class ContactsComponent implements OnInit, OnChanges {
   @Output() sendDeleteEvent = new EventEmitter();
   firstName = '';
   lastName = '';
-  avatar = '';
+  avatar = 'assets/img/defaultavatar.png';
 
   constructor(private userService: UserService) {
   }
@@ -27,10 +27,8 @@ export class ContactsComponent implements OnInit, OnChanges {
   async ngOnInit() {
     await this.userService.getUserById(this.userId).subscribe(
       (response: User) => {
-        if (response.avatar !== '') {
+        if (response.avatar.includes('/uploadm2.artheriom.fr')) {
           this.avatar = response.avatar;
-        } else {
-          this.avatar = 'assets/img/defaultavatar.png';
         }
         this.firstName = response.firstName;
         this.lastName = response.lastName;
@@ -65,7 +63,8 @@ export class ContactsComponent implements OnInit, OnChanges {
 
   setFirstMessage() {
     if (this.firstMessage) {
-      return this.firstMessage.sender === this.userId ? this.firstName + ' : ' + this.firstMessage.text : 'vous : ' + this.firstMessage.text;
+      return this.firstMessage.sender === this.userId ? this.firstName + ' : ' + this.firstMessage.text : 'vous : ' +
+        this.firstMessage.text;
     } else {
       return '';
     }
