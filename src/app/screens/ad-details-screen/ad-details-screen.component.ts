@@ -11,12 +11,16 @@ import {ConfirmationService} from 'primeng/api';
 import {Subject} from 'rxjs';
 import {LocalStorageService} from '../../services/local-storage/local-storage.service';
 import {ILocalStorage} from '../../@entities/i-local-storage';
+import { MessageService } from "primeng/api";
 
 @Component({
   selector: 'app-ad-details-screen',
   templateUrl: './ad-details-screen.component.html',
   styleUrls: ['./ad-details-screen.component.scss'],
-  providers: [ConfirmationService]
+  providers: [
+    ConfirmationService,
+    MessageService
+  ]
 })
 export class AdDetailsScreenComponent implements OnInit {
   ad: Garden;
@@ -36,7 +40,8 @@ export class AdDetailsScreenComponent implements OnInit {
               private leasingService: LeasingService,
               private confirmationService: ConfirmationService,
               private localStorageService: LocalStorageService,
-              private modal: ModalService) {
+              private modal: ModalService,
+              private messageS: MessageService) {
   }
 
   ngOnInit() {
@@ -101,9 +106,15 @@ export class AdDetailsScreenComponent implements OnInit {
   }
 
   delete() {
-    this.gardensService.deleteById(this.ad.id).subscribe(() => {
-      this.router.navigateByUrl('/personal-space/my-gardens');
-    });
+    this.gardensService.deleteById(this.ad.id).subscribe(
+      Response => {  
+        this.router.navigateByUrl('/personal-space/my-gardens');
+      },
+      error => {
+        if(error.error.message == "Impossible to delete a garden with current leasings.") {
+          this.messageS.add({severity:'error', detail:'Impossible de supprimer un jardin qui a une location en cours.'});
+        };
+      });
   }
 
   onModify() {
