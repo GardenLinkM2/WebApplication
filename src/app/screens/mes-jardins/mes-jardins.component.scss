@@ -19,6 +19,23 @@ p
   font-weight: bold;
 }
 
+.spin {
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+  width: 30px;
+}
+
+.spiner {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+
+}
+
 
 .scrollbar {
   float: left;

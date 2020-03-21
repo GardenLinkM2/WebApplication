@@ -22,12 +22,14 @@ export class MesJardinsComponent implements OnInit {
   rentedInDemand: string[] = [];
   rentedInProgress: string[] = [];
   leaselist: Leasing[];
+  showSpinner = true;
 
   constructor(private userService: UserService,
               private gardenService: GardensService,
               private leasingService: LeasingService) { }
 
   async ngOnInit() {
+
 
     this.getGardens();
 
@@ -36,7 +38,6 @@ export class MesJardinsComponent implements OnInit {
     });
 
     this.getRentedGardens();
-
 
   }
 
@@ -49,12 +50,14 @@ export class MesJardinsComponent implements OnInit {
   }
 
   getGardens() {
+    this.showSpinner = true;
     this.userService.getUserGardens().subscribe((result: { data: Garden[]; count: number; }) => {
       if (result && result.data) {
         this.selectFirstAdds(result.data, result.count);
       } else {
         this.gardens = [];
       }
+      this.showSpinner = false;
     });
   }
 
