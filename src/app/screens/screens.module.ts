@@ -29,6 +29,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { MessengerComponent } from './messenger/messenger.component';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { MessengerComponent } from './messenger/messenger.component';
     InputTextareaModule,
     ConfirmDialogModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+    ProgressSpinnerModule
   ],
   exports: [
     HomeScreenComponent,
