@@ -55,8 +55,8 @@
         </div>
     </div>
     
-    <div class="confirm-demand col">
-        <form [formGroup]="sendDemandForm" (ngSubmit)="onSubmit()" >
+    <div *ngIf="!spin" class="confirm-demand col">
+        <form [formGroup]="sendDemandForm" (ngSubmit)="onSubmit()" *ngIf="!isDemandAlreadySent">
 
             <div class="row">
                 <div class="col">
@@ -70,14 +70,14 @@
             <div class="row">
                 <div class="col">
                     <span class="label">Durée: </span>
-                <p-spinner class="customSpinner" formControlName="time" placeholder="0" [min]="0" [max]="max" [step]="1"></p-spinner> <span class="label"> mois</span>
+                    <p-spinner class="customSpinner" formControlName="time" placeholder="0" [min]="garden.minUse" [max]="max" [step]="1"></p-spinner> <span class="label"> mois</span>
                 </div>
             </div>
             <br><br><br>
     
             <div class="row">
                 <span class="col-6 align-self-end label">Porte-monnaie après paiement:     </span>
-                <span class="col-4 align-self-end money-display">{{ (wallet.amount)*1 - (garden.criteria.price) }} €</span>
+                <span class="col-4 align-self-end money-display">{{ (wallet.amount)*1 - (price) }} €</span>
             </div>
             
             <br><br><br>
@@ -99,5 +99,14 @@
             </p-confirmDialog>
             <p-toast position="bottom-right"></p-toast>
         </form>
+
+        <div *ngIf="isDemandAlreadySent">
+            Vous ne pouvez pas envoyer une autre demande.
+        </div>
     </div>
+
+    <div style="margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
+        <p-progressSpinner *ngIf="spin"></p-progressSpinner>
+    </div>
+
 </div>

@@ -1,6 +1,6 @@
 export interface Criteria {
   id:	string;
-  locationTime: Date;
+  locationTime: number;
   area: number;
   price: number;
   orientation:	string;

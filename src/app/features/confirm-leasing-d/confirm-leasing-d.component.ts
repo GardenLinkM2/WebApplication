@@ -1,13 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 
 import { UserService } from "../../services/user-info/user.service";
 import { GardensService } from "../../services/gardens/gardens.service";
 import { LeasingService } from "../../services/leasing/leasing.service";
-import { Location, DeprecatedDatePipe } from "@angular/common";
+import { Location } from "@angular/common";
 import { Leasing } from 'src/app/@entities/leasing';
 import { State } from 'src/app/@entities/enum/state.enum';
 import { Wallet } from 'src/app/@entities/wallet';
@@ -33,6 +31,9 @@ export class ConfirmLeasingDComponent implements OnInit {
     private gardenService : GardensService) { }
 
   async ngOnInit() {
+
+    this.showProgessSpinner();
+    this.checkIfDemandSent();
     
     await this.userService.getUserWallet().toPromise().then(
       response => {
@@ -45,7 +46,6 @@ export class ConfirmLeasingDComponent implements OnInit {
 
     await this.gardenService.getGardenById(this.gardenId).toPromise().then(
       response => {
-        console.log(response);
         this.garden.id = response['data'].id;
         this.garden.name = response['data'].name;
         this.garden.isReserved = response['data'].isReserved;
@@ -83,7 +83,8 @@ export class ConfirmLeasingDComponent implements OnInit {
       }
     );
 
-    this.max = Math.min(this.garden.minUse, (this.wallet.amount / this.garden.criteria.price));
+    this.max = Math.min(this.garden.criteria.locationTime, Math.floor(this.wallet.amount / this.garden.criteria.price));
+
     this.sendDemandForm.get('begin').valueChanges.subscribe(
       value => {
         this.beginDate = Date.parse(value)/1000;
@@ -132,20 +133,41 @@ export class ConfirmLeasingDComponent implements OnInit {
     amount: null
   };
 
-  max : number;
-  myId : string;
-  demand : Leasing;
-  beginDate : number;
-  endDate : number;
-  price : number = 0;
+  max: number;
+  myId: string;
+  demand: Leasing;
+  beginDate: number;
+  endDate: number;
+  price: number = 0;
+  isDemandAlreadySent : boolean = true;
+  spin: boolean = true;
 
   sendDemandForm = new FormGroup({
     begin : new FormControl('', Validators.required),
     time : new FormControl('', [
       Validators.required,
-      Validators.min(1),
+      Validators.min(this.garden.minUse)
     ])
   });
+
+  showProgessSpinner() {
+    setTimeout(() => {
+      this.spin = false;
+    }, 1500)
+  }
+
+  checkIfDemandSent() {
+    this.leasinService.getDemandSent(localStorage.getItem('id'), this.gardenId).toPromise().then(
+      Response => {
+        if(Response.length){
+          this.isDemandAlreadySent = true;
+        }
+        else {
+          this.isDemandAlreadySent = false;
+        }
+      }
+    );
+  }
 
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));

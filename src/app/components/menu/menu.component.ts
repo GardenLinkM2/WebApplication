@@ -6,6 +6,7 @@ import {BackgroundService} from '../../services/backgroud-service/background.ser
 import {MenuItem} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 import {LeasingService} from '../../services/leasing/leasing.service';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-menu',
@@ -32,15 +33,8 @@ export class MenuComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (localStorage.getItem('synToken')) {
-      await this.leasingService.getDemands(localStorage.getItem('id')).subscribe(
-        response => {
-          if (response.length !== 0) {
-            this.newDemand = true;
-          }
-        }
-      );
-    }
+    
+    this.checkNotif();
 
     this.backgroundService.backGroundChanges.subscribe(value => {
       this.isBackgroundEnabled = value;
@@ -72,6 +66,26 @@ export class MenuComponent implements OnInit {
       }
     ];
   }
+
+  checkNotif(){
+    setTimeout(
+      async () => {
+      if (localStorage.getItem('synToken')) {
+        await this.leasingService.getDemands(localStorage.getItem('id')).subscribe(
+          response => {
+            if (response.length !== 0) {
+              this.newDemand = true;
+            }
+            else {
+              this.newDemand = false;
+            }
+          }
+        );
+      }
+      this.checkNotif();
+    }, 30000);
+  }
+
 
   showModalDialog() {
     this.modal.showModalDialog();
