@@ -72,7 +72,7 @@ export class AdDetailsCommentsComponent implements OnInit, OnChanges {
 
   getUser(userId: string) {
     this.userService.getUserById(userId).subscribe((result: User) => {
-      if (result.avatar.localeCompare('(unknown)')) {
+      if (result.avatar.trim().length === 0) {
         result.avatar = '../../../assets/img/defaultavatar.png';
       }
       this.commenters.push(result);

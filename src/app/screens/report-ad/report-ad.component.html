@@ -10,7 +10,7 @@
         <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
 
             <div class="row justify-content-center">
-                <label for="idTag" class="col-3">Précisez le motif: </label>
+                <label for="idOTag" class="col-3">Précisez le motif: </label>
                 <input id="idOTag" class="col-3" maxlength="30" type="text" formControlName="reason" pInputText>
             </div>
             <br>
@@ -29,7 +29,7 @@
             <br>
             <div class="row justify-content-center">
                 <button style="margin-right: 15px;" pButton type="submit" class="ui-button-rounded ui-button-success" [disabled]="!reportForm.valid" label="Envoyer"></button>
-                <button pButton type="button" routerLink="" class="ui-button-rounded ui-button-danger" label="Annuler"></button>
+                <button pButton type="button" routerLink="{{'/details-annonce/'+garden}}" class="ui-button-rounded ui-button-danger" label="Annuler"></button>
             </div>
 
             <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
@@ -41,5 +41,5 @@
             <p-toast position="bottom-right"></p-toast>
         </form>
     </div>
-    
+
 </p-card>

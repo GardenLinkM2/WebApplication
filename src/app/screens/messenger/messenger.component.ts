@@ -51,16 +51,7 @@ export class MessengerComponent implements OnInit {
           receiver: ownerId,
           isArchived: false,
           subject: '',
-          messages: [
-            {
-              id: undefined,
-              text: undefined,
-              creationDate: new Date(Date.now()).toISOString(),
-              sender: localStorage.getItem('id'),
-              isRead: false,
-              photos: []
-            }
-          ]
+          messages: []
         };
         await this.chatService.createNewThread(newThread).toPromise().then(
           async response => {
@@ -87,10 +78,10 @@ export class MessengerComponent implements OnInit {
   sortThreads() {
     this.userThreads.sort((a, b) => {
       if ((a.messages !== undefined && b.messages !== undefined) &&
-        (Date.parse(a.messages[a.messages.length - 1].creationDate) < Date.parse(b.messages[b.messages.length - 1].creationDate))) {
+        (a.messages[a.messages.length - 1].creationDate < b.messages[b.messages.length - 1].creationDate)) {
         return 1;
       } else if ((a.messages !== undefined && b.messages !== undefined) &&
-        (Date.parse(a.messages[a.messages.length - 1].creationDate) > Date.parse(b.messages[b.messages.length - 1].creationDate))) {
+        (a.messages[a.messages.length - 1].creationDate > b.messages[b.messages.length - 1].creationDate)) {
         return -1;
       } else {
         return 0;
@@ -193,7 +184,7 @@ export class MessengerComponent implements OnInit {
       const toSend: ThreadMessage = {
         id: undefined,
         text: this.text.get('text').value,
-        creationDate: new Date(Date.now()).toISOString(),
+        creationDate: Math.floor(Date.now() / 1000),
         isRead: false,
         sender: localStorage.getItem('id'),
         photos: []
@@ -204,10 +195,9 @@ export class MessengerComponent implements OnInit {
           // @ts-ignore
           this.messages.push(response.data);
           this.scroll();
-          this.sortThreads();
           this.chatService.getAllThreads().toPromise().then(
             // @ts-ignore
-            response2 => this.userThreads = response2.data,
+            response2 => {this.userThreads = response2.data; this.sortThreads(); },
             () => console.log('Error fetching threads')
           );
           this.text.get('text').setValue('');
@@ -218,7 +208,7 @@ export class MessengerComponent implements OnInit {
   }
 
   getFirstMessage(messages: Array<ThreadMessage>) {
-    return messages[0] ? messages[messages.length - 1].text : '';
+    return messages[0] ? messages[messages.length - 1] : null;
   }
 
   onDeleteEvent(event) {
@@ -249,8 +239,9 @@ export class MessengerComponent implements OnInit {
     });
   }
 
-  parseDate(date: string) {
+  parseDate(date: number) {
     const weekday = new Array(7);
+    const dateToString = new Date(Math.floor(date * 1000)).toISOString();
     weekday[0] = 'Dimanche';
     weekday[1] = 'Lundi';
     weekday[2] = 'Mardi';
@@ -258,6 +249,6 @@ export class MessengerComponent implements OnInit {
     weekday[4] = 'Jeudi';
     weekday[5] = 'Vendredi';
     weekday[6] = 'Samedi';
-    return weekday[new Date(date).getDay()] + ' ' + date.substring(5, 10) + ' ' + date.substring(12, 16);
+    return weekday[new Date(dateToString).getDay()] + ' ' + dateToString.substring(5, 10) + ' ' + dateToString.substring(12, 16);
   }
 }
