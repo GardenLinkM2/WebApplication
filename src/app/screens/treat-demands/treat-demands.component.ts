@@ -17,6 +17,9 @@ export class TreatDemandsComponent implements OnInit {
   constructor(private msgService : MessageService, private leasingS : LeasingService) { }
 
   async ngOnInit() {
+
+    this.showProgressSpinner();
+
     await this.leasingS.getUserMe().toPromise().then(
       response => {
         this.myId = response["data"].id;
@@ -35,6 +38,13 @@ export class TreatDemandsComponent implements OnInit {
   myId : string;
   demands : Leasing [];
   title = "Demandes reçues";
+  spin: boolean = true;
+
+  showProgressSpinner() {
+    setTimeout(() => {
+      this.spin = false;
+    }, 1500);
+  }
 
   onTreated(event : any){
     this.demands.splice(this.demands.findIndex(l => l.id == event.id), 1);
