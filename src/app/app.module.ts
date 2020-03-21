@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,7 +25,9 @@ import {AuthGuard} from './services/activator/route-activator';
     ComponentsModule,
     FeaturesModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FeaturesModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}, AuthGuard

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {GroundEnum} from '../../@entities/enum/ground.enum';
 import {Orientation} from '../../@entities/enum/orientation.enum';
@@ -16,6 +16,8 @@ export class ResearchComponent implements OnInit {
 
   groundTypes: Array<[string, string]>;
   orientationTypes: Array<[string, string]>;
+
+  @Output() searchEventEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
@@ -47,8 +49,7 @@ export class ResearchComponent implements OnInit {
   }
 
   onSubmit(value: FormGroup) {
-    console.log(this.searchForm.valid);
-    console.log(value);
+    this.searchEventEmitter.emit(value);
   }
 
   onCancel(controlName: string) {

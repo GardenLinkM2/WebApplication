@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4 contacts" style="margin-right: 10px">
+      <app-contacts [selectedThreadId]="id"
+        *ngFor="let thread of userThreads"
+        [threadId]="thread.id" [userId]="getReceiver(thread.sender, thread.receiver)"
+        [firstMessage]="getFirstMessage(thread.messages)"
+        (sendContactbanner)="onReiceveContactBanner($event)"
+        (sendId)="onThreadIdChange($event)"
+        (sendDeleteEvent)="onDeleteEvent($event)"></app-contacts>
+    </div>
+    <div class="col discussion">
+
+      <div class="row contactBanner" *ngIf="id">
+        <div>
+          <img src="{{avatar}}"><span>{{firstname}} {{lastname}}</span>
+        </div>
+      </div>
+      <div class="row showMessages" id="showMessages">
+        <div *ngFor="let message of messages" style="color: white">
+
+          <div [ngStyle]="textBorderShape(message)" style="max-width: 50%; margin-bottom: 10px">
+            <p align="{{align(message)}}">
+              <span class="py-1 px-2">{{message.text}}</span><br>
+              <i class="py-1 px-2"><sub>{{parseDate(message.creationDate)}}</sub></i>
+            </p>
+          </div>
+
+        </div>
+      </div>
+      <div class="sendMessage">
+        <form [formGroup]="text" (ngSubmit)="sendMessage()">
+          <input pInputText id="message" type="text" style="width: 80%; margin-left: 5%" formControlName="text">
+          <button pButton type="button" class="ui-button-rounded sendButton" label="Envoyer" (click)="sendMessage()"></button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <p-confirmDialog [style]="{width: '25vw'}" [baseZIndex]="10000" acceptLabel="Oui" rejectLabel="Non"
+                   acceptButtonStyleClass="ui-button-rounded ui-button-success"
+                   rejectButtonStyleClass="ui-button-rounded ui-button-danger">
+  </p-confirmDialog>
+  <p-toast [style]="{marginTop: '80px'}" position="bottom-right"></p-toast>
+</div>

@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import {Garden} from '../../@entities/garden';
 import {BackgroundService} from '../../services/backgroud-service/background.service';
+import {GardensService} from '../../services/gardens/gardens.service';
 
 @Component({
   selector: 'app-home-screen',
@@ -9,48 +10,61 @@ import {BackgroundService} from '../../services/backgroud-service/background.ser
 })
 export class HomeScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   ADDS_MAX_LENGTH = 4;
-  gardens: Garden[];
+  gardens: Garden[] = [];
+  isSearch = false;
 
-  constructor(private backgroundService: BackgroundService, private elementRef: ElementRef) { }
+  constructor(private backgroundService: BackgroundService,
+              private elementRef: ElementRef,
+              private gardensService: GardensService) {
+  }
 
   ngOnInit() {
     this.getGardens();
-    this.selectFirstAdds();
   }
 
   ngAfterViewInit() {
     this.backgroundService.enableBackGround(this.elementRef);
   }
 
-  selectFirstAdds(): Garden[] {
-    return this.gardens.slice(0, this.ADDS_MAX_LENGTH);
+  selectFirstAdds(gardens: Garden[], count: number): void {
+    this.gardens = [];
+    let max = this.ADDS_MAX_LENGTH;
+    if (count < this.ADDS_MAX_LENGTH) {
+      max = count;
+    }
+    for (let i = 0; i < max; i++) {
+      this.gardens.push(gardens[i]);
+    }
   }
 
   getGardens() {
-    const garden = {id: '1', minUse: 12, name: 'Beau Jardin', owner: 'JL Picard', reserve: false, size: 123, type: 'type',
-      validation: {id: '12', state: 12},
-      criteria:
-        {
-          id: '1',
-          location: {id: 'belle adresse'},
-          price: 100,
-          area: 120,
-          directAccess: true,
-          equipments: true,
-          locationTime: undefined,
-          orientation: 'orienté',
-          typeOfClay: 'typé',
-          waterAccess: true
-        },
-      photos: undefined
-    };
-    this.gardens =
-      [
-        garden, garden, garden, garden, garden
-      ];
+    this.isSearch = false;
+    this.gardensService.getGardens().subscribe((result: { data: Garden[]; count: number; }) => {
+      if (result && result.data) {
+        this.selectFirstAdds(result.data, result.count);
+      } else {
+        this.gardens = [];
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.backgroundService.disableBackGround(this.elementRef);
+  }
+
+  isAuth() {
+    return localStorage.getItem('userToken');
+  }
+
+  onSearch(filters: any) {
+    this.gardensService.searchGarden(filters).subscribe((result: { data: Garden[]; count: number; }) => {
+      this.isSearch = true;
+      this.gardens = [];
+      if (result && result.data) {
+        result.data.forEach(garden => {
+          this.gardens.push(garden);
+        });
+      }
+    });
   }
 }

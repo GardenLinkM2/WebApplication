@@ -1,10 +1,6 @@
 
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-group has-error" id="connexion">
 
-  <div *ngIf="invalidate" id="incorrect">
-    E-mail ou mot de passe incorrect.
-  </div>
-
   <div class="form-group">
       <label for="mail">E-mail</label><br>
       <input type="email" formControlName="mail" id="mail" pInputText>
@@ -18,8 +14,7 @@
   <a routerLink="/mdp-oublie" class="link" (click)="closeDialog()">Mot de passe oublié ?</a><br>
 
   <br>
-  <p-footer>
-    <button pButton type="submit" label="Connexion" class="ui-button-rounded"></button>
-  </p-footer>
+  <button pButton type="submit" label="Connexion" class="ui-button-rounded"></button>
+  <p-toast [style]="{marginTop: '80px'}" position="bottom-center"></p-toast>
 </form>
 

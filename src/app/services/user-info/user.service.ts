@@ -29,4 +29,12 @@ export class UserService {
   fillWallet(walletId: string, newBalance: number) {
     return this.client.put(this.urlback + `Wallets/${walletId}`, {balance: newBalance});
   }
+
+  getUserById(userId: string) {
+    return this.client.get(this.urlauth + `users/${userId}`);
+  }
+
+  getUserGardens() {
+    return this.client.get(this.urlback + 'users/me/gardens');
+  }
 }

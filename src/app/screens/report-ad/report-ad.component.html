@@ -1,0 +1,45 @@
+<p-card class="ui-card">
+    <p-header style="text-align: center;">
+        <div class="row justify-content-center">
+            <hr class="card-line title">
+            <h3 class="card-title title">{{title | uppercase}}</h3>
+            <hr class="card-line title">
+        </div>
+    </p-header>
+    <div>
+        <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+
+            <div class="row justify-content-center">
+                <label for="idOTag" class="col-3">Précisez le motif: </label>
+                <input id="idOTag" class="col-3" maxlength="30" type="text" formControlName="reason" pInputText>
+            </div>
+            <br>
+
+            <div class="row justify-content-center">
+                <label for="idReference" class="col-3">Référence annonce:</label>
+                <input id="idReference" class="col-3" size="30" type="text" formControlName="ofGarden" pInputText>
+            </div>
+            <br>
+
+            <div class="row justify-content-center">
+                <label for="idDescription" class="col-3">Descripiton:</label> <br>
+                <textarea id="idDescription" class="col-3" rows="6" formControlName="comment" pInputTextarea></textarea>
+            </div>
+
+            <br>
+            <div class="row justify-content-center">
+                <button style="margin-right: 15px;" pButton type="submit" class="ui-button-rounded ui-button-success" [disabled]="!reportForm.valid" label="Envoyer"></button>
+                <button pButton type="button" routerLink="{{'/details-annonce/'+garden}}" class="ui-button-rounded ui-button-danger" label="Annuler"></button>
+            </div>
+
+            <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+                <p-footer>
+                    <button type="button" class="ui-button-rounded ui-button-success" pButton icon="pi pi-check" label="Confirmer" (click)="cd.accept()"></button>
+                    <button type="button" class="ui-button-rounded ui-button-danger"  pButton icon="pi pi-times" label="Annuler" (click)="cd.reject()"></button>
+                </p-footer>
+            </p-confirmDialog>
+            <p-toast position="bottom-right"></p-toast>
+        </form>
+    </div>
+
+</p-card>

@@ -41,7 +41,6 @@ export class FillWalletComponent implements OnInit {
         this.wallet.id = response.data.id;
         // @ts-ignore
         this.wallet.amount = response.data.balance;
-        console.log(this.wallet);
       },
       error => {
         console.error('No response');
@@ -61,8 +60,8 @@ export class FillWalletComponent implements OnInit {
     this.confirmationService.confirm({
         message: 'Veuillez confirmer votre rechargement.',
         accept: () => {
-            this.userService.fillWallet(this.wallet.id, this.fillForm.get('amount').value + this.wallet.amount).subscribe(
-              () => this.router.navigateByUrl('personal-space/user-info')
+            this.userService.fillWallet(this.wallet.id, this.fillForm.get('amount').value).subscribe(
+              () => this.router.navigateByUrl('espace-personel')
             );
         }
     });

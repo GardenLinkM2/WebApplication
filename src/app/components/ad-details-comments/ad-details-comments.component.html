@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <p-virtualScroller [value]="comments" scrollHeight="200px" [first]="comments.length-1">
+    <p-header>
+      <h6 class="h6">Commentaire<span *ngIf="comments.length>0">s</span> ( {{comments.length}} )</h6>
+    </p-header>
+    <ng-template pTemplate="item" let-comment>
+      <div class="container-fluid">
+        <div class="row pb-1" *ngIf="findCommenterById(comment.rater)">
+          <div class="col-2 px-1 py-1 commentPic">
+            <img src="{{findCommenterById(comment.rater).avatar}}" alt="avatar">
+          </div>
+          <div class="col-10">
+            <div class="row">
+              <div class="col text-success px-0 mx-1">{{findCommenterById(comment.rater).firstName}}</div>
+            </div>
+            <div class="row">
+              <div class="col message px-1 mx-1">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <span>{{comment.comment}}</span>
+                  </div>
+                  <div class="col-sm-2 pt-1" *ngIf="!getCommentShown(comment.id).isReported && (findCommenterById(comment.rater).id.localeCompare(comment.rater))">
+                    <span class="text-danger ml-auto" style="cursor: pointer;"  (click)="onReport(comment.id)"><i class="pi pi-exclamation-triangle"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col" (click)="onRepondre(comment.rater)" style="cursor: pointer;">
+                <span class="small">Répondre</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <p-footer>
+      <div class="ui-inputgroup ui-fluid">
+        <textarea [rows]="1" pInputTextarea autoResize="autoResize" [(ngModel)]="newComment" id="text-area"></textarea>
+        <button pButton type="button" (click)="onPostComment()" class="ui-button"
+                icon="pi pi-play"></button>
+      </div>
+    </p-footer>
+  </p-virtualScroller>
+</div>
