@@ -17,9 +17,16 @@
         </div>
       </div>
       <div class="row showMessages" id="showMessages">
-        <p *ngFor="let message of messages" style="color: white" align="{{align(message)}}">
-          <span class="py-1 px-2" [ngStyle]="textBorderShape(message)">{{message.text}}</span>
-        </p>
+        <div *ngFor="let message of messages" style="color: white">
+
+          <div [ngStyle]="textBorderShape(message)" style="max-width: 50%; margin-bottom: 10px">
+            <p align="{{align(message)}}">
+              <span class="py-1 px-2">{{message.text}}</span><br>
+              <i class="py-1 px-2"><sub>{{parseDate(message.creationDate)}}</sub></i>
+            </p>
+          </div>
+
+        </div>
       </div>
       <div class="sendMessage">
         <form [formGroup]="text" (ngSubmit)="sendMessage()">
