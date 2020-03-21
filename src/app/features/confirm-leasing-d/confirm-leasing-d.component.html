@@ -1,112 +1,117 @@
-<div class="row">
-    <div class="garden-details col-5">
-        <h1 style="word-break: break-word">{{garden.name}}</h1>
-        <span class="subtitle">{{garden.criteria.price}} € par mois </span>
-        <hr>
-
-        <div>
-            <h4>Détails</h4>
+<div>
+    <div *ngIf="!spin" class="row">
+        <div class="garden-details col-5">
+            <h1 style="word-break: break-word">{{garden.name}}</h1>
+            <span class="subtitle">{{garden.criteria.price}} € par mois </span>
+            <hr>
+    
             <div>
+                <h4>Détails</h4>
                 <div>
-                    <div class="row">
-                        <span class="detail-label col">ACCÈS À L'EAU</span>
-                        <span class="detail-label col">OUTILS FOURNIS</span>
-                        <span class="detail-label col">ACCÈS DIRECT</span>
+                    <div>
+                        <div class="row">
+                            <span class="detail-label col">ACCÈS À L'EAU</span>
+                            <span class="detail-label col">OUTILS FOURNIS</span>
+                            <span class="detail-label col">ACCÈS DIRECT</span>
+                        </div>
+    
+                        <div class="row">
+                            <span class="display-criteria col">{{isWaterAvailable()}}</span>
+                            <span class="display-criteria col">{{isEquipmentAvailable()}}</span>
+                            <span class="display-criteria col">{{isDirectlyAccessible()}}</span>
+    
+                        </div>
                     </div>
-
-                    <div class="row">
-                        <span class="display-criteria col">{{isWaterAvailable()}}</span>
-                        <span class="display-criteria col">{{isEquipmentAvailable()}}</span>
-                        <span class="display-criteria col">{{isDirectlyAccessible()}}</span>
-
+                    <br>
+                    <div>
+                        <div class="row">
+                            <span class="detail-label col">TYPE DE SOL</span>
+                            <span class="detail-label col">ORIENTATION</span>
+                            <span class="detail-label col"></span>
+                        </div>
+                        <div class="row">
+                            <span class="display-criteria col">{{garden.criteria.typeOfClay}}</span>
+                            <span class="display-criteria col">{{garden.criteria.orientation}}</span>
+                            <span class="display-criteria col"></span>
+                        </div>
                     </div>
+                </div>
+                </div>
+    
+            <hr>
+            <div>
+                <h4>Localisation</h4>
+                <div>
+                    <span class="detail-label">RUE: </span> <span>{{garden.location.streetNum}} {{garden.location.street}} </span>
                 </div>
                 <br>
                 <div>
-                    <div class="row">
-                        <span class="detail-label col">TYPE DE SOL</span>
-                        <span class="detail-label col">ORIENTATION</span>
-                        <span class="detail-label col"></span>
+                    <span class="detail-label">VILLE: </span> <span>{{garden.location.city}} </span>
+                </div>
+                <br>
+                <div>
+                    <span class="detail-label">CODE POSTAL: </span> <span>{{garden.location.postalCode}} </span>
+                </div>
+                <br>
+            </div>
+        </div>
+    
+        <div class="confirm-demand col">
+            <form [formGroup]="sendDemandForm" (ngSubmit)="onSubmit()" *ngIf="!isDemandAlreadySent">
+    
+                <div class="row">
+                    <div class="col">
+                        <label class="label" for="beginID">Début: </label>
+                        <input id="beginID" formControlName="begin" type="date" pInputText min="{{getDateNow()}}">
                     </div>
-                    <div class="row">
-                        <span class="display-criteria col">{{garden.criteria.typeOfClay}}</span>
-                        <span class="display-criteria col">{{garden.criteria.orientation}}</span>
-                        <span class="display-criteria col"></span>
+                    <div class="col label">
+                        <span>Prix: </span> <span class="monney-display">{{price}} €</span>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <span class="label">Durée: </span>
+                        <p-spinner class="customSpinner" formControlName="time" placeholder="0" [min]="garden.minUse" [max]="max" [step]="1"></p-spinner> <span class="label"> mois</span>
+                    </div>
+                </div>
+                <br><br><br>
+    
+                <div class="row">
+                    <span class="col-6 align-self-end label">Porte-monnaie après paiement:     </span>
+                    <span class="col-4 align-self-end money-display">{{ (wallet.amount)*1 - (price) }} €</span>
+                </div>
+    
+                <br><br><br>
+                <br><br><br>
+                <div class="row justify-content-end">
+                    <div>
+                        <button pButton style="margin-right: 5px;" class="ui-button-rounded ui-button-success" type="submit" label="Envoyer" [disabled]="!sendDemandForm.valid"></button>
+                    </div>
+                    <div>
+                        <button pButton style="margin-right: 10px;" class="ui-button-rounded ui-button-danger" type="button" (click)="abort()" label="Annuler"></button>
+                    </div>
+                </div>
+    
+                <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle" >
+                    <p-footer>
+                        <button type="button" class="ui-button-rounded ui-button-success" pButton icon="pi pi-check" label="Confirmer" (click)="cd.accept()"></button>
+                        <button type="button" class="ui-button-rounded ui-button-danger" pButton icon="pi pi-times" label="Annuler" (click)="cd.reject()"></button>
+                    </p-footer>
+                </p-confirmDialog>
+                <p-toast position="bottom-right"></p-toast>
+            </form>
+    
+            <div *ngIf="isDemandAlreadySent" style="font-size: 30px; margin-top:150px">
+                Vous ne pouvez pas envoyer une autre demande.
             </div>
-            </div>
-
-        <hr>
-        <div>
-            <h4>Localisation</h4>
-            <div>
-                <span class="detail-label">RUE: </span> <span>{{garden.location.streetNum}} {{garden.location.street}} </span>
-            </div>
-            <br>
-            <div>
-                <span class="detail-label">VILLE: </span> <span>{{garden.location.city}} </span>
-            </div>
-            <br>
-            <div>
-                <span class="detail-label">CODE POSTAL: </span> <span>{{garden.location.postalCode}} </span>
-            </div>
-            <br>
         </div>
     </div>
+    
 
-    <div *ngIf="!spin" class="confirm-demand col">
-        <form [formGroup]="sendDemandForm" (ngSubmit)="onSubmit()" *ngIf="!isDemandAlreadySent">
-
-            <div class="row">
-                <div class="col">
-                    <label class="label" for="beginID">Début: </label>
-                    <input id="beginID" formControlName="begin" type="date" pInputText min="{{getDateNow()}}">
-                </div>
-                <div class="col label">
-                    <span>Prix: </span> <span class="monney-display">{{price}} €</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <span class="label">Durée: </span>
-                    <p-spinner class="customSpinner" formControlName="time" placeholder="0" [min]="garden.minUse" [max]="max" [step]="1"></p-spinner> <span class="label"> mois</span>
-                </div>
-            </div>
-            <br><br><br>
-
-            <div class="row">
-                <span class="col-6 align-self-end label">Porte-monnaie après paiement:     </span>
-                <span class="col-4 align-self-end money-display">{{ (wallet.amount)*1 - (price) }} €</span>
-            </div>
-
-            <br><br><br>
-            <br><br><br>
-            <div class="row justify-content-end">
-                <div>
-                    <button pButton style="margin-right: 5px;" class="ui-button-rounded ui-button-success" type="submit" label="Envoyer" [disabled]="!sendDemandForm.valid"></button>
-                </div>
-                <div>
-                    <button pButton style="margin-right: 10px;" class="ui-button-rounded ui-button-danger" type="button" (click)="abort()" label="Annuler"></button>
-                </div>
-            </div>
-
-            <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle" >
-                <p-footer>
-                    <button type="button" class="ui-button-rounded ui-button-success" pButton icon="pi pi-check" label="Confirmer" (click)="cd.accept()"></button>
-                    <button type="button" class="ui-button-rounded ui-button-danger" pButton icon="pi pi-times" label="Annuler" (click)="cd.reject()"></button>
-                </p-footer>
-            </p-confirmDialog>
-            <p-toast position="bottom-right"></p-toast>
-        </form>
-
-        <div *ngIf="isDemandAlreadySent" style="font-size: 30px; margin-top:150px">
-            Vous ne pouvez pas envoyer une autre demande.
+    <div *ngIf="spin" class="spinner">
+        <div class="spin">
+          <p-progressSpinner></p-progressSpinner>
         </div>
-    </div>
-
-    <div style="margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
-        <p-progressSpinner *ngIf="spin"></p-progressSpinner>
     </div>
 
 </div>

@@ -101,9 +101,11 @@ export class DemandComponent implements OnInit {
   payment: Payment = {
     id: '',
     sum: 0,
-    date: null,
+    date: 0,
     leasing: ''
   };
+
+  paymentDate : Date;
 
   
 
@@ -131,9 +133,10 @@ export class DemandComponent implements OnInit {
         header: null,
         icon: null,
         accept: () => {
+          this.paymentDate = new Date();
           this.payment.leasing = this.leasing.id;
-          this.payment.sum = this.garden.criteria.price;
-          this.payment.date = new Date();
+          this.payment.sum = this.garden.criteria.price*(this.leasing.time/(30*24*3600));
+          this.payment.date = Date.parse(this.paymentDate.toDateString())/1000;
           this.payment.id = this.leasing.id;
           this.leasingS.payLeasing(this.payment).subscribe(
             response => { 
