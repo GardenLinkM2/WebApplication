@@ -4,7 +4,7 @@
             <h1 style="word-break: break-word">{{garden.name}}</h1>
             <span class="subtitle">{{garden.criteria.price}} € par mois </span>
             <hr>
-    
+
             <div>
                 <h4>Détails</h4>
                 <div>
@@ -14,12 +14,12 @@
                             <span class="detail-label col">OUTILS FOURNIS</span>
                             <span class="detail-label col">ACCÈS DIRECT</span>
                         </div>
-    
+
                         <div class="row">
                             <span class="display-criteria col">{{isWaterAvailable()}}</span>
                             <span class="display-criteria col">{{isEquipmentAvailable()}}</span>
                             <span class="display-criteria col">{{isDirectlyAccessible()}}</span>
-    
+
                         </div>
                     </div>
                     <br>
@@ -37,12 +37,12 @@
                     </div>
                 </div>
                 </div>
-    
+
             <hr>
             <div>
                 <h4>Localisation</h4>
                 <div>
-                    <span class="detail-label">RUE: </span> <span>{{garden.location.streetNum}} {{garden.location.street}} </span>
+                    <span class="detail-label">RUE: </span> <span>{{garden.location.streetNumber}} {{garden.location.street}} </span>
                 </div>
                 <br>
                 <div>
@@ -55,10 +55,10 @@
                 <br>
             </div>
         </div>
-    
+
         <div class="confirm-demand col">
             <form [formGroup]="sendDemandForm" (ngSubmit)="onSubmit()" *ngIf="!isDemandAlreadySent">
-    
+
                 <div class="row">
                     <div class="col">
                         <label class="label" for="beginID">Début: </label>
@@ -75,12 +75,12 @@
                     </div>
                 </div>
                 <br><br><br>
-    
+
                 <div class="row">
                     <span class="col-6 align-self-end label">Porte-monnaie après paiement:     </span>
                     <span class="col-4 align-self-end money-display">{{ (wallet.amount)*1 - (price) }} €</span>
                 </div>
-    
+
                 <br><br><br>
                 <br><br><br>
                 <div class="row justify-content-end">
@@ -91,7 +91,7 @@
                         <button pButton style="margin-right: 10px;" class="ui-button-rounded ui-button-danger" type="button" (click)="abort()" label="Annuler"></button>
                     </div>
                 </div>
-    
+
                 <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle" >
                     <p-footer>
                         <button type="button" class="ui-button-rounded ui-button-success" pButton icon="pi pi-check" label="Confirmer" (click)="cd.accept()"></button>
@@ -100,13 +100,13 @@
                 </p-confirmDialog>
                 <p-toast position="bottom-right"></p-toast>
             </form>
-    
+
             <div *ngIf="isDemandAlreadySent" style="font-size: 30px; margin-top:150px">
                 Vous ne pouvez pas envoyer une autre demande.
             </div>
         </div>
     </div>
-    
+
 
     <div *ngIf="spin" class="spinner">
         <div class="spin">

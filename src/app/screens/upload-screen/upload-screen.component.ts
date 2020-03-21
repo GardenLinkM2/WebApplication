@@ -37,7 +37,7 @@ export class UploadScreenComponent implements OnInit {
   title = 'PUBLIER UNE ANNONCE';
   private requestBody: UploadAdBody;
   private id: string;
-  private previewUrls = [];
+  previewUrls = [];
   private confirmationMessage = 'Souhaitez vous publier le bien?';
   constructor(private client: HttpClient,
               private upload: UploadService,
