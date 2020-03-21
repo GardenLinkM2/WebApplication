@@ -184,7 +184,7 @@ export class MessengerComponent implements OnInit {
     if (message.sender === localStorage.getItem('id')) {
       return {'border-radius': '19px 10px 19px 15px', 'background-color': '#006600', float: 'right', 'margin-right': '5px'};
     } else {
-      return {'border-radius': '10px 19px 15px 19px', 'background-color': '#005739', float: 'left', 'margin-right': '5px'};
+      return {'border-radius': '10px 19px 15px 19px', 'background-color': '#005739', float: 'left', 'margin-left': '5px'};
     }
   }
 
