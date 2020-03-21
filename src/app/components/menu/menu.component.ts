@@ -53,17 +53,17 @@ export class MenuComponent implements OnInit {
       {
         label: 'Mon profil',
         icon: 'pi pi-user-edit',
-        routerLink: '/personal-space/user-info'
+        routerLink: '/espace-personel/mes-info'
       },
       {
         label: 'Mes jardins',
         icon: 'pi pi-pw pi-file',
-        routerLink: '/personal-space/my-gardens'
+        routerLink: '/espace-personel/mes-jardins'
       },
       {
         label: 'Mes messages',
         icon: 'pi pi-comment',
-        routerLink: '/personal-space/messages'
+        routerLink: '/espace-personel/messages'
       },
       {
         label: 'Demandes reçues',

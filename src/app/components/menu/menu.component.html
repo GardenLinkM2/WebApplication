@@ -2,8 +2,8 @@
   <a class="navbar-brand" routerLink="/accueil">
     <img src="../../../assets/img/logo.png" alt="Logo" class="logo">
   </a>
-  <div *ngIf="!(route.url.includes('acceuil') || route.url.includes('upload'))">
-    <button routerLink="/upload" pButton type="button" label="+ Nouvelle annonce" class="ui-button-rounded ui-button-secondary login-custom-button"></button>
+  <div *ngIf="!(route.url.includes('acceuil') || route.url.includes('publier'))">
+    <button routerLink="/publier" pButton type="button" label="+ Nouvelle annonce" class="ui-button-rounded ui-button-secondary login-custom-button"></button>
   </div>
   <div *ngIf="!route.url.includes('acceuil')">
     <button routerLink="/" pButton type="button" icon="pi pi-search" label="Rechercher" class="ui-button-rounded ui-button-secondary login-custom-button"></button>

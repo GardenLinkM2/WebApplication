@@ -108,7 +108,7 @@ export class AdDetailsScreenComponent implements OnInit {
 
   onModify() {
     sessionStorage.setItem('adToEdit', this.ad.id);
-    this.router.navigateByUrl('/edit-ad');
+    this.router.navigateByUrl('/modifier-annonce');
   }
 
   onDelete() {

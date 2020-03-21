@@ -24,7 +24,6 @@ export class ContactsComponent implements OnInit, OnChanges {
   }
 
   async ngOnInit() {
-    console.log(this.threadId, this.selectedThreadId);
     await this.userService.getUserById(this.userId).subscribe(
       (response: User) => {
         if (response.avatar !== '') {
