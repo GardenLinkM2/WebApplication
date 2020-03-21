@@ -1,0 +1,154 @@
+<div class="container-fluid bg-white p-3 rounded" *ngIf="ad">
+  <div class="row">
+    <div class="col-4">
+      <div class="row border-bottom pb-2">
+        <div class="col">
+          <app-caroussel [images]="ad.photos"></app-caroussel>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h4 class="h4">Localisation</h4>
+          <div class="row">
+            <div class="col py-2">
+              <app-map [localisation]="ad.location"></app-map>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="container-fluid">
+        <div class="row pb-1">
+          <div class="col">
+            <h2 class="h2">{{ad.name}}</h2>
+          </div>
+          <div class="col text-right" *ngIf="isConnected">
+            <span class="text-danger" style="cursor: pointer;" [routerLink]="'/signaler-annonce/' + ad.id"><i
+              class="pi pi-exclamation-triangle"></i></span>
+          </div>
+        </div>
+        <div class="row border-bottom pb-1">
+          <div class="col">
+            <h3 class="h3 text-success">{{ad.criteria.price}} € par mois</h3>
+            <div class="text-right" *ngIf="!isMine">
+              <button class="btn btn-sm btn-success rounded-pill" *ngIf="!isMeDemandingLeasing" (click)="showModalDialog()"><span class="px-4">Louer</span></button>
+              <div class="row pt-1" *ngIf="isMeDemandingLeasing && !isLeasingAccepted">
+                <div class="col mt-1 text-warning h4 text-left">
+                  (En attente)
+                </div>
+                <div class="col text-right">
+                  <button class="btn btn-sm btn-danger rounded-pill py-1" (click)="onCancelDemandOfLeasing()">Annuler la
+                    demande
+                  </button>
+                </div>
+              </div>
+              <div class="row pt-1" *ngIf="isLeasingAccepted">
+                <div class="col mt-1 text-warning h4 text-center">
+                  (Acceptée)
+                </div>
+              </div>
+            </div>
+            <div class="text-right" *ngIf="isMine">
+              <button class="btn btn-sm btn-warning rounded-pill mr-2" (click)="onModify()"><span
+                class="px-4">Modifier</span></button>
+              <button class="btn btn-sm btn-danger rounded-pill" (click)="onDelete()"><span
+                class="px-4">Supprimer</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row border-bottom py-2">
+          <div class="col">
+            <h4 class="h4">Détails</h4>
+            <div class="row pt-1">
+              <div class="col font-weight-bold">
+                <span *ngIf="ad.criteria.waterAccess">Accès à l'eau</span>
+                <span *ngIf="!ad.criteria.waterAccess">Pas d'accès à l'eau</span>
+              </div>
+              <div class="col font-weight-bold">
+                <span *ngIf="ad.criteria.equipments">Outils fournis</span>
+                <span *ngIf="!ad.criteria.equipments">Pas d'outils fournis</span>
+              </div>
+              <div class="col font-weight-bold">
+                <span *ngIf="ad.criteria.directAccess">Accès direct</span>
+                <span *ngIf="!ad.criteria.directAccess">Pas d'accès direct</span>
+              </div>
+            </div>
+            <div class="row pt-1">
+              <div class="col">
+                <span class="font-weight-bold">Type de sol</span><br>
+                <span *ngIf="ad.criteria.typeOfClay">{{ad.criteria.typeOfClay}}</span>
+                <span *ngIf="!ad.criteria.typeOfClay">Non renseigné</span>
+              </div>
+              <div class="col">
+                <span class="font-weight-bold">Orientation</span><br>
+                <span *ngIf="ad.criteria.orientation">{{ad.criteria.orientation}}</span>
+                <span *ngIf="!ad.criteria.orientation">Non renseigné</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col">
+            <h4 class="h4">Description</h4>
+            <div class="text-justify">
+              {{ad.description}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="container-fluid">
+        <div class="row pb-3">
+          <div class="col" *ngIf="owner">
+            <p-card styleClass="ui-card-shadow">
+              <p-header>
+                <div class="text-center">
+                  <img src="profile photo" [src]="owner.avatar.includes('/uploadm2.artheriom.fr') ? owner.avatar : '../../../assets/img/defaultavatar.png'"
+                       class="w-50" style="max-width: 100px">
+                </div>
+                <div class="text-center h3 pt-1">{{owner.firstName}}</div>
+                <div class="text-center h3">{{owner.lastName}}</div>
+              </p-header>
+              <button *ngIf="!isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"
+                      [routerLink]="'/espace-personel/messages/'+owner.id"><i class="pi pi-comments"></i>Discuter
+              </button>
+              <button *ngIf="isMine" type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"
+                      [routerLink]="'/consulter-demandes'">Demandes
+              </button>
+            </p-card>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" *ngIf="ad && owner && isConnected">
+            <app-ad-details-comments [garden]="ad" [owner]="owner"></app-ad-details-comments>
+          </div>
+          <div class="col" *ngIf="!isConnected">
+            Vous devez être connecté pour voir les commentaires
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row border-bottom pt-2">
+    <div class="col">
+      <h4 class="h4">Offres qui pourraient vous interesser</h4>
+    </div>
+  </div>
+  <div class="row pt-2">
+    <div *ngFor="let otherAd of otherAds; last as isLast"
+         class="col pl-0 mb-2" [class.pr-1]="!isLast" [class.pr-0]="isLast">
+      <app-ad-card [garden]="otherAd"></app-ad-card>
+    </div>
+  </div>
+
+  <p-confirmDialog acceptLabel="Confirmer" rejectLabel="Annuler"
+                   acceptButtonStyleClass="ui-button-rounded ui-button-success"
+                   rejectButtonStyleClass="ui-button-rounded ui-button-danger">
+  </p-confirmDialog>
+
+  <p-toast [style]="{marginTop: '80px'}" position="bottom-center"></p-toast>
+</div>
+
+

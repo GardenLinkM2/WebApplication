@@ -1,0 +1,48 @@
+.avatar {
+  vertical-align: middle;
+  top: -45px;
+  margin-right: 2%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #515151;
+  background-color: #f7f7f7;
+}
+
+div {
+  cursor: pointer;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+div:hover p{
+  color: #289428;
+}
+div:hover span {
+  color: #289428;
+}
+div:hover {
+  border: solid #289428;
+}
+p {
+  display: inline-block;
+  width: 8cm;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  color: white;
+}
+span {
+  color: white;
+}
+
+.pi-times-circle {
+  color: white;
+  position: relative;
+  top: 0;
+  left: 5px;
+}
+
+.pi-times-circle:hover{
+  color: red;
+}

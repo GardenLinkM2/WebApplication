@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../services/user-info/user.service';
-import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {ConfirmationService, Message} from 'primeng/api';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ConfirmationService, Message, MessageService} from 'primeng/api';
 import {UpdatedInfo} from '../../@entities/updateInfo';
 import {comparisonValidator} from '../../services/validators/cofirm-password';
 import {Router} from '@angular/router';
@@ -10,11 +10,12 @@ import {Router} from '@angular/router';
   selector: 'app-user-information',
   templateUrl: './user-information.component.html',
   styleUrls: ['./user-information.component.scss'],
-  providers: [ConfirmationService]
+  providers: [ConfirmationService, MessageService]
 })
 
 export class UserInformationComponent implements OnInit {
-  constructor(private userService: UserService, private confirmationService: ConfirmationService, private router: Router) { }
+  constructor(private userService: UserService, private confirmationService: ConfirmationService, private router: Router,
+              private messageService: MessageService) { }
   firstname: string;
   lastname: string;
   balance: number;
@@ -29,6 +30,18 @@ export class UserInformationComponent implements OnInit {
   displaySuccessModification: boolean;
   displayChangeImage = false;
   infoForm: FormGroup;
+  options = [
+    {
+      label: 'Modifier',
+      icon: 'pi pi-pencil',
+      command: () => { this.displayChangeImage = true; },
+    },
+    {
+      label: 'Supprimer',
+      icon: 'pi pi-trash',
+      command: () => { this.removeProfilePicture(); },
+    }
+  ];
 
   async ngOnInit() {
     this.newInformation = {
@@ -77,7 +90,7 @@ export class UserInformationComponent implements OnInit {
         sessionStorage.setItem('newsletter', responseAuth.newsletter);
         this.infoForm.get('newsletter').setValue(this.newInformation.newsletter);
         // @ts-ignore
-        if (responseAuth.avatar !== '' && responseAuth.avatar !== 'urltoavatar') {
+        if (responseAuth.avatar.includes('https://uploadm2.artheriom.fr')) {
           // @ts-ignore
           this.avatar = responseAuth.avatar;
         }
@@ -130,7 +143,6 @@ export class UserInformationComponent implements OnInit {
         header: 'Modification',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-          this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'You have accepted'}];
           this.activateFields = false;
           if (this.infoForm.get('password').disabled) {
             this.newInformation = {
@@ -152,15 +164,14 @@ export class UserInformationComponent implements OnInit {
           }
           this.userService.updateInformation(this.id, this.newInformation).subscribe(
             () => {
-              this.displaySuccessModification = true;
+              this.showSuccessEdit();
               sessionStorage.setItem('email', this.newInformation.email);
               sessionStorage.setItem('phone', this.newInformation.phone);
               sessionStorage.setItem('newsletter', this.infoForm.get('newsletter').value); },
-            error => console.log('Failure', error)
+            () => this.showError()
           );
         },
         reject: () => {
-          this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
           this.cancelAction();
         }
       });
@@ -182,6 +193,7 @@ export class UserInformationComponent implements OnInit {
     this.displaySuccessModification = false;
     this.infoForm.disable();
   }
+
   editPassword() {
     if  (this.infoForm.get('password').enabled) {
       this.infoForm.get('password').disable();
@@ -203,8 +215,25 @@ export class UserInformationComponent implements OnInit {
     this.avatar = event.originalEvent.body[0];
     localStorage.setItem('avatarURL', this.avatar);
     this.userService.updateInformation(this.id, {avatar: this.avatar} ).toPromise().then(
-      () => this.displayChangeImage = false,
-      error => console.log('FAILURE', error)
+      () => {this.displayChangeImage = false;  this.showSuccessEdit(); },
+      () => this.showError()
     );
+  }
+
+  removeProfilePicture() {
+    this.avatar = 'assets/img/defaultavatar.png';
+    localStorage.setItem('avatarURL', this.avatar);
+    this.userService.updateInformation(this.id, {avatar: 'urltoavatar'} ).toPromise().then(
+      () => {this.displayChangeImage = false;  this.showSuccessEdit(); },
+      () => this.showError()
+    );
+  }
+
+  showSuccessEdit() {
+    this.messageService.add({severity: 'success', summary: '', detail: 'Votre profile a été modifiée'});
+  }
+
+  showError() {
+    this.messageService.add({severity: 'error', summary: '', detail: 'Une erreur est survenue, réessayez plus tard!'});
   }
 }

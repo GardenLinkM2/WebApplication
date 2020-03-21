@@ -1,0 +1,25 @@
+:host {
+  ::ng-deep {
+    & .ui-card-shadow {
+      width: 300px;
+      overflow: hidden;
+    }
+    & .ui-card-header {
+      width: 300px;
+      height: 150px;
+      overflow: hidden;
+    }
+    & .ui-card-subtitle {
+      width: 200px;
+      word-break: break-all;
+    }
+  }
+}
+img {
+  width: 300px;
+}
+
+p-header
+{
+  background-color: #E6E6E6;
+}

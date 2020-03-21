@@ -11,6 +11,8 @@ import {environment} from '../../../environments/environment';
 export class InscriptionService {
 
   url = environment.urlAuth + 'users';
+  private urlCaptcha = 'https://www.google.com/recaptcha/api/siteverify';
+  private secretToken = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -34,4 +36,5 @@ export class InscriptionService {
 
     return this.httpClient.post<any>(this.url, toSend);
   }
+
 }

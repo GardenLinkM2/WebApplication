@@ -1,0 +1,6 @@
+<div class="container-fluid my-2" (click)="sendIdToMessage(); sendContactBannerToMessage()">
+  <img src="{{avatar}}" class="avatar">
+  <span>{{firstName}} {{lastName}}</span>
+  <i class="pi pi-times-circle" (click)="sendDeleteEventToMessage()"></i>
+  <p><i>{{setFirstMessage()}}</i></p>
+</div>

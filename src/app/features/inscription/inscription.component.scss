@@ -1,21 +1,12 @@
-#main_div
+form
 {
   margin: auto;
   position: relative;
-  background-color: rgba($color: white, $alpha: 1);
-  width: 65%;
-  height: 100%;
-  border-radius: 3%;
-  top: 0.5cm;
+  border-radius: 4%;
   box-shadow: 10px 10px 15px black;
-  border-color: green;
-}
+  background-color: white;
+  width: 65%;
 
-form
-{
-  position: relative;
-  left: 7%;
-  top: 5%;
 }
 
 h1
@@ -39,13 +30,10 @@ label
 button
 {
   position: relative;
-  left: 25%;
   color: white;
   background-color: green;
-  margin-top: 5%;
-  margin-bottom: 1%;
-  left: 35%;
   text-align: center;
+  width: 100%;
 }
 
 .form-check
@@ -58,17 +46,6 @@ button
 }
 
 
-#l
-{
-  position: relative;
-  left: 3.5%;
-}
-
-#r
-{
-  position: relative;
-  right: 3.5%;
-}
 
 p-checkbox
 {
@@ -77,6 +54,36 @@ p-checkbox
 
 input
 {
-  width: 65%;
+  width: 100%;
 }
 
+re-captcha
+{
+  position: relative;
+  width: 0%;
+}
+
+.fields
+{
+  position: relative;
+
+}
+
+.container
+{
+  width: 100%;
+  margin: 0 auto;
+}
+
+#newsletter
+{
+  position: relative;
+}
+
+#cgu
+{
+  position: relative;
+  color: green;
+  font-weight: normal;
+  padding-left: 7px;
+}

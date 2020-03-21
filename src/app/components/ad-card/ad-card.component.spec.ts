@@ -1,7 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdCardComponent } from './ad-card.component';
+import {AdCardComponent} from './ad-card.component';
 import {CardModule} from 'primeng/card';
+import {Location} from '../../@entities/location';
+import {Criteria} from '../../@entities/criteria';
+import {Photo} from '../../@entities/photo';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AdCardComponent', () => {
   let component: AdCardComponent;
@@ -9,32 +13,38 @@ describe('AdCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdCardComponent ],
+      declarations: [AdCardComponent],
       imports: [
-        CardModule
+        CardModule,
+        RouterTestingModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdCardComponent);
     component = fixture.componentInstance;
-    component.garden =  {id: '1', minUse: 12, name: 'Beau Jardin', owner: 'JL Picard', reserve: false, size: 123, type: 'type',
-      validation: {id: '12', state: 12},
-      criteria:
-        {
-          id: '1',
-          location: {id: 'belle adresse'},
-          price: 100,
-          area: 120,
-          directAccess: true,
-          equipments: true,
-          locationTime: undefined,
-          orientation: 'orienté',
-          typeOfClay: 'typé',
-          waterAccess: true
-        },
+    component.garden = {
+      id: '',
+      name: '',
+      isReserved: false,
+      minUse: 1,
+      description: '',
+      location: {city: '', postalCode: 1, streetNumber: 1, street: '', longitudeAndLatitude: undefined},
+      owner: '',
+      validation: '',
+      criteria: {
+        id: '1',
+        orientation: '',
+        typeOfClay: undefined,
+        directAccess: false,
+        equipments: false,
+        waterAccess: false,
+        price: 1,
+        locationTime: undefined,
+        area: 23
+      },
       photos: undefined
     };
     fixture.detectChanges();
