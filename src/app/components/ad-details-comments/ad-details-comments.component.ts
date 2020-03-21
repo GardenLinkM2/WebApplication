@@ -72,7 +72,7 @@ export class AdDetailsCommentsComponent implements OnInit, OnChanges {
 
   getUser(userId: string) {
     this.userService.getUserById(userId).subscribe((result: User) => {
-      if (result.avatar.trim().length === 0) {
+      if (!result.avatar.includes('/uploadm2.artheriom.fr')) {
         result.avatar = '../../../assets/img/defaultavatar.png';
       }
       this.commenters.push(result);
