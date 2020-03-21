@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit {
   displayModal: boolean;
   newDemand = false;
   items: MenuItem[];
+  myRoute;
 
   constructor(private backgroundService: BackgroundService,
               private modal: ModalService,
@@ -33,7 +34,7 @@ export class MenuComponent implements OnInit {
   }
 
   async ngOnInit() {
-    
+    this.myRoute = this.route.url;
     this.checkNotif();
 
     this.backgroundService.backGroundChanges.subscribe(value => {

@@ -5,8 +5,8 @@
     </div>
   </div>
   <p-header>
-    <img *ngIf="garden.photos && garden.photos[0].fileName && garden.photos[0].fileName.trim() != 0" [src]="garden.photos[0].path">
-    <img *ngIf="!garden.photos || !garden.photos[0].fileName || garden.photos[0].fileName.trim() == 0" [src]="baseImage">
+    <img *ngIf="garden.photos && garden.photos[0].fileName && garden.photos[0].fileName.trim().length != 0" [src]="garden.photos[0].path">
+    <img *ngIf="!garden.photos || !garden.photos[0].fileName || garden.photos[0].fileName.trim().length == 0" [src]="baseImage">
   </p-header>
   <div class="row">
     <div class="col">
