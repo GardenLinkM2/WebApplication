@@ -13,9 +13,9 @@
           <h2>Mes jardins</h2>
         </div>
       </div>
-      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="gardens.length > 0" class="gardenElement">
+      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="gardens.length > 0" class="gardenElement scrollbar scrollbar-success" >
         <div *ngFor="let add of this.gardens;" class="px-1 mb-2 mr-1">
-            <app-ad-card [garden]="add"></app-ad-card>
+            <app-ad-card [garden]="add" class="force-overflow"></app-ad-card>
         </div>
       </div>
 
@@ -31,14 +31,14 @@
           <h2>Mes locations</h2>
         </div>
       </div>
-      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="locations.length > 0" class="gardenElement">
+      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="locations.length > 0" class="gardenElement scrollbar scrollbar-success">
         <div *ngFor="let add of this.locations;" class="px-1 mb-2 mr-1">
-          <app-ad-card [garden]="add"></app-ad-card>
+          <app-ad-card [garden]="add" class="force-overflow"></app-ad-card>
         </div>
       </div>
 
       <div class="row w-100 mx-0 px-0 mb-1" *ngIf="locations.length === 0">
-        <p>Vous n'avez loué aucun jardin.</p>
+        <p-message severity="info" text="Vous n'avez loué aucun jardin."></p-message>
       </div>
 
     </div>
@@ -49,14 +49,14 @@
           <h2>Demandes envoyées</h2>
         </div>
       </div>
-      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="demandes.length > 0" class="gardenElement">
+      <div class="row w-100 mx-0 px-0 mb-1" *ngIf="demandes.length > 0" class="gardenElement scrollbar scrollbar-success">
         <div *ngFor="let add of this.demandes;" class="px-1 mb-2 mr-1" >
-          <app-ad-card [garden]="add"></app-ad-card>
+          <app-ad-card [garden]="add" class="force-overflow"></app-ad-card>
         </div>
       </div>
 
       <div class="row w-100 mx-0 px-0 mb-1" *ngIf="demandes.length === 0">
-        <p>Vous n'avez envoyé aucune demande.</p>
+        <p-message severity="info" text="Vous n'avez envoyé aucune demande."></p-message>
       </div>
 
     </div>

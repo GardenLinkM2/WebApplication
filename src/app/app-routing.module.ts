@@ -11,7 +11,6 @@ import {MdpOublieComponent} from './screens/mdp-oublie/mdp-oublie.component';
 import {RecoverPwdScreenComponent} from './screens/recover-pwd-screen/recover-pwd-screen.component';
 import {AdDetailsScreenComponent} from './screens/ad-details-screen/ad-details-screen.component';
 import {PersonalSpaceComponent} from './screens/personal-space/personal-space/personal-space.component';
-import { ConnexionComponent } from './components/connexion/connexion.component';
 import {FillWalletScreenComponent} from './screens/fill-wallet-screen/fill-wallet-screen.component';
 import { LeasingDemandComponent } from './screens/leasing-demand/leasing-demand.component';
 import {AuthGuard} from './services/activator/route-activator';
@@ -27,7 +26,6 @@ const routes: Routes = [
   { path: 'signaler-annonce/:id', component: ReportAdComponent},
   { path: 'consulter-demandes', component: TreatDemandsComponent},
   { path: 'inscription', component: InscriptionComponent},
-  { path: 'connexion', component: ConnexionComponent},
   { path: 'espace-personel', component: PersonalSpaceComponent, canActivate: [AuthGuard],
     children: [
       { path: 'mes-info', component: UserInformationComponent },
