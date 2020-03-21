@@ -1,4 +1,4 @@
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {AuthenticationService} from '../../services/connexion/authentication.service';
 import {ModalService} from '../../services/modal-service/modal.service';
 import {Component, OnInit} from '@angular/core';
@@ -6,7 +6,7 @@ import {BackgroundService} from '../../services/backgroud-service/background.ser
 import {MenuItem} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 import {LeasingService} from '../../services/leasing/leasing.service';
-import { async } from '@angular/core/testing';
+import {async} from '@angular/core/testing';
 
 @Component({
   selector: 'app-menu',
@@ -35,6 +35,11 @@ export class MenuComponent implements OnInit {
 
   async ngOnInit() {
     this.myRoute = this.route.url;
+    this.route.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.myRoute = event.url;
+      }
+    });
     this.checkNotif();
 
     this.backgroundService.backGroundChanges.subscribe(value => {
@@ -68,23 +73,22 @@ export class MenuComponent implements OnInit {
     ];
   }
 
-  checkNotif(){
+  checkNotif() {
     setTimeout(
       async () => {
-      if (localStorage.getItem('synToken')) {
-        await this.leasingService.getDemands(localStorage.getItem('id')).subscribe(
-          response => {
-            if (response.length !== 0) {
-              this.newDemand = true;
+        if (localStorage.getItem('synToken')) {
+          await this.leasingService.getDemands(localStorage.getItem('id')).subscribe(
+            response => {
+              if (response.length !== 0) {
+                this.newDemand = true;
+              } else {
+                this.newDemand = false;
+              }
             }
-            else {
-              this.newDemand = false;
-            }
-          }
-        );
-      }
-      this.checkNotif();
-    }, 30000);
+          );
+        }
+        this.checkNotif();
+      }, 30000);
   }
 
 
