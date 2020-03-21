@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { CguComponent } from './cgu/cgu.component';
+import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
 import {FeaturesModule} from '../features/features.module';
@@ -52,6 +53,7 @@ import {MessageModule} from 'primeng/message';
     AdDetailsScreenComponent,
     MesJardinsComponent,
     MessengerComponent,
+    CguComponent
   ],
   imports: [
     CommonModule,
