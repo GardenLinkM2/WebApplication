@@ -34,7 +34,7 @@ export class ConfirmLeasingDComponent implements OnInit {
 
     this.showProgessSpinner();
     this.checkIfDemandSent();
-    
+
     await this.userService.getUserWallet().toPromise().then(
       response => {
         this.wallet.amount = response['data'].balance;
@@ -97,6 +97,11 @@ export class ConfirmLeasingDComponent implements OnInit {
         this.displayPrice();
       }
     );
+  }
+
+
+  getDateNow() {
+    return new Date(Date.now()).toISOString().substring(0, 10);
   }
 
   garden: Garden = {
@@ -183,7 +188,7 @@ export class ConfirmLeasingDComponent implements OnInit {
       this.price = tPrice;
     }
   }
-    
+
   onSubmit() {
     console.log(this.beginDate);
     console.log(this.endDate);

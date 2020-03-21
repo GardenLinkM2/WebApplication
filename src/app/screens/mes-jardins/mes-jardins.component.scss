@@ -21,7 +21,6 @@ p
 
 
 .scrollbar {
-  margin-left: 30px;
   float: left;
   width: 100%;
   overflow-x: scroll;
@@ -39,7 +38,7 @@ p
 }
 
   .scrollbar-success::-webkit-scrollbar {
-  width: 12px;
+  width: 9px;
 }
 
   .scrollbar-success::-webkit-scrollbar-thumb {
