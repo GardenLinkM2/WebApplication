@@ -4,7 +4,7 @@
       <app-contacts [selectedThreadId]="id"
         *ngFor="let thread of userThreads"
         [threadId]="thread.id" [userId]="getReceiver(thread.sender, thread.receiver)"
-        [fisrtMessage]="getFirstMessage(thread.messages)"
+        [firstMessage]="getFirstMessage(thread.messages)"
         (sendContactbanner)="onReiceveContactBanner($event)"
         (sendId)="onThreadIdChange($event)"
         (sendDeleteEvent)="onDeleteEvent($event)"></app-contacts>

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {User} from '../../@entities/user';
 import {UserService} from '../../services/user-info/user.service';
+import {ThreadMessage} from '../../@entities/threadMessage';
 
 @Component({
   selector: 'app-contacts',
@@ -9,7 +10,7 @@ import {UserService} from '../../services/user-info/user.service';
 })
 export class ContactsComponent implements OnInit, OnChanges {
 
-  @Input() fisrtMessage: string;
+  @Input() firstMessage: ThreadMessage;
   @Input() userId: string;
   @Input() threadId: string;
   @Input() selectedThreadId: string;
@@ -60,5 +61,13 @@ export class ContactsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.ngOnInit();
+  }
+
+  setFirstMessage() {
+    if (this.firstMessage) {
+      return this.firstMessage.sender === this.userId ? this.firstName + ' : ' + this.firstMessage.text : 'vous : ' + this.firstMessage.text;
+    } else {
+      return '';
+    }
   }
 }

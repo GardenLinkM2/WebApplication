@@ -11,9 +11,8 @@
 
 div {
   cursor: pointer;
-  width: 8.8cm;
-  height: 2cm;
   border-radius: 25px;
+  overflow: hidden;
 }
 
 div:hover p{
@@ -37,13 +36,13 @@ span {
   color: white;
 }
 
-i {
+.pi-times-circle {
   color: white;
-  position: absolute;
-  left: 300px;
-  margin-top: 32px;
+  position: relative;
+  top: 0;
+  left: 5px;
 }
 
-i:hover{
+.pi-times-circle:hover{
   color: red;
 }

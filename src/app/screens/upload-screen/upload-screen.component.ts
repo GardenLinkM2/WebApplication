@@ -266,14 +266,14 @@ export class UploadScreenComponent implements OnInit {
                          this.uploadedFiles = [];
                          this.previewUrls = [];
                          // @ts-ignore
-                         this.router.navigateByUrl(`ad-details/${response.data.id}`);
+                         this.router.navigateByUrl(`details-annonce/${response.data.id}`);
             },
             () => this.showError()
           );
         } else {
           this.upload.modifyGarden(this.requestBody, sessionStorage.getItem('adToEdit')).subscribe(
             // @ts-ignore
-            response => {this.showSuccessEdit(); this.router.navigateByUrl(`ad-details/${response.data.id}`); },
+            response => {this.showSuccessEdit(); this.router.navigateByUrl(`details-annonce/${response.data.id}`); },
             () => this.showError()
           );
           sessionStorage.removeItem('adToEdit');
