@@ -1,3 +1,4 @@
+import { CguComponent } from './screens/cgu/cgu.component';
 import { MesJardinsComponent } from './screens/mes-jardins/mes-jardins.component';
 import { InscriptionComponent } from './features/inscription/inscription.component';
 import { NgModule } from '@angular/core';
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'signaler-annonce/:id', component: ReportAdComponent},
   { path: 'consulter-demandes', component: TreatDemandsComponent},
   { path: 'inscription', component: InscriptionComponent},
+  { path: 'conditions-generales-utilisation', component: CguComponent},
   { path: 'espace-personel', component: PersonalSpaceComponent, canActivate: [AuthGuard],
     children: [
       { path: 'mes-info', component: UserInformationComponent },
