@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Thread} from '../../@entities/thread';
 import {ChatService} from '../../services/chat/chat.service';
 import {ThreadMessage} from '../../@entities/threadMessage';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {ConfirmationService, MessageService} from 'primeng/api';
 
@@ -25,7 +25,7 @@ export class MessengerComponent implements OnInit {
   userThreads: Array<Thread>;
   messages: Array<ThreadMessage>;
   text = new FormGroup({
-    text: new FormControl('')
+    text: new FormControl('', Validators.required)
   });
 
   async ngOnInit() {
@@ -182,37 +182,39 @@ export class MessengerComponent implements OnInit {
 
   textBorderShape(message: ThreadMessage) {
     if (message.sender === localStorage.getItem('id')) {
-      return {'border-radius': '19px 10px 19px 15px', 'background-color': '#006600'};
+      return {'border-radius': '19px 10px 19px 15px', 'background-color': '#006600', float: 'right', 'margin-right': '5px'};
     } else {
-      return {'border-radius': '10px 19px 15px 19px', 'background-color': '#005739'};
+      return {'border-radius': '10px 19px 15px 19px', 'background-color': '#005739', float: 'left', 'margin-right': '5px'};
     }
   }
 
   async sendMessage() {
-    const toSend: ThreadMessage = {
-      id: undefined,
-      text: this.text.get('text').value,
-      creationDate: new Date(Date.now()).toISOString(),
-      isRead: false,
-      sender: localStorage.getItem('id'),
-      photos: []
-    };
-    await this.chatService.sendMessage(toSend, this.id).subscribe(
-      // @ts-ignore
-      response => {
+    if (this.text.valid) {
+      const toSend: ThreadMessage = {
+        id: undefined,
+        text: this.text.get('text').value,
+        creationDate: new Date(Date.now()).toISOString(),
+        isRead: false,
+        sender: localStorage.getItem('id'),
+        photos: []
+      };
+      await this.chatService.sendMessage(toSend, this.id).subscribe(
         // @ts-ignore
-        this.messages.push(response.data);
-        this.scroll();
-        this.sortThreads();
-        this.chatService.getAllThreads().toPromise().then(
+        response => {
           // @ts-ignore
-          response2 => this.userThreads = response2.data,
-          () => console.log('Error fetching threads')
-        );
-        this.text.get('text').setValue('');
-      },
-      () => console.log('Sending message failed')
-    );
+          this.messages.push(response.data);
+          this.scroll();
+          this.sortThreads();
+          this.chatService.getAllThreads().toPromise().then(
+            // @ts-ignore
+            response2 => this.userThreads = response2.data,
+            () => console.log('Error fetching threads')
+          );
+          this.text.get('text').setValue('');
+        },
+        () => console.log('Sending message failed')
+      );
+    }
   }
 
   getFirstMessage(messages: Array<ThreadMessage>) {
@@ -245,5 +247,17 @@ export class MessengerComponent implements OnInit {
       reject: () => {
       }
     });
+  }
+
+  parseDate(date: string) {
+    const weekday = new Array(7);
+    weekday[0] = 'Dimanche';
+    weekday[1] = 'Lundi';
+    weekday[2] = 'Mardi';
+    weekday[3] = 'Mercredi';
+    weekday[4] = 'Jeudi';
+    weekday[5] = 'Vendredi';
+    weekday[6] = 'Samedi';
+    return weekday[new Date(date).getDay()] + ' ' + date.substring(5, 10) + ' ' + date.substring(12, 16);
   }
 }
