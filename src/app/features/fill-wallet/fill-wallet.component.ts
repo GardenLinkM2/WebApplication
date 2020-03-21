@@ -61,7 +61,7 @@ export class FillWalletComponent implements OnInit {
         message: 'Veuillez confirmer votre rechargement.',
         accept: () => {
             this.userService.fillWallet(this.wallet.id, this.fillForm.get('amount').value).subscribe(
-              () => this.router.navigateByUrl('personal-space/user-info')
+              () => this.router.navigateByUrl('espace-personel')
             );
         }
     });
