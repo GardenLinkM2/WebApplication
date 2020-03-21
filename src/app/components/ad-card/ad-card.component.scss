@@ -2,13 +2,12 @@
   ::ng-deep {
     & .ui-card-shadow {
       min-width: 200px;
-      max-width: 400px;
+      max-width: 228px;
       overflow: hidden;
     }
     & .ui-card-header {
       height: 150px;
       overflow: hidden;
-      background-color: #E6E6E6;
     }
     & .ui-card-subtitle {
       width: 200px;
@@ -17,5 +16,11 @@
   }
 }
 img {
-  max-width: 500px;
+  max-width: 228px;
+  height: 150px;
+}
+
+p-header
+{
+  background-color: white;
 }

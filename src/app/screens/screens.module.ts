@@ -30,6 +30,8 @@ import {DialogModule} from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { MessengerComponent } from './messenger/messenger.component';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {MessageModule} from 'primeng/message';
+
 
 
 @NgModule({
@@ -49,7 +51,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     RecoverPwdScreenComponent,
     AdDetailsScreenComponent,
     MesJardinsComponent,
-    MessengerComponent
+    MessengerComponent,
   ],
   imports: [
     CommonModule,
@@ -69,7 +71,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     ConfirmDialogModule,
     DialogModule,
     ToastModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    MessageModule
   ],
   exports: [
     HomeScreenComponent,
