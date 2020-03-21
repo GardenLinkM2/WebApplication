@@ -105,7 +105,7 @@
             <p-card styleClass="ui-card-shadow">
               <p-header>
                 <div class="text-center">
-                  <img src="profile photo" [src]="owner ? owner.avatar : '../../../assets/img/defaultavatar.png'"
+                  <img src="profile photo" [src]="owner.avatar.includes('/uploadm2.artheriom.fr') ? owner.avatar : '../../../assets/img/defaultavatar.png'"
                        class="w-50" style="max-width: 100px">
                 </div>
                 <div class="text-center h3 pt-1">{{owner.firstName}}</div>
