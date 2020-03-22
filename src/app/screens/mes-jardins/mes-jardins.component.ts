@@ -31,9 +31,23 @@ export class MesJardinsComponent implements OnInit {
               private leasingService: LeasingService) { }
 
   async ngOnInit() {
+    this.showSpinner = true;
 
-    this.getGardens();
+    await this.leasingService.getUserLeasings().toPromise().then((result: {data: Leasing[]; count: number; }) => {
+      this.getGardenIdByLeasing(result.data, result.count);
+      this.userService.getUserGardens().toPromise().then((result: { data: Garden[]; count: number; }) => {
+        if (result && result.data) {
+          this.selectFirstAdds(result.data, result.count);
+          this.showMyRentedGardens();
+        } else {
+          this.gardens = [];
+        }
 
+        this.getRentedGardens();
+      });
+    });
+
+    this.showSpinner = false;
   }
 
   selectFirstAdds(gardens: Garden[], count: number): void {
@@ -44,29 +58,7 @@ export class MesJardinsComponent implements OnInit {
     }
   }
 
-  getGardens() {
-    this.showSpinner = true;
-    this.userService.getUserGardens().subscribe((result: { data: Garden[]; count: number; }) => {
-      if (result && result.data) {
-        this.selectFirstAdds(result.data, result.count);
-      } else {
-        this.gardens = [];
-      }
-      this.leasingService.getUserLeasings().toPromise().then((result: {data: Leasing[]; count: number; }) => {
-        this.getGardenIdByLeasing(result.data, result.count);
-        this.showMyRentedGardens();
-      });
 
-      this.getRentedGardens();
-      this.showSpinner = false;
-    });
-  }
-
-  async getLeasing() {
-    await this.leasingService.getUserLeasings().toPromise().then((result: {data: Leasing[]; count: number; }) => {
-      this.getGardenIdByLeasing(result.data, result.count);
-    });
-  }
 
   getGardenIdByLeasing(lease: Leasing[], size: number) {
     // tslint:disable-next-line: prefer-for-of
