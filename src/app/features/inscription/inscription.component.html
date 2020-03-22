@@ -1,74 +1,68 @@
-<html>
-  <head>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  </head>
-  <body>
-    <div id="main_div">
+<div id="main_div">
 
-      <h1>Inscription</h1>
+  <h1>Inscription</h1>
 
-      <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-group has-error" id="formInscription">
-      <div class="container">
-            <br>
-            <div>
-              <label for="firstName">Prénoms</label><br>
-              <input type="text" size="30" id="firstName" formControlName="firstName" pInputText>
-            </div>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-group has-error" id="formInscription">
+  <div class="container">
+        <br>
+        <div>
+          <label for="firstName">Prénoms</label><br>
+          <input type="text" size="30" id="firstName" formControlName="firstName" pInputText>
+        </div>
 
-            <br>
+        <br>
 
-            <div>
-              <label for="lastName">Nom</label><br>
-              <input type="text" size="30" id="lastName" formControlName="lastName" pInputText>
-            </div>
+        <div>
+          <label for="lastName">Nom</label><br>
+          <input type="text" size="30" id="lastName" formControlName="lastName" pInputText>
+        </div>
 
-            <br>
+        <br>
 
-            <div>
-              <label for="email">E-mail</label><br>
-              <input type="email" size="30"  id="email" formControlName="email"  pInputText>
-            </div>
+        <div>
+          <label for="email">E-mail</label><br>
+          <input type="email" size="30"  id="email" formControlName="email"  pInputText>
+        </div>
 
-            <br>
+        <br>
 
-            <div>
-              <label for="phone">Téléphone</label><br>
-              <input type="tel" size="30"  id="phone" formControlName="phone" pInputText>
-            </div>
+        <div>
+          <label for="phone">Téléphone</label><br>
+          <input type="tel" size="30"  id="phone" formControlName="phone" pInputText>
+        </div>
 
-            <br>
+        <br>
 
-            <div>
-              <label for="password">Mot de passe</label><br>
-              <input type="password" size="30"  id="password" formControlName="password" pInputText>
-            </div>
+        <div>
+          <label for="password">Mot de passe</label><br>
+          <input type="password" size="30"  id="password" formControlName="password" pInputText>
+        </div>
 
-            <br>
+        <br>
 
-            <div>
-              <label for="repass">Confirmer le mot de passe</label><br>
-              <input type="password" size="30"  id="repass" formControlName="repassword" pInputText>
-            </div>
+        <div>
+          <label for="repass">Confirmer le mot de passe</label><br>
+          <input type="password" size="30"  id="repass" formControlName="repassword" pInputText>
+        </div>
 
-            <br>
+        <br>
 
-            <re-captcha (resolved)="resolved($event)" siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></re-captcha>
+        <re-captcha (resolved)="resolved($event)" siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></re-captcha>
 
-            <br>
+        <br>
 
-            <p-checkbox id="condition" formControlName="condition" label="" binary="true"></p-checkbox>
-            <label id="cgu">J'accepte les <a [routerLink]="['/conditions-generales-utilisation']">CGU</a></label>
-            <br>
-            <p-checkbox id="newsletter" formControlName="newsletter" label="Newsletter" binary="true"></p-checkbox>
+        <p-checkbox id="condition" formControlName="condition" label="" binary="true"></p-checkbox>
+        <label id="cgu">J'accepte les <a [routerLink]="['/conditions-generales-utilisation']">CGU</a></label>
+        <br>
+        <p-checkbox id="newsletter" formControlName="newsletter" label="Newsletter" binary="true"></p-checkbox>
 
 
-          </div>
-          <br>
-        <button pButton type="submit" label="S'inscrire" class="ui-button-rounded"></button>
+      </div>
+      <br>
+    <button pButton type="submit" label="S'inscrire" class="ui-button-rounded"></button>
 
-      </form>
+  </form>
 
-    </div>
-  </body>
-  <p-toast [style]="{marginTop: '80px'}" position="bottom-right"></p-toast>
-</html>
+</div>
+
+<p-toast [style]="{marginTop: '80px'}" position="bottom-right"></p-toast>

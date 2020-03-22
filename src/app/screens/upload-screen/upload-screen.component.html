@@ -98,13 +98,16 @@
               <br>
             </div>
           </div>
-          <label for="fileInput" style="color: #005739; font-weight: bold">Ajouter des photos</label><br>
           <!--TODO: adding upload url-->
           <div>
             <form [formGroup] = "uploadFile">
               <div>
+                <label for="fileInput" class="custom-file-upload" (click)="throwInformation()" >
+                  <span style="color: #005739; font-weight: bold">Ajouter des photos</span>
+                  <i class="pi pi-paperclip"></i>
+                </label>
                 <input id="fileInput" [disabled]="!(previewUrls.length < MAX_FILES)"
-                       type="file" (change)="onFileSelect($event)" /><br><br>
+                       type="file" (change)="onFileSelect($event)" class="fileInputButton"/><br><br>
                 <div *ngFor="let url of previewUrls; let index = index">
                     <img class="preview" [src]="url" height="100" width="100">
                     <span *ngIf="action!='PUT'">{{uploadedFiles[index].name}}</span>

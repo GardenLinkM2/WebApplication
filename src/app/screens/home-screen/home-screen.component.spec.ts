@@ -7,6 +7,7 @@ import {AdCardComponent} from '../../components/ad-card/ad-card.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('HomeScreenComponent', () => {
   let component: HomeScreenComponent;
@@ -24,7 +25,8 @@ describe('HomeScreenComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

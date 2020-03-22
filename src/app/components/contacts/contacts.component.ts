@@ -62,7 +62,8 @@ export class ContactsComponent implements OnInit, OnChanges {
   }
 
   setFirstMessage() {
-    if (this.firstMessage) {
+
+    if (this.firstMessage && this.firstMessage.text) {
       return this.firstMessage.sender === this.userId ? this.firstName + ' : ' + this.firstMessage.text : 'vous : ' +
         this.firstMessage.text;
     } else {

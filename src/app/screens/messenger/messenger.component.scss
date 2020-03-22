@@ -24,7 +24,7 @@
   background-position: 60% 50%;
   background-repeat: no-repeat;
   font-size: 0;
-  margin-left: 3%;
+  margin-left: 5%;
 }
 
 .sendButton:hover{
@@ -78,7 +78,73 @@
   text-shadow: 0px -1px 0px rgba(000,000,000,0.2), 0px 1px 0px rgba(255,255,255,0.3);
 }
 
+.photoInput{
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  position: absolute;
+  margin-left: 3%;
+  font-size: 2em;
+  border-style: none;
+  color: white;
+}
+
+.custom-file-upload:hover{
+  color: #448233;
+}
+
+.photoPreview {
+  position: absolute;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));;
+  width: 95%;
+  top: 50px;
+  margin-bottom: 10px;
+  border-radius: 50px 50px 50px 50px;
+}
+
+.photoPreview img {
+  border-radius: 100%;
+}
+
+.photoPreview span {
+  margin-left: 3%;
+}
+
+.pi-trash {
+  color: darkred;
+  font-size: 1.75em;
+  position: relative;
+  float: right;
+  margin-right: 5%;
+  top: 35px;
+}
+
+.pi-trash:hover {
+  color: red;
+  cursor: pointer;
+}
 span {
   border-style: none;
   border-width: thin;
+}
+
+
+.spin {
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+  width: 30px;
+}
+
+.spiner {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+
 }

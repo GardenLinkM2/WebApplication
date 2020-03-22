@@ -33,6 +33,34 @@
     </div>
   </div>
   <p-footer>
-    <a [routerLink]="'/details-annonce/'+garden.id" class="btn btn-sm ml-0 pl-0">Détails</a>
+    <div class="foot">
+      <a [routerLink]="'/details-annonce/'+garden.id" class="btn btn-sm ml-0 pl-0">Détails</a>
+      <i class="pi pi-user" id="rentedGarden" *ngIf="hasRenter" ng-click="" (click)="showModalDialog()"></i>
+    </div>
   </p-footer>
 </p-card>
+
+<p-dialog [(visible)]="displayModal" [modal]="true" [style]="{width: '15vw'}" [baseZIndex]="10000" [draggable]="true" [resizable]="false">
+  <p-header>
+    {{garden.name}}
+  </p-header>
+  <h3>Locataire</h3>
+  <div class="locataire">
+    <img src="{{avatar}}" class="avatar">
+    <span>{{firstName}} {{lastName}}</span>
+  </div>
+  <br>
+  <h3>Location</h3>
+  <div>
+    <span>Début:  <p>{{debut}}</p></span>
+    <span>Fin:  <p>{{fin}}</p></span>
+    <span>Durée: <p>{{time}} Mois</p></span>
+    <span>Bénéfice: <p>{{price}}€</p></span>
+  </div>
+
+  <p-footer>
+    <button type="button" class="btn btn-sm btn-outline-dark rounded-pill w-100"
+                      [routerLink]="'/espace-personel/messages/'+renterID"><i class="pi pi-comments"></i>Discuter
+              </button>
+  </p-footer>
+</p-dialog>

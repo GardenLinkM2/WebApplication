@@ -1,4 +1,10 @@
-<div class="container-fluid">
+<div *ngIf="showSpinner" class="spiner">
+  <div class="spin">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+</div>
+
+<div class="container-fluid" *ngIf="!showSpinner">
   <div class="row">
     <div class="col-4 contacts" style="margin-right: 10px">
       <app-contacts [selectedThreadId]="id"
@@ -18,26 +24,41 @@
       </div>
       <div class="row showMessages" id="showMessages">
         <div *ngFor="let message of messages" style="color: white">
-
           <div [ngStyle]="textBorderShape(message)" style="max-width: 50%; margin-bottom: 10px">
-            <p align="{{align(message)}}">
+            <p align="{{align(message)}}"  *ngIf="message.text">
+              <button *ngIf="message.photos" type="button" pButton
+                      [ngStyle]="getPhoto(message.photos)" (click)="showImage = message.photos[0].fileName; show=true"></button>
               <span class="py-1 px-2">{{message.text}}</span><br>
               <i class="py-1 px-2"><sub>{{parseDate(message.creationDate)}}</sub></i>
             </p>
+            <p-dialog *ngIf="message.photos" [(visible)]="showImage == message.photos[0].fileName && show" [modal]="true">
+              <img style="width: 1024px; height: 768px" src="{{message.photos[0].fileName}}">
+              <p-footer>
+                <button type="button" class="ui-button-rounded ui-button-success" pButton icon="pi pi-check" (click)="show=false" label="Ok"></button>
+              </p-footer>
+            </p-dialog>
           </div>
-
         </div>
       </div>
       <div class="sendMessage">
         <form [formGroup]="text" (ngSubmit)="sendMessage()">
-          <input pInputText id="message" type="text" style="width: 80%; margin-left: 5%" formControlName="text">
-          <button pButton type="button" class="ui-button-rounded sendButton" label="Envoyer" (click)="sendMessage()"></button>
+          <label for="fileInput" class="custom-file-upload" (click)="throwInformation()" >
+            <i class="pi pi-paperclip"></i>
+          </label>
+          <input id="fileInput" [disabled]="!(previewUrls.length < 1)" type="file" (change)="onFileSelect($event)"
+                 class="photoInput"/>
+          <input pInputText id="message" type="text" style="width: 70%; margin-left: 13%" formControlName="text">
+          <button pButton type="button" class="ui-button-rounded sendButton" label="Envoyer"></button>
         </form>
+        <div *ngFor="let url of previewUrls; let index = index" class="photoPreview">
+          <img class="preview" [src]="url" height="100" width="100">
+          <span style="color: white">{{uploadedFiles[index].name}}</span>
+          <i class="pi pi-trash" (click)="removeImage()"></i>
+        </div>
       </div>
 
     </div>
   </div>
-
   <p-confirmDialog [style]="{width: '25vw'}" [baseZIndex]="10000" acceptLabel="Oui" rejectLabel="Non"
                    acceptButtonStyleClass="ui-button-rounded ui-button-success"
                    rejectButtonStyleClass="ui-button-rounded ui-button-danger">

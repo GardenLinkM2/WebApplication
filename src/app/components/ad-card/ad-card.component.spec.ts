@@ -6,6 +6,8 @@ import {Location} from '../../@entities/location';
 import {Criteria} from '../../@entities/criteria';
 import {Photo} from '../../@entities/photo';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AdCardComponent', () => {
   let component: AdCardComponent;
@@ -16,8 +18,10 @@ describe('AdCardComponent', () => {
       declarations: [AdCardComponent],
       imports: [
         CardModule,
-        RouterTestingModule
-      ]
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
