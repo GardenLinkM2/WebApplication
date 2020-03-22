@@ -305,4 +305,9 @@ export class UploadScreenComponent implements OnInit {
     }
   }
 
+  throwInformation() {
+    if (this.uploadedFiles.length >= this.MAX_FILES) {
+      this.messageService.add({severity: 'info', detail: 'Vous ne pouvez ajouter que 5 images'});
+    }
+  }
 }

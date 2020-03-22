@@ -89,3 +89,20 @@ button:focus{
   border-radius: 10px !important;
   padding: 2px !important;
 }
+
+.fileInputButton{
+  display: none;
+}
+
+.pi-paperclip {
+  display: inline-block;
+  cursor: pointer;
+  position: absolute;
+  font-size: 2em;
+  border-style: none;
+  color: darkgreen;
+}
+
+.pi-paperclip:hover{
+  color: #448233;
+}

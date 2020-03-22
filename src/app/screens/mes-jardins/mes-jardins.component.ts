@@ -5,6 +5,7 @@ import { UserService } from './../../services/user-info/user.service';
 import { Garden } from 'src/app/@entities/garden';
 import { Component, OnInit } from '@angular/core';
 import { Leasing } from 'src/app/@entities/leasing';
+import { count } from 'rxjs/operators';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class MesJardinsComponent implements OnInit {
   rentedInProgress: string[] = [];
   leaselist: Leasing[];
   showSpinner = true;
+  ownerGardens: string[] = [];
 
   constructor(private userService: UserService,
               private gardenService: GardensService,
@@ -30,14 +32,7 @@ export class MesJardinsComponent implements OnInit {
 
   async ngOnInit() {
 
-
     this.getGardens();
-
-    await this.leasingService.getUserLeasings().toPromise().then((result: {data: Leasing[]; count: number; }) => {
-      this.getGardenIdByLeasing(result.data, result.count);
-    });
-
-    this.getRentedGardens();
 
   }
 
@@ -57,6 +52,12 @@ export class MesJardinsComponent implements OnInit {
       } else {
         this.gardens = [];
       }
+      this.leasingService.getUserLeasings().toPromise().then((result: {data: Leasing[]; count: number; }) => {
+        this.getGardenIdByLeasing(result.data, result.count);
+        this.showMyRentedGardens();
+      });
+
+      this.getRentedGardens();
       this.showSpinner = false;
     });
   }
@@ -77,6 +78,10 @@ export class MesJardinsComponent implements OnInit {
       if (lease[i].state === 'InProgress' && lease[i].renter === localStorage.getItem('id')) {
         this.rentedInProgress.push(lease[i].garden);
       }
+
+      if (lease[i].state === 'InProgress' && lease[i].owner === localStorage.getItem('id')) {
+        this.ownerGardens.push(lease[i].garden);
+      }
     }
   }
 
@@ -94,6 +99,16 @@ export class MesJardinsComponent implements OnInit {
         this.locations.push(result.data);
       });
     }
+  }
+
+  showMyRentedGardens() {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0 ; i < this.gardens.length; i++) {
+      if (this.ownerGardens.indexOf(this.gardens[i].id) !== -1) {
+        this.gardens[i].isReserved = true;
+      }
+    }
+
   }
 
 }

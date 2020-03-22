@@ -3,8 +3,10 @@ import {Thread} from '../../@entities/thread';
 import {ChatService} from '../../services/chat/chat.service';
 import {ThreadMessage} from '../../@entities/threadMessage';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import {HttpClient} from '@angular/common/http';
+import {Photo} from '../../@entities/photo';
 
 @Component({
   selector: 'app-messenger',
@@ -14,7 +16,9 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 })
 export class MessengerComponent implements OnInit {
   constructor(private chatService: ChatService, private activatedRoute: ActivatedRoute,
-              private confirmationService: ConfirmationService, private messageService: MessageService) {
+              private confirmationService: ConfirmationService, private messageService: MessageService,
+              private client: HttpClient,
+              private router: Router) {
   }
 
   id = '';
@@ -27,13 +31,29 @@ export class MessengerComponent implements OnInit {
   text = new FormGroup({
     text: new FormControl('', Validators.required)
   });
+  uploadedFiles: any[] = [];
+  uploadFile: FormGroup;
+  previewUrls = [];
+  showImage: string ;
+  show: boolean;
+  showSpinner: boolean;
+
 
   async ngOnInit() {
+    this.showSpinner = true;
+
     const ownerId = this.activatedRoute.snapshot.params.ownerId;
     let threadExist = false;
+    this.uploadFile = new FormGroup({
+      profile: new FormControl('')
+    });
     await this.chatService.getAllThreads().toPromise().then(
       // @ts-ignore
-      response => this.userThreads = response.data,
+      response => {
+        // @ts-ignore
+        this.userThreads = response.data;
+        this.showSpinner = false;
+      },
       () => console.log('Error fetching threads')
     );
     for (const thread of this.userThreads) {
@@ -44,6 +64,7 @@ export class MessengerComponent implements OnInit {
       }
     }
     if (ownerId) {
+      this.showSpinner = true;
       if (!threadExist) {
         const newThread: Thread = {
           id: undefined,
@@ -51,7 +72,16 @@ export class MessengerComponent implements OnInit {
           receiver: ownerId,
           isArchived: false,
           subject: '',
-          messages: []
+          messages: [
+            {
+            id: undefined,
+            text: undefined,
+            creationDate: Math.floor(Date.now() / 1000),
+            isRead: false,
+            sender: localStorage.getItem('id'),
+            photos: []
+          }
+        ]
         };
         await this.chatService.createNewThread(newThread).toPromise().then(
           async response => {
@@ -62,17 +92,21 @@ export class MessengerComponent implements OnInit {
                 // @ts-ignore
                 this.userThreads = response2.data;
                 this.sortThreads();
+                this.showSpinner = false;
               },
               () => console.log('Error fetching threads')
             );
+
           },
           () => console.log('Thread creation failed'),
         );
       } else {
         this.id = this.existingThreadId;
+        this.showSpinner = false;
       }
     }
     this.sortThreads();
+
   }
 
   sortThreads() {
@@ -111,6 +145,7 @@ export class MessengerComponent implements OnInit {
   }
 
   refreshMessages() {
+
     setTimeout(async () => {
       await this.chatService.getAllThreads().toPromise().then(
         // @ts-ignore
@@ -146,7 +181,10 @@ export class MessengerComponent implements OnInit {
         },
         () => console.log('fecthing messages failed')
       );
-      this.refreshMessages();
+      if (this.router.url.includes('messages')) {
+        this.refreshMessages();
+      }
+
     }, 3000);
   }
 
@@ -180,7 +218,7 @@ export class MessengerComponent implements OnInit {
   }
 
   async sendMessage() {
-    if (this.text.valid) {
+    if (this.text.valid || this.uploadedFiles.length > 0) {
       const toSend: ThreadMessage = {
         id: undefined,
         text: this.text.get('text').value,
@@ -189,6 +227,21 @@ export class MessengerComponent implements OnInit {
         sender: localStorage.getItem('id'),
         photos: []
       };
+      if (this.uploadedFiles.length > 0) {
+        for (const file of this.uploadedFiles) {
+          const formData = new FormData();
+          formData.append('file', file);
+          await this.client.post<any>('https://uploadm2.artheriom.fr/upload.php', formData).toPromise().then(
+            (response) => toSend.photos.push(
+              {
+                id: undefined,
+                fileName: response[0],
+                path: response[0]
+              }),
+            (err) => console.log(err)
+          );
+        }
+      }
       await this.chatService.sendMessage(toSend, this.id).subscribe(
         // @ts-ignore
         response => {
@@ -196,8 +249,14 @@ export class MessengerComponent implements OnInit {
           this.messages.push(response.data);
           this.scroll();
           this.chatService.getAllThreads().toPromise().then(
-            // @ts-ignore
-            response2 => {this.userThreads = response2.data; this.sortThreads(); },
+            response2 => {
+              // @ts-ignore
+              this.userThreads = response2.data;
+              this.sortThreads();
+              if (this.uploadedFiles.length > 0) {
+                this.removeImage();
+              }
+            },
             () => console.log('Error fetching threads')
           );
           this.text.get('text').setValue('');
@@ -230,8 +289,10 @@ export class MessengerComponent implements OnInit {
               }
             }
           },
-          () => this.messageService.
-          add({severity: 'info', detail: 'Vous ne pouvez pas supprimer une discussion que vous n\'avez pas créée'})
+          () => this.messageService.add({
+            severity: 'info',
+            detail: 'Vous ne pouvez pas supprimer une discussion que vous n\'avez pas créée'
+          })
         );
       },
       reject: () => {
@@ -249,6 +310,44 @@ export class MessengerComponent implements OnInit {
     weekday[4] = 'Jeudi';
     weekday[5] = 'Vendredi';
     weekday[6] = 'Samedi';
-    return weekday[new Date(dateToString).getDay()] + ' ' + dateToString.substring(5, 10) + ' ' + dateToString.substring(12, 16);
+    return weekday[new Date(dateToString).getDay()] + ' ' + dateToString.substring(5, 10) + ' ' + dateToString.substring(11, 16);
+  }
+
+  onFileSelect(event) {
+    if (event.target.files.length > 0) {
+      for (const file of event.target.files) {
+        this.uploadedFiles.push(file);
+        this.uploadFile.get('profile').setValue(file);
+        const reader = new FileReader();
+        reader.readAsDataURL(file); // read file as data url
+        reader.onload = (pevent) => { // called once readAsDataURL is completed
+          // @ts-ignore
+          this.previewUrls.push(pevent.target.result);
+        };
+      }
+    }
+  }
+
+  removeImage() {
+    this.uploadedFiles.splice(0, 1);
+    this.previewUrls.splice(0, 1);
+  }
+
+  getPhoto(photos: Array<Photo>) {
+    return {
+      'background-image': 'url(' + photos[0].path + ')',
+      width: '50px',
+      height: '50px',
+      'background-position': '50% 50%',
+      'font-size': 0,
+      'background-size': '50px 50px',
+      'border-radius': '10px'
+    };
+  }
+
+  throwInformation() {
+    if (this.uploadedFiles.length > 0) {
+      this.messageService.add({severity: 'info', detail: 'Vous ne pouvez ajouter qu\'une seule image'});
+    }
   }
 }

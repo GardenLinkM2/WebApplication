@@ -1,5 +1,5 @@
-import { ModalService } from './../../services/modal-service/modal.service';
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {ModalService} from '../../services/modal-service/modal.service';
+import {Component, OnInit} from '@angular/core';
 import {Garden} from '../../@entities/garden';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {GardensService} from '../../services/gardens/gardens.service';
@@ -8,10 +8,9 @@ import {User} from '../../@entities/user';
 import {LeasingService} from '../../services/leasing/leasing.service';
 import {Leasing} from '../../@entities/leasing';
 import {ConfirmationService} from 'primeng/api';
-import {Subject} from 'rxjs';
 import {LocalStorageService} from '../../services/local-storage/local-storage.service';
 import {ILocalStorage} from '../../@entities/i-local-storage';
-import { MessageService } from "primeng/api";
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-ad-details-screen',
@@ -107,13 +106,13 @@ export class AdDetailsScreenComponent implements OnInit {
 
   delete() {
     this.gardensService.deleteById(this.ad.id).subscribe(
-      Response => {  
+      Response => {
         this.router.navigateByUrl('/personal-space/my-gardens');
       },
       error => {
-        if(error.error.message == "Impossible to delete a garden with current leasings.") {
-          this.messageS.add({severity:'error', detail:'Impossible de supprimer un jardin qui a une location en cours.'});
-        };
+        if (error.error.message === 'Impossible to delete a garden with current leasings.') {
+          this.messageS.add({severity: 'error', detail: 'Impossible de supprimer un jardin qui a une location en cours.'});
+        }
       });
   }
 
@@ -173,6 +172,14 @@ export class AdDetailsScreenComponent implements OnInit {
         this.isMeDemandingLeasing = false;
         this.leasing = undefined;
       });
+    }
+  }
+
+  throwInformation() {
+    if (!localStorage.getItem('synToken')) {
+      this.messageS.add({severity: 'info', detail: 'Connectez vous pour discuter !'});
+    } else {
+      this.router.navigateByUrl(`/espace-personel/messages/${this.owner.id}`);
     }
   }
 }

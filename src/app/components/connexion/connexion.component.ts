@@ -80,6 +80,10 @@ export class ConnexionComponent implements OnInit {
               localStorage.setItem('lastName', responseAuth.lastName);
                     // @ts-ignore
               this.localStorageService.setItem('id', responseAuth.id);
+
+              if (this.router.url.startsWith('/inscription')) {
+                this.router.navigateByUrl('/acceuil');
+              }
             }
 
           );
